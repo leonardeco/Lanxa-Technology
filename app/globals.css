@@ -1,26 +1,61 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --void: #06060f;
+  --deep: #0b0b1d;
+  --panel: #11112a;
+  --line: #23234a;
+  --line2: #34346a;
+  --ion: #7c5cff;
+  --ion-soft: #9d85ff;
+  --plasma: #1fe6cd;
+  --ether: #b4b1d8;
+  --ether-dim: #7a78a0;
+  --moon: #f6f5ff;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+html { scroll-behavior: smooth; }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--void);
+  color: var(--moon);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+::selection { background: var(--ion); color: var(--void); }
+
+@keyframes sweep {
+  to { background-position: 200% center; }
+}
+@keyframes pulse-dot {
+  0%   { box-shadow: 0 0 0 0 rgba(31,230,205,.55); }
+  70%  { box-shadow: 0 0 0 8px rgba(31,230,205,0); }
+  100% { box-shadow: 0 0 0 0 rgba(31,230,205,0); }
+}
+@keyframes lift {
+  0%,100% { transform: translateY(0); }
+  50%      { transform: translateY(-16px); }
+}
+@keyframes spin-anim { to { transform: rotate(360deg); } }
+@keyframes scroll-marquee { to { transform: translateX(-50%); } }
+
+.grad-text {
+  background: linear-gradient(105deg, var(--ion) 0%, var(--plasma) 50%, var(--ion) 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: sweep 7s linear infinite;
+}
+
+.animate-lift       { animation: lift 6s ease-in-out infinite; }
+.animate-pulse-dot  { animation: pulse-dot 2.4s infinite; }
+.animate-spin-slow  { animation: spin-anim 26s linear infinite; }
+.animate-spin-slower { animation: spin-anim 34s linear infinite reverse; }
+.animate-orbit      { animation: spin-anim 16s linear infinite; }
+.animate-marquee    { animation: scroll-marquee 28s linear infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
 }
