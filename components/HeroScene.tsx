@@ -95,6 +95,8 @@ export default function HeroScene() {
     if (!ctx) return;
 
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const fontFamily = getComputedStyle(document.documentElement).getPropertyValue("--font-space").trim() || "sans-serif";
+    const WORD = "Technology";
     let L: Layout;
     let stars: BgStar[] = [];
     const sparks: Spark[] = Array.from({ length: 46 }, () => ({
@@ -121,13 +123,13 @@ export default function HeroScene() {
       const mobile = w < 768;
       const r = Math.max(w, h) * 1.7;
       const planet = { cx: w * 0.62, cy: h + r - h * (mobile ? 0.1 : 0.13), r };
-      const fx = w * (mobile ? 0.8 : w >= 1100 ? 0.66 : 0.76);
+      const fx = w * (mobile ? 0.84 : w >= 1100 ? 0.66 : 0.76);
       const fy = planet.cy - Math.sqrt(Math.max(0, r * r - (fx - planet.cx) ** 2));
-      const scale = mobile ? Math.min(h * 0.17, w * 0.32) : Math.min(h * 0.3, 260);
+      const scale = mobile ? Math.min(h * 0.24, w * 0.4) : Math.min(h * 0.36, 320);
       L = {
         w, h, fx, fy, scale, mobile, planet,
-        sx: w * (mobile ? 0.84 : 0.88),
-        sy: h * (mobile ? 0.13 : 0.2),
+        sx: w * (mobile ? 0.9 : 0.88),
+        sy: mobile ? 72 : h * 0.2,
         starR: mobile ? 9 : 13,
       };
 
@@ -224,41 +226,70 @@ export default function HeroScene() {
 
     const drawFigure = (pose: Pose, alpha: number) => {
       const w = (j: Joint) => toWorld(pose[j]);
-      const chains: Joint[][] = [
-        ["neck", "hip"],
+      const limb = Math.max(8, L.scale * 0.058);
+      const torso = limb * 1.65;
+      const headR = L.scale * 0.09;
+      const limbs: Joint[][] = [
         ["neck", "elbowT", "handT"],
         ["neck", "elbowF", "handF"],
         ["hip", "kneeF", "footF"],
         ["hip", "kneeB", "footB"],
       ];
+      const stroke = (pts: P[], width: number) => {
+        ctx.lineWidth = width;
+        ctx.beginPath();
+        pts.forEach((p, i) => { if (i === 0) ctx.moveTo(p[0], p[1]); else ctx.lineTo(p[0], p[1]); });
+        ctx.stroke();
+      };
+      const paint = (limbW: number, torsoW: number, color: string, blur: number, shadow: string) => {
+        ctx.strokeStyle = color;
+        ctx.fillStyle = color;
+        ctx.shadowColor = shadow;
+        ctx.shadowBlur = blur;
+        const neck = w("neck");
+        const hip = w("hip");
+        const head = w("head");
+        stroke([neck, hip], torsoW);
+        for (const c of limbs) stroke(c.map(w), limbW);
+        stroke([neck, head], limbW * 0.9);
+        ctx.beginPath();
+        ctx.arc(head[0], head[1], headR, 0, Math.PI * 2);
+        ctx.fill();
+      };
+
       ctx.save();
       ctx.globalAlpha = alpha;
       ctx.lineCap = "round";
       ctx.lineJoin = "round";
-      // Cuerpo con halo
-      for (const pass of [0, 1]) {
-        ctx.strokeStyle = pass === 0 ? "rgba(79,124,255,0.35)" : "rgba(214,224,255,0.85)";
-        ctx.lineWidth = pass === 0 ? L.scale * 0.05 : Math.max(1.4, L.scale * 0.011);
-        if (pass === 0) { ctx.shadowColor = "rgba(79,124,255,0.8)"; ctx.shadowBlur = 20; } else { ctx.shadowBlur = 6; ctx.shadowColor = "rgba(143,168,255,1)"; }
-        for (const c of chains) {
-          ctx.beginPath();
-          c.forEach((j, i) => { const p = w(j); if (i === 0) ctx.moveTo(p[0], p[1]); else ctx.lineTo(p[0], p[1]); });
-          ctx.stroke();
-        }
-        const head = w("head");
-        ctx.beginPath();
-        ctx.arc(head[0], head[1], L.scale * 0.062, 0, Math.PI * 2);
-        ctx.stroke();
-      }
-      // Articulaciones como estrellas
-      ctx.shadowBlur = 10;
-      ctx.shadowColor = "rgba(255,200,87,1)";
+      paint(limb * 1.7, torso * 1.45, "rgba(79,124,255,0.34)", 28, "rgba(79,124,255,0.9)");
+      paint(limb, torso, "rgba(232,237,255,0.96)", 8, "rgba(186,204,255,0.9)");
+
+      const neck = w("neck");
+      const hip = w("hip");
+      const dx = hip[0] - neck[0];
+      const dy = hip[1] - neck[1];
+      const len = Math.hypot(dx, dy) || 1;
+      const px = -dy / len;
+      const py = dx / len;
+      const sw = torso * 0.78;
+      ctx.shadowBlur = 0;
+      ctx.fillStyle = "rgba(232,237,255,0.96)";
+      ctx.beginPath();
+      ctx.moveTo(neck[0] + px * sw, neck[1] + py * sw);
+      ctx.lineTo(hip[0] + px * sw * 0.7, hip[1] + py * sw * 0.7);
+      ctx.lineTo(hip[0] - px * sw * 0.52, hip[1] - py * sw * 0.52);
+      ctx.lineTo(neck[0] - px * sw * 0.82, neck[1] - py * sw * 0.82);
+      ctx.closePath();
+      ctx.fill();
+
+      ctx.shadowBlur = 8;
+      ctx.shadowColor = "rgba(255,200,87,0.9)";
       for (const j of JOINTS) {
         if (j === "head") continue;
         const p = w(j);
         ctx.fillStyle = j === "handT" ? "#ffc857" : "#eef2ff";
         ctx.beginPath();
-        ctx.arc(p[0], p[1], j === "handT" ? 2.6 : 1.9, 0, Math.PI * 2);
+        ctx.arc(p[0], p[1], j === "handT" ? 3.1 : 2.2, 0, Math.PI * 2);
         ctx.fill();
       }
       ctx.restore();
@@ -293,6 +324,45 @@ export default function HeroScene() {
       ctx.bezierCurveTo(-k, -k, -k, -k, 0, -r * 1.6);
       ctx.fill();
       ctx.restore();
+    };
+
+    const nameAlpha = (t: number) => {
+      if (t < T_IMPACT) return 0;
+      const fadeIn = clamp01((t - T_IMPACT) / 0.32);
+      const fadeOut = t < 6.45 ? 1 : clamp01((7.15 - t) / 0.55);
+      return fadeIn * fadeOut;
+    };
+
+    const drawName = (alpha: number, twinkle: number, spin: number) => {
+      if (alpha <= 0.01) return;
+      const size = L.mobile ? 16 : Math.min(48, Math.max(26, L.w * 0.036));
+      ctx.save();
+      ctx.font = `600 ${size}px ${fontFamily}`;
+      ctx.textAlign = "right";
+      ctx.textBaseline = "middle";
+      const x = Math.min(L.sx + L.starR * 0.2, L.w - (L.mobile ? 14 : 28));
+      const y = L.mobile ? L.sy + size * 0.95 : L.sy + L.starR * 2.4 + size * 0.72;
+      const width = ctx.measureText(WORD).width;
+      const cx = x - width / 2;
+      const halo = ctx.createRadialGradient(cx, y, 0, cx, y, Math.max(width, size) * 0.72);
+      halo.addColorStop(0, `rgba(255,240,190,${0.5 * alpha})`);
+      halo.addColorStop(0.38, `rgba(255,200,87,${0.16 * alpha})`);
+      halo.addColorStop(1, "rgba(255,200,87,0)");
+      ctx.fillStyle = halo;
+      ctx.beginPath();
+      ctx.ellipse(cx, y, width * 0.62, size * 1.25, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.globalAlpha = alpha * (0.92 + (twinkle - 1) * 1.4);
+      ctx.shadowColor = "rgba(255,233,168,0.95)";
+      ctx.shadowBlur = 22;
+      const g = ctx.createLinearGradient(x - width, y - size * 0.6, x, y + size * 0.6);
+      g.addColorStop(0, "#ffffff");
+      g.addColorStop(0.48, "#ffe9a8");
+      g.addColorStop(1, "#ffc857");
+      ctx.fillStyle = g;
+      ctx.fillText(WORD, x, y);
+      ctx.restore();
+      drawSparkle(x - width + size * 0.15, y - size * 0.42, size * 0.22 * twinkle, spin, alpha);
     };
 
     const frame = (now: number) => {
@@ -395,7 +465,7 @@ export default function HeroScene() {
 
       // Figura
       const pose = poseAt(t);
-      drawFigure(pose, L.mobile ? 0.55 : 1);
+      drawFigure(pose, L.mobile ? 0.88 : 1);
 
       // Lanza en la mano
       const held = t < T_RELEASE ? 1 : clamp01((t - 5.6) / 0.6);
@@ -429,6 +499,9 @@ export default function HeroScene() {
         ctx.restore();
         drawLance(tip, d, len, 1);
       }
+
+      const shown = nameAlpha(t);
+      if (shown > 0.01) drawName(shown, twinkle, elapsed * 0.15);
 
       if (!reduced && visible) raf = requestAnimationFrame(frame);
     };
