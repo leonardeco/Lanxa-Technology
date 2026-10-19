@@ -4,7 +4,8 @@ import Marquee from "@/components/Marquee";
 import Services from "@/components/Services";
 import Process from "@/components/Process";
 import Stack from "@/components/Stack";
-import Work from "@/components/Work";
+import Portfolio from "@/components/Portfolio";
+import Experience from "@/components/Experience";
 import B2B from "@/components/B2B";
 import WhyLanxa from "@/components/WhyLanxa";
 import Pricing from "@/components/Pricing";
@@ -19,10 +20,11 @@ export default function Home() {
       <main>
         <Hero />
         <Marquee />
+        <Experience />
         <Services />
+        <Portfolio />
         <Process />
         <Stack />
-        <Work />
         <B2B />
         <WhyLanxa />
         <Pricing />

@@ -1,4 +1,7 @@
 import { ReactNode } from "react";
+import SectionHeader from "@/components/SectionHeader";
+import SpotlightCard from "@/components/SpotlightCard";
+import { Stagger, Item } from "@/components/Reveal";
 
 const services = [
   {
@@ -33,15 +36,18 @@ const services = [
   },
 ];
 
-function Card({ icon, title, desc }: { icon: ReactNode; title: string; desc: string }) {
+function Card({ icon, title, desc, i }: { icon: ReactNode; title: string; desc: string; i: number }) {
   return (
-    <article className="group relative border border-[var(--line)] rounded-[22px] p-7 bg-gradient-to-b from-[rgba(17,17,42,.55)] to-[rgba(11,11,29,.55)] transition-all duration-300 hover:-translate-y-1.5 hover:border-[var(--ion)] hover:shadow-[0_28px_60px_-34px_rgba(124,92,255,.7)]">
-      <div className="w-12 h-12 rounded-[13px] flex items-center justify-center mb-5 text-[var(--void)] shadow-[0_8px_22px_-10px_rgba(31,230,205,.6)]" style={{ background: "linear-gradient(105deg,#7c5cff,#1fe6cd)" }}>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.9} width={22} height={22}>{icon}</svg>
+    <SpotlightCard className="group h-full p-7">
+      <div className="flex items-start justify-between mb-6">
+        <div className="w-12 h-12 rounded-[13px] flex items-center justify-center text-[var(--void)] shadow-[0_8px_22px_-10px_rgba(31,230,205,.6)] transition-transform duration-500 group-hover:rotate-[-8deg] group-hover:scale-110" style={{ background: "var(--grad)" }}>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.9} width={22} height={22}>{icon}</svg>
+        </div>
+        <span className="font-mono text-[0.7rem] text-[var(--ether-dim)]">0{i + 1}</span>
       </div>
-      <h3 className="text-[1.1rem] font-semibold mb-2" style={{ fontFamily: "var(--font-space)" }}>{title}</h3>
+      <h3 className="text-[1.15rem] font-semibold mb-2" style={{ fontFamily: "var(--font-space)" }}>{title}</h3>
       <p className="text-[0.92rem] text-[var(--ether)] leading-relaxed">{desc}</p>
-    </article>
+    </SpotlightCard>
   );
 }
 
@@ -49,16 +55,14 @@ export default function Services() {
   return (
     <section id="servicios" className="py-[clamp(72px,11vw,128px)]">
       <div className="max-w-[1200px] mx-auto px-5 md:px-10">
-        <div className="max-w-xl mb-14">
-          <span className="inline-flex items-center gap-2 font-mono text-[0.72rem] tracking-[.28em] uppercase text-[var(--plasma)] before:content-[''] before:w-[22px] before:h-px before:bg-[var(--plasma)] before:opacity-60">Servicios</span>
-          <h2 className="text-[clamp(1.9rem,4vw,2.9rem)] font-bold mt-4 mb-3 tracking-tight" style={{ fontFamily: "var(--font-space)" }}>
-            Todo lo que tu producto necesita para <span className="grad-text">crecer.</span>
-          </h2>
-          <p className="text-[var(--ether)]">Desde la idea hasta producción. Un solo equipo de ingeniería, responsable de extremo a extremo.</p>
-        </div>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {services.map((s) => <Card key={s.title} {...s} />)}
-        </div>
+        <SectionHeader
+          eyebrow="Servicios"
+          title={<>Todo lo que tu producto necesita para <span className="grad-text">crecer.</span></>}
+          desc="Desde la idea hasta producción. Un solo equipo de ingeniería, responsable de extremo a extremo."
+        />
+        <Stagger className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {services.map((s, i) => <Item key={s.title}><Card {...s} i={i} /></Item>)}
+        </Stagger>
       </div>
     </section>
   );

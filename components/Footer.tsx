@@ -1,21 +1,33 @@
+import Logo from "@/components/Logo";
+
+const links = [
+  { href: "#servicios", label: "Servicios" },
+  { href: "#portafolio", label: "Portafolio" },
+  { href: "#proceso", label: "Proceso" },
+  { href: "#precios", label: "Precios" },
+  { href: "#contacto", label: "Contacto" },
+];
+
 export default function Footer() {
   return (
     <footer className="border-t border-[var(--line)] bg-[var(--void)]">
-      <div className="max-w-[1200px] mx-auto px-5 md:px-10 py-8 flex flex-wrap gap-4 items-center justify-between">
-        <div className="flex items-center gap-2 font-bold" style={{ fontFamily: "var(--font-space)" }}>
-          <svg viewBox="0 0 40 40" width={24} height={24} aria-hidden="true">
-            <defs>
-              <linearGradient id="ag-f" x1="0" y1="1" x2="1" y2="0">
-                <stop offset="0" stopColor="#7c5cff" /><stop offset="1" stopColor="#1fe6cd" />
-              </linearGradient>
-            </defs>
-            <path d="M9 31 L21 7 L26 7 L14 31 Z" fill="url(#ag-f)" />
-            <path d="M18 31 L30 7 L35 7 L23 31 Z" fill="url(#ag-f)" opacity="0.55" />
-          </svg>
-          Lanxa Technology
+      <div className="max-w-[1200px] mx-auto px-5 md:px-10 py-12 grid gap-8 md:grid-cols-[1.2fr_1fr] items-start">
+        <div>
+          <div className="flex items-center gap-2.5 font-bold text-[1.1rem]" style={{ fontFamily: "var(--font-space)" }}>
+            <Logo size={30} />
+            Lanxa Technology
+          </div>
+          <p className="mt-4 text-[0.9rem] text-[var(--ether)] max-w-[42ch] leading-relaxed">
+            Más de 5 años desarrollando aplicaciones web, móviles y de escritorio a la medida. Apuntamos a las estrellas, entregamos en tierra firme.
+          </p>
         </div>
-        <p className="font-mono text-[0.72rem] text-[var(--ether-dim)]">
-          © 2026 Lanxa Technology · Ingeniería de software · Armenia, Colombia
+        <nav aria-label="Pie de página" className="flex flex-wrap gap-x-7 gap-y-3 md:justify-end text-[0.9rem] text-[var(--ether)]">
+          {links.map((l) => <a key={l.href} href={l.href} className="hover:text-[var(--moon)] transition-colors">{l.label}</a>)}
+        </nav>
+      </div>
+      <div className="border-t border-[var(--line)]">
+        <p className="max-w-[1200px] mx-auto px-5 md:px-10 py-5 font-mono text-[0.72rem] text-[var(--ether-dim)]">
+          © {new Date().getFullYear()} Lanxa Technology · Ingeniería de software · Armenia, Colombia
         </p>
       </div>
     </footer>

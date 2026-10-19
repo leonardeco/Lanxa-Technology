@@ -12,9 +12,10 @@
   --ether: #b4b1d8;
   --ether-dim: #7a78a0;
   --moon: #f6f5ff;
+  --grad: linear-gradient(105deg, #7c5cff, #1fe6cd);
 }
 
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; scroll-padding-top: 72px; }
 
 body {
   background: var(--void);
@@ -25,20 +26,110 @@ body {
 
 ::selection { background: var(--ion); color: var(--void); }
 
-@keyframes sweep {
-  to { background-position: 200% center; }
+/* Grano sutil sobre toda la página para dar textura */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: .035;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
+
+:focus-visible { outline: 2px solid var(--plasma); outline-offset: 3px; border-radius: 8px; }
+
+/* ---------- Componentes base ---------- */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  font-family: var(--font-mono);
+  font-size: .72rem;
+  letter-spacing: .28em;
+  text-transform: uppercase;
+  color: var(--plasma);
+}
+.eyebrow::before { content: ""; width: 22px; height: 1px; background: var(--plasma); opacity: .6; }
+
+.btn-primary, .btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+  padding: .85rem 1.5rem;
+  border-radius: 14px;
+  font-weight: 600;
+  transition: transform .25s ease, box-shadow .25s ease, background-color .25s ease, border-color .25s ease;
+}
+.btn-primary {
+  color: var(--void);
+  background: var(--grad);
+  box-shadow: 0 10px 30px -14px rgba(31,230,205,.55), inset 0 1px 0 rgba(255,255,255,.35);
+}
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 18px 44px -14px rgba(31,230,205,.7), inset 0 1px 0 rgba(255,255,255,.35); }
+.btn-ghost {
+  color: var(--moon);
+  border: 1px solid var(--line2);
+  background: rgba(17,17,42,.45);
+  backdrop-filter: blur(8px);
+}
+.btn-ghost:hover { transform: translateY(-2px); border-color: var(--ion); background: rgba(124,92,255,.12); }
+
+.card {
+  position: relative;
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  background: linear-gradient(180deg, rgba(17,17,42,.6), rgba(11,11,29,.6));
+  transition: transform .35s cubic-bezier(.22,1,.36,1), border-color .35s ease, box-shadow .35s ease;
+}
+.card:hover { transform: translateY(-6px); border-color: var(--ion); box-shadow: 0 28px 60px -34px rgba(124,92,255,.75); }
+
+/* Tarjeta con foco de luz que sigue al cursor (variables --mx/--my desde JS) */
+.spotlight { --mx: 50%; --my: 50%; overflow: hidden; }
+.spotlight::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .35s ease;
+  background: radial-gradient(420px circle at var(--mx) var(--my), rgba(124,92,255,.16), transparent 45%);
+}
+.spotlight:hover::after { opacity: 1; }
+
+.project-card {
+  --mx: 50%; --my: 50%; --rx: 0deg; --ry: 0deg;
+  transform: perspective(1100px) rotateX(var(--rx)) rotateY(var(--ry));
+  transition: transform .4s cubic-bezier(.22,1,.36,1), border-color .35s ease, box-shadow .35s ease;
+}
+.project-card:hover {
+  border-color: color-mix(in srgb, var(--accent) 60%, transparent);
+  box-shadow: 0 40px 80px -40px color-mix(in srgb, var(--accent) 55%, transparent);
+}
+.project-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .35s ease;
+  background: radial-gradient(500px circle at var(--mx) var(--my), color-mix(in srgb, var(--accent) 14%, transparent), transparent 45%);
+}
+.project-card:hover::after { opacity: 1; }
+
+/* ---------- Keyframes ---------- */
+@keyframes sweep { to { background-position: 200% center; } }
 @keyframes pulse-dot {
   0%   { box-shadow: 0 0 0 0 rgba(31,230,205,.55); }
   70%  { box-shadow: 0 0 0 8px rgba(31,230,205,0); }
   100% { box-shadow: 0 0 0 0 rgba(31,230,205,0); }
 }
-@keyframes lift {
-  0%,100% { transform: translateY(0); }
-  50%      { transform: translateY(-16px); }
-}
+@keyframes lift { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-16px); } }
 @keyframes spin-anim { to { transform: rotate(360deg); } }
 @keyframes scroll-marquee { to { transform: translateX(-50%); } }
+@keyframes scroll-dot { 0% { transform: translateY(0); opacity: 1; } 80% { transform: translateY(12px); opacity: 0; } 100% { opacity: 0; } }
 
 .grad-text {
   background: linear-gradient(105deg, var(--ion) 0%, var(--plasma) 50%, var(--ion) 100%);
@@ -49,13 +140,78 @@ body {
   animation: sweep 7s linear infinite;
 }
 
-.animate-lift       { animation: lift 6s ease-in-out infinite; }
-.animate-pulse-dot  { animation: pulse-dot 2.4s infinite; }
-.animate-spin-slow  { animation: spin-anim 26s linear infinite; }
+.animate-lift        { animation: lift 6s ease-in-out infinite; }
+.animate-pulse-dot   { animation: pulse-dot 2.4s infinite; }
+.animate-spin-slow   { animation: spin-anim 26s linear infinite; }
 .animate-spin-slower { animation: spin-anim 34s linear infinite reverse; }
-.animate-orbit      { animation: spin-anim 16s linear infinite; }
-.animate-marquee    { animation: scroll-marquee 28s linear infinite; }
+.animate-orbit       { animation: spin-anim 16s linear infinite; }
+.animate-marquee     { animation: scroll-marquee 28s linear infinite; }
+.animate-scroll-dot  { animation: scroll-dot 1.8s ease-in-out infinite; }
+
+/* Entrada en cascada del hero: CSS puro para que aparezca sin esperar a la hidratación */
+@keyframes hero-in { from { opacity: 0; transform: translateY(34px); filter: blur(8px); } to { opacity: 1; transform: none; filter: none; } }
+.hero-in { animation: hero-in .95s cubic-bezier(.22,1,.36,1) both; animation-delay: calc(var(--i, 0) * 130ms + 120ms); }
+
+/* ---------- Logo ---------- */
+@keyframes lx-twinkle { 0%,100% { transform: scale(1) rotate(0); } 50% { transform: scale(1.18) rotate(45deg); } }
+@keyframes lx-halo { 0%,100% { opacity: .55; } 50% { opacity: 1; } }
+.lx-logo-animated .lx-star { transform-box: fill-box; transform-origin: center; animation: lx-twinkle 3.2s ease-in-out infinite; }
+.lx-logo-animated .lx-halo { animation: lx-halo 3.2s ease-in-out infinite; }
+
+/* ---------- Mockups del portafolio ---------- */
+.mk-pop, .mk-grow, .mk-type { transform-box: fill-box; }
+@keyframes mk-pop { 0% { opacity: 0; transform: scaleY(0); } 6% { opacity: 1; transform: scaleY(1); } 88% { opacity: 1; } 100% { opacity: 0; } }
+.mk-pop { transform-origin: center; animation: mk-pop 7s cubic-bezier(.22,1,.36,1) infinite both; }
+
+@keyframes mk-grow { 0% { transform: scaleY(0); } 14% { transform: scaleY(1); } 90% { transform: scaleY(1); opacity: 1; } 100% { transform: scaleY(1); opacity: 0; } }
+.mk-grow { transform-origin: bottom; animation: mk-grow 6s cubic-bezier(.22,1,.36,1) infinite both; }
+
+@keyframes mk-draw { 0% { stroke-dashoffset: var(--len); } 45%, 90% { stroke-dashoffset: 0; opacity: 1; } 100% { stroke-dashoffset: 0; opacity: 0; } }
+.mk-draw { stroke-dasharray: var(--len); animation: mk-draw 7s ease-in-out infinite; }
+
+@keyframes mk-slide { 0% { opacity: 0; transform: translateY(8px); } 8%, 92% { opacity: 1; transform: none; } 100% { opacity: 0; } }
+.mk-slide { animation: mk-slide 7s cubic-bezier(.22,1,.36,1) infinite both; }
+
+@keyframes mk-blink { 0%,100% { opacity: 1; } 50% { opacity: .25; } }
+.mk-blink { animation: mk-blink 1.2s ease-in-out infinite; }
+
+@keyframes mk-type { 0% { transform: scaleX(0); } 10%, 88% { transform: scaleX(1); } 100% { transform: scaleX(1); opacity: 0; } }
+.mk-type { transform-origin: left; animation: mk-type 7s cubic-bezier(.22,1,.36,1) infinite both; }
+
+@keyframes mk-status { 0%, 30% { fill: #1fe6cd; } 34%, 63% { fill: #9d85ff; } 67%, 96% { fill: #ffb547; } 100% { fill: #1fe6cd; } }
+.mk-status { animation: mk-status 7s steps(1, end) infinite; fill: #1fe6cd; }
+
+@keyframes mk-scan { 0%, 15% { transform: translateY(0); } 20%, 35% { transform: translateY(38px); } 40%, 55% { transform: translateY(76px); } 60%, 75% { transform: translateY(114px); } 80%, 95% { transform: translateY(152px); } 100% { transform: translateY(0); } }
+.mk-scan { animation: mk-scan 8s cubic-bezier(.65,0,.35,1) infinite; }
+
+@keyframes mk-float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+.mk-float { animation: mk-float 3.4s ease-in-out infinite; }
+
+@keyframes mk-shine { 0% { transform: translateX(-70px); } 40%, 100% { transform: translateX(70px); } }
+.mk-shine { animation: mk-shine 3.6s ease-in-out infinite; }
+
+@keyframes mk-press { 0%, 20%, 30%, 100% { transform: scale(1); } 25% { transform: scale(.9); } }
+.mk-press { transform-box: fill-box; transform-origin: center; animation: mk-press 3.6s ease infinite; }
+
+@keyframes mk-fly { 0%, 24% { opacity: 0; transform: translate(0,0) scale(1); } 27% { opacity: 1; } 45% { opacity: 1; transform: translate(338px,-208px) scale(.5); } 48%, 100% { opacity: 0; transform: translate(338px,-208px) scale(.5); } }
+.mk-fly { opacity: 0; animation: mk-fly 3.6s cubic-bezier(.5,0,.3,1) infinite; }
+
+@keyframes mk-badge { 0%, 44% { transform: scale(1); } 50% { transform: scale(1.45); } 58%, 100% { transform: scale(1); } }
+.mk-badge { transform-box: fill-box; transform-origin: center; animation: mk-badge 3.6s ease infinite; }
+
+@keyframes mk-swipe {
+  0%, 20% { transform: translate(0,0) rotate(0); opacity: 1; }
+  45% { transform: translate(190px,-20px) rotate(18deg); opacity: 0; }
+  46%, 70% { transform: translate(0,0) rotate(0); opacity: 0; }
+  80%, 100% { transform: translate(0,0) rotate(0); opacity: 1; }
+}
+.mk-swipe { transform-box: fill-box; transform-origin: 50% 100%; animation: mk-swipe 5s cubic-bezier(.5,0,.3,1) infinite; }
+@keyframes mk-like { 0%, 12% { opacity: 0; } 22%, 40% { opacity: 1; } 100% { opacity: 1; } }
+.mk-like { animation: mk-like 5s ease infinite; }
+@keyframes mk-match { 0%, 42% { opacity: 0; transform: scale(.2); } 50% { opacity: 1; transform: scale(1.25); } 56%, 66% { opacity: 1; transform: scale(1); } 74%, 100% { opacity: 0; transform: scale(1); } }
+.mk-match { opacity: 0; transform-box: fill-box; transform-origin: center; animation: mk-match 5s ease infinite; }
 
 @media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
   *, *::before, *::after { animation: none !important; transition: none !important; }
 }
