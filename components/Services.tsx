@@ -40,7 +40,7 @@ function Card({ icon, title, desc, i }: { icon: ReactNode; title: string; desc: 
   return (
     <SpotlightCard className="group h-full p-7">
       <div className="flex items-start justify-between mb-6">
-        <div className="w-12 h-12 rounded-[13px] flex items-center justify-center text-[var(--void)] shadow-[0_8px_22px_-10px_rgba(31,230,205,.6)] transition-transform duration-500 group-hover:rotate-[-8deg] group-hover:scale-110" style={{ background: "var(--grad)" }}>
+        <div className="w-12 h-12 rounded-[13px] flex items-center justify-center text-[var(--void)] shadow-[0_8px_22px_-10px_rgba(255,200,87,.6)] transition-transform duration-500 group-hover:rotate-[-8deg] group-hover:scale-110" style={{ background: "var(--grad)" }}>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.9} width={22} height={22}>{icon}</svg>
         </div>
         <span className="font-mono text-[0.7rem] text-[var(--ether-dim)]">0{i + 1}</span>

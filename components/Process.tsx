@@ -13,7 +13,7 @@ const steps = [
 
 export default function Process() {
   return (
-    <section id="proceso" className="py-[clamp(72px,11vw,128px)] border-y border-[var(--line)] bg-[rgba(11,11,29,.4)]">
+    <section id="proceso" className="py-[clamp(72px,11vw,128px)] border-y border-[var(--line)] bg-[rgba(11,16,32,.4)]">
       <div className="max-w-[1200px] mx-auto px-5 md:px-10">
         <SectionHeader
           eyebrow="Cómo trabajamos"

@@ -11,7 +11,7 @@ const facts = [
 export default function Experience() {
   return (
     <section id="experiencia" className="relative py-[clamp(72px,10vw,120px)] overflow-hidden">
-      <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(40% 60% at 15% 50%,rgba(124,92,255,.16),transparent 70%)" }} />
+      <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(40% 60% at 15% 50%,rgba(79,124,255,.16),transparent 70%)" }} />
       <div className="relative max-w-[1200px] mx-auto px-5 md:px-10 grid lg:grid-cols-[.9fr_1.1fr] gap-12 lg:gap-16 items-center">
         <Reveal>
           <span className="eyebrow">Trayectoria</span>

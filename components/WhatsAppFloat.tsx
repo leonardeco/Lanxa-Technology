@@ -14,9 +14,9 @@ export default function WhatsAppFloat() {
       <div className={`flex flex-col gap-2 items-end transition-all duration-300 ${open ? "opacity-100 pointer-events-auto translate-y-0" : "opacity-0 pointer-events-none translate-y-3"}`}>
         {advisors.map((a) => (
           <a key={a.name} href={`https://wa.me/${a.wa}?text=${a.msg}`} target="_blank" rel="noopener"
-            className="flex items-center gap-3 bg-[rgba(11,11,29,.95)] border border-[var(--line2)] rounded-full px-4 py-2 text-[var(--moon)] whitespace-nowrap shadow-lg transition-all hover:border-[#25d366] hover:bg-[rgba(37,211,102,.08)] hover:-translate-x-1"
+            className="flex items-center gap-3 bg-[rgba(11,16,32,.95)] border border-[var(--line2)] rounded-full px-4 py-2 text-[var(--moon)] whitespace-nowrap shadow-lg transition-all hover:border-[#25d366] hover:bg-[rgba(37,211,102,.08)] hover:-translate-x-1"
             style={{ fontFamily: "var(--font-space)" }}>
-            <div className="w-8 h-8 rounded-full flex-shrink-0 flex items-center justify-center text-[0.68rem] font-bold text-[var(--void)]" style={{ background: "linear-gradient(105deg,#7c5cff,#1fe6cd)" }}>
+            <div className="w-8 h-8 rounded-full flex-shrink-0 flex items-center justify-center text-[0.68rem] font-bold text-[var(--void)]" style={{ background: "var(--grad)" }}>
               {a.initials}
             </div>
             <div className="flex flex-col leading-tight">

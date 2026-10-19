@@ -14,18 +14,18 @@ export default function Logo({ size = 32, animated = false }: { size?: number; a
     <svg viewBox="0 0 48 48" width={size} height={size} aria-hidden="true" className={animated ? "lx-logo-animated" : undefined}>
       <defs>
         <linearGradient id={g} x1="6" y1="42" x2="34" y2="14" gradientUnits="userSpaceOnUse">
-          <stop offset="0" stopColor="#7c5cff" stopOpacity="0.15" />
-          <stop offset="0.55" stopColor="#7c5cff" />
-          <stop offset="1" stopColor="#1fe6cd" />
+          <stop offset="0" stopColor="#4f7cff" stopOpacity="0.15" />
+          <stop offset="0.55" stopColor="#4f7cff" />
+          <stop offset="1" stopColor="#c9d4ff" />
         </linearGradient>
         <radialGradient id={s} cx="0.5" cy="0.5" r="0.5">
           <stop offset="0" stopColor="#ffffff" />
           <stop offset="0.45" stopColor="#ffe9a8" />
-          <stop offset="1" stopColor="#1fe6cd" />
+          <stop offset="1" stopColor="#ffc857" />
         </radialGradient>
         <radialGradient id={glow} cx="0.5" cy="0.5" r="0.5">
-          <stop offset="0" stopColor="#1fe6cd" stopOpacity="0.55" />
-          <stop offset="1" stopColor="#1fe6cd" stopOpacity="0" />
+          <stop offset="0" stopColor="#ffc857" stopOpacity="0.55" />
+          <stop offset="1" stopColor="#ffc857" stopOpacity="0" />
         </radialGradient>
       </defs>
 
@@ -35,9 +35,9 @@ export default function Logo({ size = 32, animated = false }: { size?: number; a
       {/* Asta de la lanza */}
       <path d="M6.5 43.5 L29.2 20.8" stroke={`url(#${g})`} strokeWidth="3.2" strokeLinecap="round" />
       {/* Punta de la lanza */}
-      <path d="M33.6 16.4 L26.2 19.6 L28.4 21.6 L30.4 23.8 Z" fill="#1fe6cd" />
+      <path d="M33.6 16.4 L26.2 19.6 L28.4 21.6 L30.4 23.8 Z" fill="#e3e9ff" />
       {/* Plumas / contrapeso */}
-      <path d="M9.6 40.4 L5 39.6 M7.6 42.4 L8.4 47" stroke="#9d85ff" strokeWidth="1.6" strokeLinecap="round" opacity="0.8" />
+      <path d="M9.6 40.4 L5 39.6 M7.6 42.4 L8.4 47" stroke="#8fa8ff" strokeWidth="1.6" strokeLinecap="round" opacity="0.8" />
 
       {/* Estrella de cuatro puntas */}
       <path

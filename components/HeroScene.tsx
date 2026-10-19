@@ -101,7 +101,7 @@ export default function HeroScene() {
       a: Math.random() * Math.PI * 2,
       v: 40 + Math.random() * 120,
       r: 0.8 + Math.random() * 1.8,
-      hue: Math.random() < 0.5 ? 170 : 255,
+      hue: Math.random() < 0.5 ? 42 : 225,
     }));
     const pointer = { x: 0, y: 0, tx: 0, ty: 0 };
     let shooting: { x: number; y: number; vx: number; vy: number; life: number } | null = null;
@@ -138,7 +138,7 @@ export default function HeroScene() {
         depth: Math.random(),
         phase: Math.random() * Math.PI * 2,
         speed: 0.6 + Math.random() * 1.8,
-        hue: Math.random() < 0.18 ? 170 : Math.random() < 0.4 ? 255 : 240,
+        hue: Math.random() < 0.18 ? 42 : Math.random() < 0.4 ? 225 : 228,
       }));
     };
 
@@ -173,19 +173,19 @@ export default function HeroScene() {
       ctx.save();
       ctx.globalAlpha = alpha;
       const g = ctx.createLinearGradient(tail[0], tail[1], tip[0], tip[1]);
-      g.addColorStop(0, "rgba(124,92,255,0.05)");
-      g.addColorStop(0.6, "rgba(157,133,255,0.95)");
-      g.addColorStop(1, "rgba(31,230,205,1)");
+      g.addColorStop(0, "rgba(79,124,255,0.05)");
+      g.addColorStop(0.6, "rgba(143,168,255,0.95)");
+      g.addColorStop(1, "rgba(255,200,87,1)");
       ctx.strokeStyle = g;
       ctx.lineWidth = Math.max(1.6, L.scale * 0.012);
       ctx.lineCap = "round";
-      ctx.shadowColor = "rgba(31,230,205,0.9)";
+      ctx.shadowColor = "rgba(255,200,87,0.9)";
       ctx.shadowBlur = 12;
       ctx.beginPath();
       ctx.moveTo(tail[0], tail[1]);
       ctx.lineTo(tip[0] - d[0] * hl * 0.8, tip[1] - d[1] * hl * 0.8);
       ctx.stroke();
-      ctx.fillStyle = "#e9fffb";
+      ctx.fillStyle = "#fff6dc";
       ctx.beginPath();
       ctx.moveTo(tip[0], tip[1]);
       ctx.lineTo(tip[0] - d[0] * hl + n[0] * hw, tip[1] - d[1] * hl + n[1] * hw);
@@ -200,21 +200,21 @@ export default function HeroScene() {
       const { cx, cy, r } = L.planet;
       ctx.save();
       const fill = ctx.createLinearGradient(0, cy - r, 0, cy - r + L.h * 0.25);
-      fill.addColorStop(0, "rgba(40,30,95,0.95)");
-      fill.addColorStop(1, "rgba(6,6,15,1)");
+      fill.addColorStop(0, "rgba(24,36,90,0.95)");
+      fill.addColorStop(1, "rgba(7,10,22,1)");
       ctx.fillStyle = fill;
       ctx.beginPath();
       ctx.arc(cx, cy, r, 0, Math.PI * 2);
       ctx.fill();
       // Borde iluminado del horizonte
       const rim = ctx.createLinearGradient(0, 0, L.w, 0);
-      rim.addColorStop(0, "rgba(124,92,255,0)");
-      rim.addColorStop(0.45, "rgba(124,92,255,0.75)");
-      rim.addColorStop(0.75, "rgba(31,230,205,0.9)");
-      rim.addColorStop(1, "rgba(31,230,205,0.15)");
+      rim.addColorStop(0, "rgba(79,124,255,0)");
+      rim.addColorStop(0.45, "rgba(79,124,255,0.75)");
+      rim.addColorStop(0.75, "rgba(255,200,87,0.9)");
+      rim.addColorStop(1, "rgba(255,200,87,0.15)");
       ctx.strokeStyle = rim;
       ctx.lineWidth = 1.6;
-      ctx.shadowColor = "rgba(31,230,205,0.8)";
+      ctx.shadowColor = "rgba(255,200,87,0.8)";
       ctx.shadowBlur = 18;
       ctx.beginPath();
       ctx.arc(cx, cy, r, Math.PI * 1.15, Math.PI * 1.85);
@@ -237,9 +237,9 @@ export default function HeroScene() {
       ctx.lineJoin = "round";
       // Cuerpo con halo
       for (const pass of [0, 1]) {
-        ctx.strokeStyle = pass === 0 ? "rgba(124,92,255,0.35)" : "rgba(214,206,255,0.85)";
+        ctx.strokeStyle = pass === 0 ? "rgba(79,124,255,0.35)" : "rgba(214,224,255,0.85)";
         ctx.lineWidth = pass === 0 ? L.scale * 0.05 : Math.max(1.4, L.scale * 0.011);
-        if (pass === 0) { ctx.shadowColor = "rgba(124,92,255,0.8)"; ctx.shadowBlur = 20; } else { ctx.shadowBlur = 6; ctx.shadowColor = "rgba(157,133,255,1)"; }
+        if (pass === 0) { ctx.shadowColor = "rgba(79,124,255,0.8)"; ctx.shadowBlur = 20; } else { ctx.shadowBlur = 6; ctx.shadowColor = "rgba(143,168,255,1)"; }
         for (const c of chains) {
           ctx.beginPath();
           c.forEach((j, i) => { const p = w(j); if (i === 0) ctx.moveTo(p[0], p[1]); else ctx.lineTo(p[0], p[1]); });
@@ -252,11 +252,11 @@ export default function HeroScene() {
       }
       // Articulaciones como estrellas
       ctx.shadowBlur = 10;
-      ctx.shadowColor = "rgba(31,230,205,1)";
+      ctx.shadowColor = "rgba(255,200,87,1)";
       for (const j of JOINTS) {
         if (j === "head") continue;
         const p = w(j);
-        ctx.fillStyle = j === "handT" ? "#1fe6cd" : "#f6f5ff";
+        ctx.fillStyle = j === "handT" ? "#ffc857" : "#eef2ff";
         ctx.beginPath();
         ctx.arc(p[0], p[1], j === "handT" ? 2.6 : 1.9, 0, Math.PI * 2);
         ctx.fill();
@@ -271,8 +271,8 @@ export default function HeroScene() {
       ctx.globalAlpha = alpha;
       const glow = ctx.createRadialGradient(0, 0, 0, 0, 0, r * 4.5);
       glow.addColorStop(0, "rgba(255,240,190,0.55)");
-      glow.addColorStop(0.35, "rgba(31,230,205,0.18)");
-      glow.addColorStop(1, "rgba(31,230,205,0)");
+      glow.addColorStop(0.35, "rgba(255,200,87,0.18)");
+      glow.addColorStop(1, "rgba(255,200,87,0)");
       ctx.fillStyle = glow;
       ctx.beginPath();
       ctx.arc(0, 0, r * 4.5, 0, Math.PI * 2);
@@ -280,7 +280,7 @@ export default function HeroScene() {
       const body = ctx.createRadialGradient(0, 0, 0, 0, 0, r * 1.6);
       body.addColorStop(0, "#ffffff");
       body.addColorStop(0.5, "#ffe9a8");
-      body.addColorStop(1, "#1fe6cd");
+      body.addColorStop(1, "#ffc857");
       ctx.fillStyle = body;
       ctx.shadowColor = "rgba(255,233,168,0.9)";
       ctx.shadowBlur = 24;
@@ -309,7 +309,7 @@ export default function HeroScene() {
         const tw = reduced ? 0.7 : 0.55 + 0.45 * Math.sin(elapsed * s.speed + s.phase);
         const x = s.x * w + pointer.x * (4 + s.depth * 18);
         const y = s.y * h + pointer.y * (4 + s.depth * 18);
-        ctx.fillStyle = `hsla(${s.hue},80%,${s.hue === 240 ? 92 : 78}%,${0.25 + tw * 0.6 * (0.4 + s.depth * 0.6)})`;
+        ctx.fillStyle = `hsla(${s.hue},80%,${s.hue === 228 ? 92 : 78}%,${0.25 + tw * 0.6 * (0.4 + s.depth * 0.6)})`;
         ctx.beginPath();
         ctx.arc(x, y, s.r * (0.6 + s.depth * 0.6), 0, Math.PI * 2);
         ctx.fill();
@@ -349,7 +349,7 @@ export default function HeroScene() {
       if (aim > 0.01) {
         ctx.save();
         ctx.setLineDash([2, 9]);
-        ctx.strokeStyle = `rgba(157,133,255,${0.35 * aim})`;
+        ctx.strokeStyle = `rgba(143,168,255,${0.35 * aim})`;
         ctx.lineWidth = 1;
         ctx.beginPath();
         for (let i = 0; i <= 40; i++) {
@@ -372,7 +372,7 @@ export default function HeroScene() {
         for (let i = 0; i < 3; i++) {
           const rr = (dt - i * 0.18) * 220;
           if (rr <= 0) continue;
-          ctx.strokeStyle = i === 1 ? `rgba(124,92,255,${0.6 * flare})` : `rgba(31,230,205,${0.7 * flare})`;
+          ctx.strokeStyle = i === 1 ? `rgba(79,124,255,${0.6 * flare})` : `rgba(255,200,87,${0.7 * flare})`;
           ctx.lineWidth = 1.5;
           ctx.beginPath();
           ctx.arc(L.sx, L.sy, rr, 0, Math.PI * 2);
@@ -386,8 +386,8 @@ export default function HeroScene() {
           ctx.fill();
         }
         const flash = ctx.createRadialGradient(L.sx, L.sy, 0, L.sx, L.sy, Math.max(w, h) * 0.6);
-        flash.addColorStop(0, `rgba(31,230,205,${0.16 * flare})`);
-        flash.addColorStop(1, "rgba(31,230,205,0)");
+        flash.addColorStop(0, `rgba(255,200,87,${0.16 * flare})`);
+        flash.addColorStop(1, "rgba(255,200,87,0)");
         ctx.fillStyle = flash;
         ctx.fillRect(0, 0, w, h);
         ctx.restore();
@@ -419,7 +419,7 @@ export default function HeroScene() {
           const a = bezier(p0, p1, p2, ua);
           const b = bezier(p0, p1, p2, ub);
           const k = i / steps;
-          ctx.strokeStyle = `rgba(31,230,205,${0.5 * k})`;
+          ctx.strokeStyle = `rgba(255,200,87,${0.5 * k})`;
           ctx.lineWidth = 0.5 + k * 3;
           ctx.beginPath();
           ctx.moveTo(a[0], a[1]);

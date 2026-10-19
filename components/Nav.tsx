@@ -37,7 +37,7 @@ export default function Nav() {
     <>
       <header
         className={`fixed top-0 inset-x-0 z-50 border-b transition-all duration-300 ${
-          scrolled ? "border-[var(--line)] bg-[rgba(6,6,15,0.85)] backdrop-blur-xl" : "border-transparent bg-transparent"
+          scrolled ? "border-[var(--line)] bg-[rgba(7,10,22,0.85)] backdrop-blur-xl" : "border-transparent bg-transparent"
         }`}
       >
         <div className="max-w-[1200px] mx-auto px-5 md:px-10 h-16 flex items-center justify-between">
@@ -80,7 +80,7 @@ export default function Nav() {
             onClick={() => setOpen(!open)}
             aria-label="Abrir menú"
             aria-expanded={open}
-            className="md:hidden flex flex-col justify-center gap-[5px] w-10 h-10 p-2 rounded-xl hover:bg-[rgba(124,92,255,0.1)] transition-colors"
+            className="md:hidden flex flex-col justify-center gap-[5px] w-10 h-10 p-2 rounded-xl hover:bg-[rgba(79,124,255,0.1)] transition-colors"
           >
             <span className={`block h-0.5 bg-[var(--moon)] rounded transition-transform duration-300 ${open ? "translate-y-[7px] rotate-45" : ""}`} />
             <span className={`block h-0.5 bg-[var(--moon)] rounded transition-opacity duration-200 ${open ? "opacity-0" : ""}`} />
@@ -91,7 +91,7 @@ export default function Nav() {
 
       {/* Mobile nav overlay */}
       <div
-        className={`fixed inset-0 top-16 z-40 bg-[rgba(6,6,15,0.97)] backdrop-blur-xl flex flex-col items-center justify-center gap-8 transition-all duration-300 md:hidden ${
+        className={`fixed inset-0 top-16 z-40 bg-[rgba(7,10,22,0.97)] backdrop-blur-xl flex flex-col items-center justify-center gap-8 transition-all duration-300 md:hidden ${
           open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         }`}
       >

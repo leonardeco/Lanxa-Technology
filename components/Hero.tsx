@@ -9,16 +9,16 @@ export default function Hero() {
       {/* Fondo: nebulosa + escena animada */}
       <div className="absolute inset-0" style={{
         background:
-          "radial-gradient(55% 50% at 78% 18%,rgba(31,230,205,.14),transparent 60%), radial-gradient(60% 60% at 30% 0%,rgba(124,92,255,.30),transparent 62%), radial-gradient(50% 40% at 60% 100%,rgba(124,92,255,.22),transparent 70%)",
+          "radial-gradient(55% 50% at 78% 18%,rgba(255,200,87,.14),transparent 60%), radial-gradient(60% 60% at 30% 0%,rgba(79,124,255,.30),transparent 62%), radial-gradient(50% 40% at 60% 100%,rgba(79,124,255,.22),transparent 70%)",
       }} />
       <HeroScene />
       {/* Velo para legibilidad del texto */}
-      <div className="absolute inset-0 pointer-events-none bg-[linear-gradient(180deg,rgba(6,6,15,.55)_0%,rgba(6,6,15,.15)_45%,rgba(6,6,15,.0)_70%)] md:bg-[linear-gradient(90deg,rgba(6,6,15,.85)_0%,rgba(6,6,15,.55)_38%,rgba(6,6,15,0)_62%)]" />
+      <div className="absolute inset-0 pointer-events-none bg-[linear-gradient(180deg,rgba(7,10,22,.55)_0%,rgba(7,10,22,.15)_45%,rgba(7,10,22,.0)_70%)] md:bg-[linear-gradient(90deg,rgba(7,10,22,.85)_0%,rgba(7,10,22,.55)_38%,rgba(7,10,22,0)_62%)]" />
 
       <div className="relative z-10 w-full max-w-[1200px] mx-auto px-5 md:px-10">
         <div className="max-w-[640px]">
           <div className="hero-in" style={{ ["--i" as string]: 0 }}>
-            <span className="inline-flex items-center gap-2.5 text-[var(--ether)] border border-[var(--line2)] bg-[rgba(17,17,42,.65)] backdrop-blur px-4 py-1.5 rounded-full mb-7 text-xs font-mono">
+            <span className="inline-flex items-center gap-2.5 text-[var(--ether)] border border-[var(--line2)] bg-[rgba(18,26,51,.65)] backdrop-blur px-4 py-1.5 rounded-full mb-7 text-xs font-mono">
               <span className="w-2 h-2 rounded-full bg-[var(--plasma)] animate-pulse-dot" />
               +5 años creando software a la medida
             </span>
@@ -53,7 +53,7 @@ export default function Hero() {
           </div>
 
           <div className="hero-in" style={{ ["--i" as string]: 4 }}>
-            <dl className="mt-12 grid grid-cols-3 max-w-[520px] border border-[var(--line)] rounded-2xl overflow-hidden bg-[rgba(11,11,29,.72)] backdrop-blur">
+            <dl className="mt-12 grid grid-cols-3 max-w-[520px] border border-[var(--line)] rounded-2xl overflow-hidden bg-[rgba(11,16,32,.72)] backdrop-blur">
               {[
                 { big: <Counter to={5} prefix="+" />, sub: "años de experiencia" },
                 { big: "3", sub: "web · móvil · escritorio" },

@@ -25,12 +25,12 @@ export default function Contact() {
     }
   }
 
-  const inputCls = "w-full bg-[rgba(17,17,42,.8)] border border-[var(--line)] rounded-xl text-[var(--moon)] text-[0.93rem] px-4 py-3 outline-none transition-all focus:border-[var(--ion)] focus:shadow-[0_0_0_3px_rgba(124,92,255,.15)] placeholder:text-[var(--ether-dim)]";
+  const inputCls = "w-full bg-[rgba(18,26,51,.8)] border border-[var(--line)] rounded-xl text-[var(--moon)] text-[0.93rem] px-4 py-3 outline-none transition-all focus:border-[var(--ion)] focus:shadow-[0_0_0_3px_rgba(79,124,255,.15)] placeholder:text-[var(--ether-dim)]";
   const labelCls = "font-mono text-[0.7rem] tracking-[.1em] uppercase text-[var(--ether-dim)] mb-1.5 block";
 
   return (
     <section id="contacto" className="py-[clamp(72px,11vw,128px)] relative overflow-hidden border-t border-[var(--line)] text-center">
-      <div className="absolute inset-0 z-0" style={{ background: "radial-gradient(55% 60% at 50% 35%,rgba(124,92,255,.22),transparent 65%)" }} />
+      <div className="absolute inset-0 z-0" style={{ background: "radial-gradient(55% 60% at 50% 35%,rgba(79,124,255,.22),transparent 65%)" }} />
       <div className="relative z-10 max-w-[760px] mx-auto px-5 md:px-10">
         <span className="inline-flex items-center gap-2 font-mono text-[0.72rem] tracking-[.28em] uppercase text-[var(--plasma)] before:content-[''] before:w-[22px] before:h-px before:bg-[var(--plasma)] before:opacity-60 justify-center">Contacto</span>
         <h2 className="text-[clamp(2rem,5vw,3.2rem)] font-bold mt-5 mb-4 tracking-tight" style={{ fontFamily: "var(--font-space)" }}>
@@ -41,12 +41,12 @@ export default function Contact() {
         <div className="flex flex-col sm:flex-row flex-wrap gap-3 justify-center mb-8">
           <a href="https://wa.me/573226993891?text=Hola%20Lanxa%20Technology,%20quiero%20cotizar%20un%20proyecto" target="_blank" rel="noopener"
             className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-semibold text-[var(--void)] transition-all hover:-translate-y-0.5"
-            style={{ background: "linear-gradient(105deg,#7c5cff,#1fe6cd)" }}>
+            style={{ background: "var(--grad)" }}>
             <svg viewBox="0 0 24 24" fill="currentColor" width={18} height={18}><path d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.7 4.8-1.3A10 10 0 1 0 12 2zm0 18a8 8 0 0 1-4-1.1l-.3-.2-2.9.8.8-2.8-.2-.3A8 8 0 1 1 12 20zm4.5-5.9c-.2-.1-1.4-.7-1.6-.8-.2-.1-.4-.1-.5.1l-.7.9c-.1.2-.3.2-.5.1a6.5 6.5 0 0 1-3.2-2.8c-.1-.2 0-.4.1-.5l.4-.5.2-.4v-.4l-.7-1.7c-.2-.4-.4-.4-.5-.4h-.5c-.2 0-.4.1-.6.3a3 3 0 0 0-.9 2.2c0 1.3.9 2.5 1.1 2.7.1.2 1.9 2.9 4.6 4 .6.3 1.1.4 1.5.5.6.2 1.2.2 1.6.1.5-.1 1.4-.6 1.6-1.1.2-.6.2-1 .1-1.1l-.4-.3z"/></svg>
             Escribir por WhatsApp
           </a>
           <a href="mailto:leonardecojt@gmail.com?subject=Quiero%20cotizar%20un%20proyecto%20con%20Lanxa%20Technology"
-            className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-semibold border border-[var(--line2)] text-[var(--moon)] hover:border-[var(--ion)] hover:bg-[rgba(124,92,255,.1)] transition-all hover:-translate-y-0.5">
+            className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-semibold border border-[var(--line2)] text-[var(--moon)] hover:border-[var(--ion)] hover:bg-[rgba(79,124,255,.1)] transition-all hover:-translate-y-0.5">
             Enviar un correo
           </a>
         </div>
@@ -63,8 +63,8 @@ export default function Contact() {
             { initials: "LG", name: "Leonardo Guzmán", role: "Fundador & CTO",            tel: "+573226993891", wa: "Leonardo" },
             { initials: "JR", name: "Julián Muñoz",    role: "CEO & Líder de Proyectos",  tel: "+573136817238", wa: "Juli%C3%A1n" },
           ].map((a) => (
-            <div key={a.name} className="flex items-center gap-4 border border-[var(--line2)] rounded-2xl px-6 py-4 bg-[rgba(17,17,42,.6)] min-w-[260px] text-left">
-              <div className="w-12 h-12 rounded-full flex-shrink-0 flex items-center justify-center font-bold text-[var(--void)] text-[0.9rem]" style={{ background: "linear-gradient(105deg,#7c5cff,#1fe6cd)", fontFamily: "var(--font-space)" }}>
+            <div key={a.name} className="flex items-center gap-4 border border-[var(--line2)] rounded-2xl px-6 py-4 bg-[rgba(18,26,51,.6)] min-w-[260px] text-left">
+              <div className="w-12 h-12 rounded-full flex-shrink-0 flex items-center justify-center font-bold text-[var(--void)] text-[0.9rem]" style={{ background: "var(--grad)", fontFamily: "var(--font-space)" }}>
                 {a.initials}
               </div>
               <div className="font-mono text-[0.78rem]">
@@ -78,7 +78,7 @@ export default function Contact() {
         </div>
 
         {/* Form */}
-        <div className="text-left border border-[var(--line)] rounded-[22px] p-7 bg-[rgba(11,11,29,.6)]">
+        <div className="text-left border border-[var(--line)] rounded-[22px] p-7 bg-[rgba(11,16,32,.6)]">
           {status === "success" ? (
             <div className="text-center py-8 font-mono text-[var(--plasma)] text-[0.95rem]">
               ✓ Mensaje enviado. Te respondemos en menos de 24 horas.
@@ -112,7 +112,7 @@ export default function Contact() {
               <div className="sm:col-span-2 flex justify-end">
                 <button type="submit" disabled={status === "loading"}
                   className="inline-flex items-center gap-2 px-7 py-3 rounded-xl font-semibold text-[var(--void)] transition-all hover:-translate-y-0.5 disabled:opacity-60"
-                  style={{ background: "linear-gradient(105deg,#7c5cff,#1fe6cd)" }}>
+                  style={{ background: "var(--grad)" }}>
                   {status === "loading" ? "Enviando..." : <>Enviar propuesta <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.2} width={17} height={17}><path d="M5 12h14M13 6l6 6-6 6"/></svg></>}
                 </button>
               </div>

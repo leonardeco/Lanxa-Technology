@@ -12,7 +12,7 @@ const cards = [
 
 export default function B2B() {
   return (
-    <section id="empresas" className="py-[clamp(72px,11vw,128px)] border-y border-[var(--line)] bg-[rgba(11,11,29,.4)]">
+    <section id="empresas" className="py-[clamp(72px,11vw,128px)] border-y border-[var(--line)] bg-[rgba(11,16,32,.4)]">
       <div className="max-w-[1200px] mx-auto px-5 md:px-10">
         <SectionHeader
           className="mb-10"
@@ -22,9 +22,9 @@ export default function B2B() {
         />
 
         {/* Banner */}
-        <Reveal className="mb-12"><div className="grid md:grid-cols-[1fr_auto] gap-6 items-center border border-[var(--line2)] rounded-[22px] p-8 bg-gradient-to-br from-[rgba(124,92,255,.08)] to-[rgba(31,230,205,.06)]">
+        <Reveal className="mb-12"><div className="grid md:grid-cols-[1fr_auto] gap-6 items-center border border-[var(--line2)] rounded-[22px] p-8 bg-gradient-to-br from-[rgba(79,124,255,.08)] to-[rgba(255,200,87,.06)]">
           <div>
-            <span className="inline-flex items-center gap-2 font-mono text-[0.7rem] tracking-[.15em] uppercase text-[var(--plasma)] border border-[rgba(31,230,205,.35)] px-3 py-1 rounded-full bg-[rgba(31,230,205,.05)] mb-3">
+            <span className="inline-flex items-center gap-2 font-mono text-[0.7rem] tracking-[.15em] uppercase text-[var(--plasma)] border border-[rgba(255,200,87,.35)] px-3 py-1 rounded-full bg-[rgba(255,200,87,.05)] mb-3">
               Disponible para contratos corporativos
             </span>
             <h3 className="text-[1.25rem] font-bold mb-2" style={{ fontFamily: "var(--font-space)" }}>¿Tu empresa necesita desarrolladores externos?</h3>

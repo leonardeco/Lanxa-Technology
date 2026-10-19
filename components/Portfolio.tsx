@@ -11,17 +11,17 @@ type Project = {
 
 const projects: Project[] = [
   {
-    title: "TradeSync", tag: "FinTech · Python", featured: true, accent: "#1fe6cd",
+    title: "TradeSync", tag: "FinTech · Python", featured: true, accent: "#3ddc97",
     desc: "Plataforma de trading algorítmico para Forex y VIX75: bot de señales, backtesting en MT5 y dashboard de P&L.",
     stack: ["Python", "MetaTrader 5", "Backtesting", "Dashboard"], cats: ["FinTech", "Web"], Visual: TradeSyncMock,
   },
   {
-    title: "GanancIA", tag: "SaaS · IA", accent: "#9d85ff",
+    title: "GanancIA", tag: "SaaS · IA", accent: "#8fa8ff",
     desc: "SaaS de rentabilidad para restaurantes en Latinoamérica, con un asistente de IA integrado para decisiones de negocio.",
     stack: ["SaaS", "Asistente IA", "Analítica"], cats: ["SaaS & IA", "Web"], Visual: GanancIAMock,
   },
   {
-    title: "ReservaYa", tag: "Web · Angular", accent: "#ffb547",
+    title: "ReservaYa", tag: "Web · Angular", accent: "#ffc857",
     desc: "Sistema de reservas para restaurantes de extremo a extremo, con gestión de mesas en tiempo real.",
     stack: ["Angular", "Tiempo real", "Reservas"], cats: ["Web"], Visual: ReservaYaMock,
   },
@@ -31,7 +31,7 @@ const projects: Project[] = [
     stack: ["React", "Vite", "E-commerce"], cats: ["E-commerce", "Web"], Visual: LeofitMock,
   },
   {
-    title: "GymMatch", tag: "Social · Mobile", accent: "#7c5cff",
+    title: "GymMatch", tag: "Social · Mobile", accent: "#6f93ff",
     desc: "App social-fitness para encontrar compañeros de entrenamiento, con perfiles, emparejamiento y landing de lanzamiento.",
     stack: ["App móvil", "Matching", "Landing"], cats: ["Móvil"], Visual: GymMatchMock,
   },
@@ -64,11 +64,11 @@ function ProjectCard({ p, big }: { p: Project; big: boolean }) {
     <article
       onMouseMove={onMove}
       onMouseLeave={onLeave}
-      className={`project-card group relative h-full flex flex-col ${big ? "lg:grid lg:grid-cols-[1.45fr_1fr]" : ""} rounded-[24px] border border-[var(--line)] bg-gradient-to-b from-[rgba(17,17,42,.75)] to-[rgba(8,8,20,.85)] overflow-hidden`}
+      className={`project-card group relative h-full flex flex-col ${big ? "lg:grid lg:grid-cols-[1.45fr_1fr]" : ""} rounded-[24px] border border-[var(--line)] bg-gradient-to-b from-[rgba(18,26,51,.75)] to-[rgba(8,12,26,.85)] overflow-hidden`}
       style={{ ["--accent" as string]: p.accent }}
     >
-      <div className={`relative aspect-[16/10] p-4 sm:p-5 overflow-hidden bg-[radial-gradient(80%_80%_at_50%_0%,rgba(124,92,255,.18),transparent_70%)]`}>
-        <div className="absolute inset-0 opacity-60 bg-[linear-gradient(rgba(124,92,255,.07)_1px,transparent_1px),linear-gradient(90deg,rgba(124,92,255,.07)_1px,transparent_1px)] bg-[size:28px_28px]" />
+      <div className={`relative aspect-[16/10] p-4 sm:p-5 overflow-hidden bg-[radial-gradient(80%_80%_at_50%_0%,rgba(79,124,255,.18),transparent_70%)]`}>
+        <div className="absolute inset-0 opacity-60 bg-[linear-gradient(rgba(79,124,255,.07)_1px,transparent_1px),linear-gradient(90deg,rgba(79,124,255,.07)_1px,transparent_1px)] bg-[size:28px_28px]" />
         <div className="relative w-full h-full transition-transform duration-500 ease-out group-hover:scale-[1.03]">
           <p.Visual />
         </div>
@@ -84,7 +84,7 @@ function ProjectCard({ p, big }: { p: Project; big: boolean }) {
         <p className="text-[0.92rem] text-[var(--ether)] leading-relaxed">{p.desc}</p>
         <ul className="mt-4 flex flex-wrap gap-1.5">
           {p.stack.map((s) => (
-            <li key={s} className="font-mono text-[0.66rem] text-[var(--ether)] border border-[var(--line2)] rounded-full px-2.5 py-1 bg-[rgba(17,17,42,.6)]">{s}</li>
+            <li key={s} className="font-mono text-[0.66rem] text-[var(--ether)] border border-[var(--line2)] rounded-full px-2.5 py-1 bg-[rgba(18,26,51,.6)]">{s}</li>
           ))}
         </ul>
       </div>
@@ -100,8 +100,8 @@ export default function Portfolio() {
   const ctaSpan = `${MD_SPAN[2 - (regular % 2)]} ${LG_SPAN[3 - (regular % 3)]}`;
 
   return (
-    <section id="portafolio" className="relative py-[clamp(72px,11vw,128px)] border-y border-[var(--line)] bg-[rgba(11,11,29,.4)] overflow-hidden">
-      <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(50% 40% at 85% 10%,rgba(31,230,205,.10),transparent 70%)" }} />
+    <section id="portafolio" className="relative py-[clamp(72px,11vw,128px)] border-y border-[var(--line)] bg-[rgba(11,16,32,.4)] overflow-hidden">
+      <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(50% 40% at 85% 10%,rgba(255,200,87,.10),transparent 70%)" }} />
       <div className="relative max-w-[1200px] mx-auto px-5 md:px-10">
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8 mb-10">
           <SectionHeader
@@ -120,7 +120,7 @@ export default function Portfolio() {
                 className={`relative px-4 py-2 rounded-full text-[0.82rem] font-medium transition-colors ${filter === f ? "text-[var(--void)]" : "text-[var(--ether)] hover:text-[var(--moon)] border border-[var(--line2)]"}`}
               >
                 {filter === f && (
-                  <motion.span layoutId="filter-pill" className="absolute inset-0 rounded-full" style={{ background: "linear-gradient(105deg,#7c5cff,#1fe6cd)" }} transition={{ type: "spring", stiffness: 380, damping: 32 }} />
+                  <motion.span layoutId="filter-pill" className="absolute inset-0 rounded-full" style={{ background: "var(--grad)" }} transition={{ type: "spring", stiffness: 380, damping: 32 }} />
                 )}
                 <span className="relative">{f}</span>
               </button>
@@ -156,7 +156,7 @@ export default function Portfolio() {
             transition={{ type: "spring", stiffness: 90, damping: 18, delay: 0.5 }}
           >
             <a href="#contacto" className="group relative flex flex-col justify-between h-full min-h-[260px] rounded-[24px] border border-dashed border-[var(--line2)] p-7 overflow-hidden hover:border-[var(--plasma)] transition-colors">
-              <div className="absolute -right-16 -top-16 w-56 h-56 rounded-full bg-[radial-gradient(circle,rgba(31,230,205,.18),transparent_65%)] transition-transform duration-700 group-hover:scale-150" />
+              <div className="absolute -right-16 -top-16 w-56 h-56 rounded-full bg-[radial-gradient(circle,rgba(255,200,87,.18),transparent_65%)] transition-transform duration-700 group-hover:scale-150" />
               <div className="relative">
                 <span className="font-mono text-[0.72rem] text-[var(--plasma)]">Tu proyecto</span>
                 <h3 className="text-[1.5rem] font-bold mt-3 mb-2 tracking-tight" style={{ fontFamily: "var(--font-space)" }}>El siguiente eres tú.</h3>

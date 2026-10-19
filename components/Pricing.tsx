@@ -37,7 +37,7 @@ const plans = [
 
 export default function Pricing() {
   return (
-    <section id="precios" className="py-[clamp(72px,11vw,128px)] border-y border-[var(--line)] bg-[rgba(11,11,29,.4)]">
+    <section id="precios" className="py-[clamp(72px,11vw,128px)] border-y border-[var(--line)] bg-[rgba(11,16,32,.4)]">
       <div className="max-w-[1200px] mx-auto px-5 md:px-10">
         <SectionHeader
           className="mb-10"
@@ -47,9 +47,9 @@ export default function Pricing() {
         />
 
         {/* Flex banner */}
-        <Reveal className="mb-12"><div className="grid md:grid-cols-[1fr_auto] gap-6 items-center border border-[var(--line2)] rounded-[22px] p-8 bg-gradient-to-br from-[rgba(124,92,255,.08)] to-[rgba(31,230,205,.06)]">
+        <Reveal className="mb-12"><div className="grid md:grid-cols-[1fr_auto] gap-6 items-center border border-[var(--line2)] rounded-[22px] p-8 bg-gradient-to-br from-[rgba(79,124,255,.08)] to-[rgba(255,200,87,.06)]">
           <div>
-            <span className="inline-flex items-center gap-2 font-mono text-[0.7rem] tracking-[.15em] uppercase text-[var(--plasma)] border border-[rgba(31,230,205,.35)] px-3 py-1 rounded-full bg-[rgba(31,230,205,.05)] mb-3">
+            <span className="inline-flex items-center gap-2 font-mono text-[0.7rem] tracking-[.15em] uppercase text-[var(--plasma)] border border-[rgba(255,200,87,.35)] px-3 py-1 rounded-full bg-[rgba(255,200,87,.05)] mb-3">
               Precios 100% flexibles
             </span>
             <h3 className="text-[1.25rem] font-bold mb-2" style={{ fontFamily: "var(--font-space)" }}>Nos ajustamos a lo que puedes invertir</h3>
@@ -68,7 +68,7 @@ export default function Pricing() {
 
         <Stagger className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 items-start" stagger={0.15}>
           {plans.map((p) => (
-            <Item key={p.name}><div className={`relative flex flex-col gap-0 border rounded-[22px] p-7 transition-transform duration-300 hover:-translate-y-1.5 ${p.featured ? "border-[var(--ion)] bg-gradient-to-b from-[rgba(124,92,255,.12)] to-[rgba(11,11,29,.7)] shadow-[0_0_0_1px_rgba(124,92,255,.3),0_28px_60px_-30px_rgba(124,92,255,.5)]" : "border-[var(--line)] bg-gradient-to-b from-[rgba(17,17,42,.7)] to-[rgba(11,11,29,.7)]"}`}>
+            <Item key={p.name}><div className={`relative flex flex-col gap-0 border rounded-[22px] p-7 transition-transform duration-300 hover:-translate-y-1.5 ${p.featured ? "border-[var(--ion)] bg-gradient-to-b from-[rgba(79,124,255,.12)] to-[rgba(11,16,32,.7)] shadow-[0_0_0_1px_rgba(79,124,255,.3),0_28px_60px_-30px_rgba(79,124,255,.5)]" : "border-[var(--line)] bg-gradient-to-b from-[rgba(18,26,51,.7)] to-[rgba(11,16,32,.7)]"}`}>
               {p.badge && (
                 <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 text-[var(--void)] font-mono text-[0.68rem] font-bold tracking-widest uppercase px-4 py-1 rounded-full whitespace-nowrap" style={{ background: "var(--grad)" }}>
                   {p.badge}
@@ -89,7 +89,7 @@ export default function Pricing() {
               <a
                 href={`https://wa.me/573226993891?text=${p.wa}`}
                 target="_blank" rel="noopener"
-                className={`w-full text-center py-3 rounded-xl font-semibold transition-all hover:-translate-y-0.5 ${p.featured ? "text-[var(--void)]" : "border border-[var(--line2)] text-[var(--moon)] hover:border-[var(--ion)] hover:bg-[rgba(124,92,255,.1)]"}`}
+                className={`w-full text-center py-3 rounded-xl font-semibold transition-all hover:-translate-y-0.5 ${p.featured ? "text-[var(--void)]" : "border border-[var(--line2)] text-[var(--moon)] hover:border-[var(--ion)] hover:bg-[rgba(79,124,255,.1)]"}`}
                 style={p.featured ? { background: "var(--grad)" } : {}}
               >
                 {p.cta}

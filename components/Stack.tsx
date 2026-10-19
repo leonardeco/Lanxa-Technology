@@ -23,14 +23,14 @@ export default function Stack() {
         </Reveal>
           <Stagger className="flex flex-col gap-3" stagger={0.07}>
             {rows.map((r) => (
-              <Item key={r.k}><div className="flex justify-between items-center gap-4 border border-[var(--line)] bg-[rgba(17,17,42,.45)] rounded-xl px-4 py-3 font-mono text-[0.84rem]">
+              <Item key={r.k}><div className="flex justify-between items-center gap-4 border border-[var(--line)] bg-[rgba(18,26,51,.45)] rounded-xl px-4 py-3 font-mono text-[0.84rem]">
                 <span className="text-[var(--ether-dim)]">{r.k}</span>
                 <span className="text-[var(--moon)] text-right text-[0.8rem]">{r.v}</span>
               </div></Item>
             ))}
           </Stagger>
         </div>
-        <Reveal delay={0.2}><div className="border border-[var(--line)] rounded-[22px] bg-gradient-to-b from-[rgba(17,17,42,.7)] to-[rgba(11,11,29,.7)] p-6 font-mono text-[0.84rem] leading-[1.85]">
+        <Reveal delay={0.2}><div className="border border-[var(--line)] rounded-[22px] bg-gradient-to-b from-[rgba(18,26,51,.7)] to-[rgba(11,16,32,.7)] p-6 font-mono text-[0.84rem] leading-[1.85]">
           <div className="flex gap-2 mb-5">
             {[0,1,2].map((i) => <i key={i} className="w-3 h-3 rounded-full bg-[var(--line2)] not-italic" />)}
           </div>
