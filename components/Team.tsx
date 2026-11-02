@@ -17,13 +17,6 @@ const team: Member[] = [
       { label: "WhatsApp", href: "https://wa.me/573226993891?text=Hola%20Leonardo,%20quiero%20informaci%C3%B3n%20sobre%20Lanxa%20Technology" },
     ],
   },
-  {
-    name: "Julián Muñoz", role: "CEO & Líder de Proyectos", initials: "JR",
-    bio: "Acompaña a cada cliente desde la primera reunión: entiende el negocio, define el alcance y se asegura de que las entregas lleguen a tiempo.",
-    links: [
-      { label: "WhatsApp", href: "https://wa.me/573136817238?text=Hola%20Juli%C3%A1n,%20quiero%20informaci%C3%B3n%20sobre%20Lanxa%20Technology" },
-    ],
-  },
 ];
 
 export default function Team() {
@@ -36,7 +29,7 @@ export default function Team() {
           title={<>Hablas directo con <span className="grad-text">quien lo construye.</span></>}
           desc="Sin intermediarios ni cuentas que pasan de mano en mano: el mismo equipo te acompaña de la idea a producción."
         />
-        <Stagger className="grid md:grid-cols-2 gap-5" stagger={0.15}>
+        <Stagger className="max-w-3xl" stagger={0.15}>
           {team.map((m) => (
             <Item key={m.name}>
               <article className="card glow-border h-full p-7 flex flex-col sm:flex-row gap-6 items-start">

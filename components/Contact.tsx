@@ -71,7 +71,6 @@ export default function Contact() {
         <div className="flex flex-wrap gap-4 justify-center mb-10">
           {[
             { initials: "LG", name: "Leonardo Guzmán", role: "Fundador & CTO",            tel: "+573226993891", wa: "Leonardo" },
-            { initials: "JR", name: "Julián Muñoz",    role: "CEO & Líder de Proyectos",  tel: "+573136817238", wa: "Juli%C3%A1n" },
           ].map((a) => (
             <div key={a.name} className="flex items-center gap-4 border border-[var(--line2)] rounded-2xl px-6 py-4 bg-[rgba(18,26,51,.6)] min-w-[260px] text-left">
               <div className="w-12 h-12 rounded-full flex-shrink-0 flex items-center justify-center font-bold text-[var(--void)] text-[0.9rem]" style={{ background: "var(--grad)", fontFamily: "var(--font-space)" }}>
