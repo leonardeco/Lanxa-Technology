@@ -2,7 +2,7 @@
 import { useEffect, useRef } from "react";
 
 /*
- * Escena del hero: una figura-constelación de pie sobre el horizonte de un planeta
+ * Escena del hero: una persona en silueta, de pie sobre el horizonte de un planeta,
  * lanza una lanza de luz contra una estrella. Toda la animación es función del
  * tiempo (sin estado acumulado), así que con prefers-reduced-motion se pinta un
  * único fotograma estático.
@@ -224,74 +224,129 @@ export default function HeroScene() {
       ctx.restore();
     };
 
+    /*
+     * Figura humana en silueta, iluminada a contraluz por la estrella: extremidades
+     * ahusadas (más gruesas en hombro/cadera), torso con pecho, cintura y cadera,
+     * cabeza de perfil con mandíbula, manos y pies. Las extremidades del lado lejano
+     * (brazo que lanza y pierna de atrás) se pintan más oscuras para dar profundidad.
+     */
     const drawFigure = (pose: Pose, alpha: number) => {
-      const w = (j: Joint) => toWorld(pose[j]);
-      const limb = Math.max(8, L.scale * 0.058);
-      const torso = limb * 1.65;
-      const headR = L.scale * 0.09;
-      const limbs: Joint[][] = [
-        ["neck", "elbowT", "handT"],
-        ["neck", "elbowF", "handF"],
-        ["hip", "kneeF", "footF"],
-        ["hip", "kneeB", "footB"],
-      ];
-      const stroke = (pts: P[], width: number) => {
-        ctx.lineWidth = width;
-        ctx.beginPath();
-        pts.forEach((p, i) => { if (i === 0) ctx.moveTo(p[0], p[1]); else ctx.lineTo(p[0], p[1]); });
-        ctx.stroke();
+      const S = L.scale;
+      const W = toWorld;
+      const add = (a: P, b: P): P => [a[0] + b[0], a[1] + b[1]];
+      const mix = (a: P, b: P, k: number): P => [lerp(a[0], b[0], k), lerp(a[1], b[1], k)];
+
+      const neckBase = add(pose.neck, [0, 0.02]);
+      const shT = add(pose.neck, [-0.014, 0.032]);
+      const shF = add(pose.neck, [0.014, 0.032]);
+      const wristT = mix(pose.elbowT, pose.handT, 0.84);
+      const wristF = mix(pose.elbowF, pose.handF, 0.84);
+      const ankle = (f: P): P => add(f, [-0.005, -0.036]);
+      const heel = (f: P): P => add(f, [-0.024, -0.016]);
+      const toe = (f: P): P => add(f, [0.072, -0.007]);
+
+      // Segmento ahusado: semicírculo de radio ra en a, semicírculo de radio rb en b.
+      const capsule = (a: P, b: P, ra: number, rb: number) => {
+        const A = W(a), B = W(b);
+        const rA = ra * S, rB = rb * S;
+        const ang = Math.atan2(B[1] - A[1], B[0] - A[0]);
+        ctx.moveTo(A[0] + Math.cos(ang + Math.PI / 2) * rA, A[1] + Math.sin(ang + Math.PI / 2) * rA);
+        ctx.arc(A[0], A[1], rA, ang + Math.PI / 2, ang + (Math.PI * 3) / 2);
+        ctx.arc(B[0], B[1], rB, ang - Math.PI / 2, ang + Math.PI / 2);
+        ctx.closePath();
       };
-      const paint = (limbW: number, torsoW: number, color: string, blur: number, shadow: string) => {
-        ctx.strokeStyle = color;
-        ctx.fillStyle = color;
-        ctx.shadowColor = shadow;
+
+      const arm = (sh: P, elbow: P, wrist: P, hand: P) => {
+        capsule(sh, elbow, 0.037, 0.028);
+        capsule(elbow, wrist, 0.029, 0.019);
+        capsule(wrist, hand, 0.021, 0.019);
+      };
+      const leg = (hip: P, knee: P, foot: P) => {
+        capsule(hip, knee, 0.062, 0.041);
+        capsule(knee, ankle(foot), 0.041, 0.022);
+        capsule(heel(foot), toe(foot), 0.025, 0.013);
+      };
+
+      // Torso: perfil delantero (pecho) y trasero (espalda/glúteo) a lo largo de la columna.
+      const torso = () => {
+        const a = neckBase, b = pose.hip;
+        const dx = b[0] - a[0], dy = b[1] - a[1];
+        const len = Math.hypot(dx, dy) || 1;
+        let n: P = [-dy / len, dx / len];
+        if (n[0] < 0) n = [-n[0], -n[1]]; // n apunta hacia el frente (la estrella)
+        const ks = [0, 0.26, 0.66, 1];
+        const front = [0.05, 0.078, 0.05, 0.058];
+        const back = [0.052, 0.066, 0.047, 0.066];
+        const pts: P[] = [];
+        ks.forEach((k, i) => { const c = mix(a, b, k); pts.push(W([c[0] + n[0] * front[i], c[1] + n[1] * front[i]])); });
+        [...ks].reverse().forEach((k, j) => { const i = ks.length - 1 - j; const c = mix(a, b, k); pts.push(W([c[0] - n[0] * back[i], c[1] - n[1] * back[i]])); });
+        const mid = (p: P, q: P): P => [(p[0] + q[0]) / 2, (p[1] + q[1]) / 2];
+        const start = mid(pts[pts.length - 1], pts[0]);
+        ctx.moveTo(start[0], start[1]);
+        pts.forEach((p, i) => { const m = mid(p, pts[(i + 1) % pts.length]); ctx.quadraticCurveTo(p[0], p[1], m[0], m[1]); });
+        ctx.closePath();
+      };
+
+      const head = () => {
+        const h = pose.head;
+        const tilt = Math.atan2(h[1] - pose.neck[1], h[0] - pose.neck[0]) + Math.PI / 2;
+        const C = W(h);
+        const rx = 0.056 * S, ry = 0.068 * S;
+        ctx.moveTo(C[0] + Math.cos(tilt) * rx, C[1] + Math.sin(tilt) * rx);
+        ctx.ellipse(C[0], C[1], rx, ry, tilt, 0, Math.PI * 2);
+        // Cara de perfil: mandíbula y mentón hacia adelante
+        const rot = (v: P): P => [v[0] * Math.cos(tilt) - v[1] * Math.sin(tilt), v[0] * Math.sin(tilt) + v[1] * Math.cos(tilt)];
+        const J = W(add(h, rot([0.03, 0.026])));
+        ctx.moveTo(J[0] + 0.03 * S, J[1]);
+        ctx.ellipse(J[0], J[1], 0.03 * S, 0.033 * S, tilt, 0, Math.PI * 2);
+        capsule(neckBase, add(h, [0, 0.03]), 0.027, 0.025);
+      };
+
+      const far = () => { arm(shT, pose.elbowT, wristT, pose.handT); leg(add(pose.hip, [-0.012, 0]), pose.kneeB, pose.footB); };
+      const near = () => { leg(add(pose.hip, [0.012, 0]), pose.kneeF, pose.footF); torso(); head(); arm(shF, pose.elbowF, wristF, pose.handF); };
+      const all = () => { far(); near(); };
+
+      const fillWith = (shape: () => void, style: string | CanvasGradient, off: P = [0, 0], blur = 0, shadow = "transparent") => {
+        ctx.save();
+        ctx.translate(off[0], off[1]);
+        ctx.fillStyle = style;
         ctx.shadowBlur = blur;
-        const neck = w("neck");
-        const hip = w("hip");
-        const head = w("head");
-        stroke([neck, hip], torsoW);
-        for (const c of limbs) stroke(c.map(w), limbW);
-        stroke([neck, head], limbW * 0.9);
+        ctx.shadowColor = shadow;
         ctx.beginPath();
-        ctx.arc(head[0], head[1], headR, 0, Math.PI * 2);
+        shape();
         ctx.fill();
+        ctx.restore();
       };
+
+      // Dirección de la luz: desde el cuerpo hacia la estrella
+      const center = W([0, -0.6]);
+      const lx = L.sx - center[0], ly = L.sy - center[1];
+      const ll = Math.hypot(lx, ly) || 1;
+      const rim = Math.max(1.6, S * 0.01);
+      const toStar: P = [(lx / ll) * rim, (ly / ll) * rim];
+      const away: P = [-toStar[0] * 0.75, -toStar[1] * 0.75];
+
+      const top = W([0, -1.02]), feet = W([0, 0]);
+      const body = ctx.createLinearGradient(top[0], top[1], feet[0], feet[1]);
+      body.addColorStop(0, "#1c2754");
+      body.addColorStop(0.55, "#121a3c");
+      body.addColorStop(1, "#0b1129");
 
       ctx.save();
       ctx.globalAlpha = alpha;
-      ctx.lineCap = "round";
-      ctx.lineJoin = "round";
-      paint(limb * 1.7, torso * 1.45, "rgba(91,134,255,0.34)", 28, "rgba(91,134,255,0.9)");
-      paint(limb, torso, "rgba(232,237,255,0.96)", 8, "rgba(186,204,255,0.9)");
-
-      const neck = w("neck");
-      const hip = w("hip");
-      const dx = hip[0] - neck[0];
-      const dy = hip[1] - neck[1];
-      const len = Math.hypot(dx, dy) || 1;
-      const px = -dy / len;
-      const py = dx / len;
-      const sw = torso * 0.78;
-      ctx.shadowBlur = 0;
-      ctx.fillStyle = "rgba(232,237,255,0.96)";
+      fillWith(all, "rgba(91,134,255,0.22)", [0, 0], 40, "rgba(91,134,255,0.85)"); // halo
+      fillWith(all, "#ffd98a", toStar, 14, "rgba(255,200,87,0.95)");               // borde dorado (luz de la estrella)
+      fillWith(all, "rgba(143,168,255,0.85)", away, 6, "rgba(143,168,255,0.8)");  // rebote azul del planeta
+      fillWith(far, "#080c1f");
+      fillWith(near, body);
+      // Contorno tenue del brazo delantero para separarlo del torso
+      ctx.save();
+      ctx.strokeStyle = "rgba(255,217,138,0.28)";
+      ctx.lineWidth = 1;
       ctx.beginPath();
-      ctx.moveTo(neck[0] + px * sw, neck[1] + py * sw);
-      ctx.lineTo(hip[0] + px * sw * 0.7, hip[1] + py * sw * 0.7);
-      ctx.lineTo(hip[0] - px * sw * 0.52, hip[1] - py * sw * 0.52);
-      ctx.lineTo(neck[0] - px * sw * 0.82, neck[1] - py * sw * 0.82);
-      ctx.closePath();
-      ctx.fill();
-
-      ctx.shadowBlur = 8;
-      ctx.shadowColor = "rgba(255,200,87,0.9)";
-      for (const j of JOINTS) {
-        if (j === "head") continue;
-        const p = w(j);
-        ctx.fillStyle = j === "handT" ? "#ffc857" : "#f3f5ff";
-        ctx.beginPath();
-        ctx.arc(p[0], p[1], j === "handT" ? 3.1 : 2.2, 0, Math.PI * 2);
-        ctx.fill();
-      }
+      arm(shF, pose.elbowF, wristF, pose.handF);
+      ctx.stroke();
+      ctx.restore();
       ctx.restore();
     };
 
