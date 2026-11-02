@@ -230,7 +230,7 @@ export default function HeroScene() {
      * cabeza de perfil con mandíbula, manos y pies. Las extremidades del lado lejano
      * (brazo que lanza y pierna de atrás) se pintan más oscuras para dar profundidad.
      */
-    const drawFigure = (pose: Pose, alpha: number) => {
+    const drawFigure = (pose: Pose, alpha: number, openT: number, openF: number) => {
       const S = L.scale;
       const W = toWorld;
       const add = (a: P, b: P): P => [a[0] + b[0], a[1] + b[1]];
@@ -239,8 +239,8 @@ export default function HeroScene() {
       const neckBase = add(pose.neck, [0, 0.02]);
       const shT = add(pose.neck, [-0.014, 0.032]);
       const shF = add(pose.neck, [0.014, 0.032]);
-      const wristT = mix(pose.elbowT, pose.handT, 0.84);
-      const wristF = mix(pose.elbowF, pose.handF, 0.84);
+      const wristT = mix(pose.elbowT, pose.handT, 0.8);
+      const wristF = mix(pose.elbowF, pose.handF, 0.8);
       const ankle = (f: P): P => add(f, [-0.005, -0.036]);
       const heel = (f: P): P => add(f, [-0.024, -0.016]);
       const toe = (f: P): P => add(f, [0.072, -0.007]);
@@ -256,10 +256,42 @@ export default function HeroScene() {
         ctx.closePath();
       };
 
-      const arm = (sh: P, elbow: P, wrist: P, hand: P) => {
+      /*
+       * Mano con palma, cuatro dedos y pulgar. `open` va de 0 (puño cerrado sobre la
+       * lanza) a 1 (mano abierta con los dedos separados, justo al soltar).
+       */
+      const handShape = (wrist: P, hand: P, open: number) => {
+        const vx = hand[0] - wrist[0], vy = hand[1] - wrist[1];
+        const vl = Math.hypot(vx, vy) || 1;
+        const d: P = [vx / vl, vy / vl];
+        let n: P = [-d[1], d[0]];
+        if (n[1] > 0) n = [-n[0], -n[1]]; // el pulgar queda del lado de arriba
+        const rot = (v: P, a: number): P => [v[0] * Math.cos(a) - v[1] * Math.sin(a), v[0] * Math.sin(a) + v[1] * Math.cos(a)];
+        const along = (p: P, v: P, k: number): P => [p[0] + v[0] * k, p[1] + v[1] * k];
+        // Hacia qué lado gira un ángulo positivo respecto al pulgar
+        const sideSign = Math.sign(rot(d, 0.5)[0] * n[0] + rot(d, 0.5)[1] * n[1]) || 1;
+
+        const palmEnd = along(wrist, d, 0.05);
+        capsule(wrist, palmEnd, 0.02, 0.025); // palma
+        const fingerLen = lerp(0.016, 0.042, open);
+        const spreads = [-0.34, -0.11, 0.11, 0.32];
+        const bases = [-0.015, -0.005, 0.005, 0.015];
+        spreads.forEach((sp, i) => {
+          const base = along(along(palmEnd, n, -bases[i] * 1.2), d, -0.004);
+          // Puño: los dedos se doblan hacia la palma; abierta: se separan en abanico
+          const curl = lerp(1.9, 0, open) * -sideSign;
+          const dir = rot(d, sp * open * -sideSign + curl);
+          capsule(base, along(base, dir, fingerLen * (i === 0 || i === 3 ? 0.85 : 1)), 0.0072, 0.0058);
+        });
+        const thumbBase = along(along(wrist, d, 0.022), n, 0.017);
+        const thumbDir = rot(d, lerp(0.35, 1.0, open) * sideSign);
+        capsule(thumbBase, along(thumbBase, thumbDir, lerp(0.022, 0.034, open)), 0.0095, 0.007);
+      };
+
+      const arm = (sh: P, elbow: P, wrist: P, hand: P, open: number) => {
         capsule(sh, elbow, 0.037, 0.028);
         capsule(elbow, wrist, 0.029, 0.019);
-        capsule(wrist, hand, 0.021, 0.019);
+        handShape(wrist, hand, open);
       };
       const leg = (hip: P, knee: P, foot: P) => {
         capsule(hip, knee, 0.062, 0.041);
@@ -302,8 +334,8 @@ export default function HeroScene() {
         capsule(neckBase, add(h, [0, 0.03]), 0.027, 0.025);
       };
 
-      const far = () => { arm(shT, pose.elbowT, wristT, pose.handT); leg(add(pose.hip, [-0.012, 0]), pose.kneeB, pose.footB); };
-      const near = () => { leg(add(pose.hip, [0.012, 0]), pose.kneeF, pose.footF); torso(); head(); arm(shF, pose.elbowF, wristF, pose.handF); };
+      const far = () => { arm(shT, pose.elbowT, wristT, pose.handT, openT); leg(add(pose.hip, [-0.012, 0]), pose.kneeB, pose.footB); };
+      const near = () => { leg(add(pose.hip, [0.012, 0]), pose.kneeF, pose.footF); torso(); head(); arm(shF, pose.elbowF, wristF, pose.handF, openF); };
       const all = () => { far(); near(); };
 
       const fillWith = (shape: () => void, style: string | CanvasGradient, off: P = [0, 0], blur = 0, shadow = "transparent") => {
@@ -344,7 +376,7 @@ export default function HeroScene() {
       ctx.strokeStyle = "rgba(255,217,138,0.28)";
       ctx.lineWidth = 1;
       ctx.beginPath();
-      arm(shF, pose.elbowF, wristF, pose.handF);
+      arm(shF, pose.elbowF, wristF, pose.handF, openF);
       ctx.stroke();
       ctx.restore();
       ctx.restore();
@@ -520,7 +552,11 @@ export default function HeroScene() {
 
       // Figura
       const pose = poseAt(t);
-      drawFigure(pose, L.mobile ? 0.88 : 1);
+      // Mano que lanza: puño sobre la lanza, se abre de golpe al soltarla y se relaja
+      // cuando aparece la siguiente lanza. Mano guía: se abre al apuntar.
+      const openT = t < T_RELEASE ? 0 : t < 5.4 ? clamp01((t - T_RELEASE + 0.05) / 0.12) * lerp(1, 0.55, clamp01((t - 3.2) / 1.2)) : lerp(0.55, 0, clamp01((t - 5.4) / 0.4));
+      const openF = 0.45 + 0.55 * clamp01(t < 1.7 ? (t - 0.6) / 0.6 : 1 - (t - 2.0) / 0.8);
+      drawFigure(pose, L.mobile ? 0.88 : 1, openT, openF);
 
       // Lanza en la mano
       const held = t < T_RELEASE ? 1 : clamp01((t - 5.6) / 0.6);
