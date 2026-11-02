@@ -68,7 +68,7 @@ export default function Pricing() {
 
         <Stagger className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 items-start" stagger={0.15}>
           {plans.map((p) => (
-            <Item key={p.name}><div className={`relative flex flex-col gap-0 border rounded-[22px] p-7 transition-transform duration-300 hover:-translate-y-1.5 ${p.featured ? "border-[var(--ion)] bg-gradient-to-b from-[rgba(79,124,255,.12)] to-[rgba(11,16,32,.7)] shadow-[0_0_0_1px_rgba(79,124,255,.3),0_28px_60px_-30px_rgba(79,124,255,.5)]" : "border-[var(--line)] bg-gradient-to-b from-[rgba(18,26,51,.7)] to-[rgba(11,16,32,.7)]"}`}>
+            <Item key={p.name}><div className={`relative flex flex-col gap-0 border rounded-[22px] p-7 transition-transform duration-300 hover:-translate-y-1.5 ${p.featured ? "glow-border lg:scale-[1.04] border-[var(--ion)] bg-gradient-to-b from-[rgba(79,124,255,.12)] to-[rgba(11,16,32,.7)] shadow-[0_0_0_1px_rgba(79,124,255,.3),0_28px_60px_-30px_rgba(79,124,255,.5)]" : "border-[var(--line)] bg-gradient-to-b from-[rgba(18,26,51,.7)] to-[rgba(11,16,32,.7)]"}`}>
               {p.badge && (
                 <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 text-[var(--void)] font-mono text-[0.68rem] font-bold tracking-widest uppercase px-4 py-1 rounded-full whitespace-nowrap" style={{ background: "var(--grad)" }}>
                   {p.badge}

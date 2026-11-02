@@ -23,68 +23,6 @@ export function BrowserFrame({ url, children }: { url: string; children: ReactNo
   );
 }
 
-/* ---------- TradeSync: dashboard de trading ---------- */
-const CANDLES = [
-  [150, 132, 160, 128], [132, 140, 145, 126], [140, 118, 146, 112], [118, 124, 130, 110],
-  [124, 104, 128, 98], [104, 112, 118, 100], [112, 96, 116, 90], [96, 102, 108, 88],
-  [102, 84, 106, 78], [84, 90, 96, 80], [90, 74, 94, 68], [74, 80, 86, 70],
-  [80, 64, 84, 58], [64, 70, 76, 60], [70, 56, 74, 50], [56, 60, 66, 48],
-]; // [open, close, low(y alto), high(y bajo)] en coordenadas SVG
-
-export function TradeSyncMock() {
-  return (
-    <BrowserFrame url="app.tradesync.io/dashboard">
-      <svg viewBox="0 0 480 262" className="w-full h-full" preserveAspectRatio="xMidYMid slice">
-        <rect width="480" height="262" fill="#080c1a" />
-        {/* Barra lateral */}
-        <rect width="44" height="262" fill="#0b1022" />
-        {[24, 54, 84, 114].map((y, i) => <rect key={y} x="13" y={y} width="18" height="18" rx="5" fill={i === 0 ? "#4f7cff" : "#1a2340"} />)}
-        {/* Cabecera */}
-        <text x="60" y="30" fill="#eef2ff" fontSize="13" fontWeight="700" style={H}>EUR/USD</text>
-        <text x="128" y="30" fill="#3ddc97" fontSize="11" style={T}>1.0842 ▲ 0.38%</text>
-        <rect x="246" y="18" width="40" height="16" rx="8" fill="rgba(255,200,87,.14)" />
-        <text x="266" y="29.5" fill="#ffc857" fontSize="8" textAnchor="middle" style={T}>H1</text>
-        {/* Gráfico */}
-        {[60, 100, 140, 180].map((y) => <line key={y} x1="56" x2="320" y1={y} y2={y} stroke="#1a2340" strokeDasharray="2 4" />)}
-        {CANDLES.map(([o, c, lo, hi], i) => {
-          const x = 66 + i * 15.5;
-          const up = c < o;
-          const col = up ? "#3ddc97" : "#ff6b8b";
-          return (
-            <g key={i} className="mk-pop" style={d(i * 0.14)}>
-              <line x1={x + 4} x2={x + 4} y1={hi} y2={lo} stroke={col} strokeWidth="1" />
-              <rect x={x} y={Math.min(o, c)} width="8" height={Math.max(2, Math.abs(o - c))} rx="1.5" fill={col} />
-            </g>
-          );
-        })}
-        <polyline className="mk-draw" points="60,170 90,160 120,150 150,140 180,128 210,120 240,104 270,96 300,80 318,70"
-          fill="none" stroke="#8fa8ff" strokeWidth="2" strokeLinecap="round" style={{ ["--len" as string]: 300 } as CSSProperties} />
-        {/* Volumen */}
-        {CANDLES.map((_, i) => <rect key={i} className="mk-grow" style={d(0.4 + i * 0.08)} x={66 + i * 15.5} y={226 - ((i * 37) % 22) - 8} width="8" height={((i * 37) % 22) + 8} fill="rgba(79,124,255,.35)" rx="1" />)}
-        {/* Panel de señales */}
-        <rect x="332" y="14" width="136" height="234" rx="10" fill="#0d1328" stroke="#1a2340" />
-        <text x="344" y="34" fill="#8a93b8" fontSize="8" style={T}>P&amp;L HOY</text>
-        <text x="344" y="58" fill="#eef2ff" fontSize="20" fontWeight="700" style={H}>+12.4%</text>
-        <text x="344" y="84" fill="#8a93b8" fontSize="8" style={T}>SEÑALES</text>
-        {[
-          ["BUY", "EUR/USD", "+38p", "#3ddc97"],
-          ["SELL", "VIX75", "+21p", "#ff6b8b"],
-          ["BUY", "GBP/JPY", "+14p", "#3ddc97"],
-          ["HOLD", "XAU/USD", "—", "#8fa8ff"],
-        ].map(([a, p, g, c], i) => (
-          <g key={p} className="mk-slide" style={d(0.6 + i * 0.35)}>
-            <rect x="342" y={94 + i * 36} width="116" height="28" rx="7" fill="#121a33" />
-            <circle className="mk-blink" style={d(i * 0.5)} cx="353" cy={108 + i * 36} r="3" fill={c} />
-            <text x="362" y={106 + i * 36} fill={c} fontSize="8" fontWeight="700" style={T}>{a}</text>
-            <text x="362" y={116 + i * 36} fill="#b7c0de" fontSize="7" style={T}>{p}</text>
-            <text x="450" y={112 + i * 36} fill="#eef2ff" fontSize="8" textAnchor="end" style={T}>{g}</text>
-          </g>
-        ))}
-      </svg>
-    </BrowserFrame>
-  );
-}
-
 /* ---------- GanancIA: SaaS de rentabilidad con IA ---------- */
 export function GanancIAMock() {
   const bars = [48, 62, 55, 74, 68, 88, 96];

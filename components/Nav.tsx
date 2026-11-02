@@ -8,7 +8,7 @@ const links = [
   { href: "#portafolio", label: "Portafolio" },
   { href: "#proceso", label: "Proceso" },
   { href: "#empresas", label: "Empresas" },
-  { href: "#stack", label: "Stack" },
+  { href: "#equipo", label: "Equipo" },
   { href: "#precios", label: "Precios" },
 ];
 

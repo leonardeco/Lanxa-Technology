@@ -1,46 +1,96 @@
 "use client";
 import { AnimatePresence, motion } from "framer-motion";
+import Image from "next/image";
 import { useState, type ComponentType, type MouseEvent } from "react";
 import SectionHeader from "@/components/SectionHeader";
-import { GanancIAMock, GymMatchMock, LeofitMock, ReservaYaMock, TradeSyncMock } from "@/components/Mockups";
+import { BrowserFrame, GanancIAMock, GymMatchMock, LeofitMock, ReservaYaMock } from "@/components/Mockups";
+
+type Status = "En línea" | "Beta" | "En desarrollo" | "Completado" | "Cliente";
 
 type Project = {
-  title: string; tag: string; desc: string; stack: string[]; cats: string[];
-  Visual: ComponentType; featured?: boolean; accent: string;
+  title: string; tag: string; desc: string; stack: string[]; cats: string[]; accent: string;
+  status: Status;
+  /** Captura real (1440×900) en /public/projects; si no hay, se usa la vista animada `Visual`. */
+  image?: string; url?: string; Visual?: ComponentType;
+  demo?: string; featured?: boolean; highlights?: string[];
 };
 
 const projects: Project[] = [
   {
-    title: "TradeSync", tag: "FinTech · Python", featured: true, accent: "#3ddc97",
-    desc: "Plataforma de trading algorítmico para Forex y VIX75: bot de señales, backtesting en MT5 y dashboard de P&L.",
-    stack: ["Python", "MetaTrader 5", "Backtesting", "Dashboard"], cats: ["FinTech", "Web"], Visual: TradeSyncMock,
+    title: "MenuFlow", tag: "SaaS · Restaurantes", status: "Beta", featured: true, accent: "#ff7aa8",
+    image: "/projects/menuflow.png", url: "menu-flow-navy.vercel.app", demo: "https://menu-flow-navy.vercel.app",
+    desc: "SaaS multi-restaurante: pedidos web, QR de mesa y cocina en tiempo real, con registro, prueba gratuita de 14 días y suscripción.",
+    highlights: ["265 pruebas automatizadas", "API documentada con OpenAPI", "Datos aislados por restaurante", "Cobro con Wompi o WhatsApp"],
+    stack: ["Next.js 15", "TypeScript", "Prisma", "Neon", "Tailwind"], cats: ["SaaS", "Web"],
   },
   {
-    title: "GanancIA", tag: "SaaS · IA", accent: "#8fa8ff",
-    desc: "SaaS de rentabilidad para restaurantes en Latinoamérica, con un asistente de IA integrado para decisiones de negocio.",
-    stack: ["SaaS", "Asistente IA", "Analítica"], cats: ["SaaS & IA", "Web"], Visual: GanancIAMock,
+    title: "NEXA Sports Nutrition", tag: "E-commerce · IA", status: "Beta", accent: "#3ddc97",
+    image: "/projects/nexa.png", url: "nexa-sports-nutrition-web.vercel.app", demo: "https://nexa-sports-nutrition-web.vercel.app",
+    desc: "Tienda de suplementos con pagos en línea (PSE, Nequi y tarjeta vía Wompi) y un asistente de ventas que consulta el catálogo real.",
+    stack: ["Next.js 15", "Prisma", "pgvector", "Wompi"], cats: ["E-commerce", "IA", "Web"],
   },
   {
-    title: "ReservaYa", tag: "Web · Angular", accent: "#ffc857",
-    desc: "Sistema de reservas para restaurantes de extremo a extremo, con gestión de mesas en tiempo real.",
-    stack: ["Angular", "Tiempo real", "Reservas"], cats: ["Web"], Visual: ReservaYaMock,
+    title: "MT5 Señales", tag: "FinTech · Python", status: "Beta", accent: "#ffc857",
+    image: "/projects/mt5-signals.png", url: "mt5-signals.vercel.app", demo: "https://mt5-signals.vercel.app",
+    desc: "Radar de señales para MetaTrader 5 con gestión de riesgo en el servidor, kill switch diario y backtest con spread y comisión.",
+    stack: ["Python", "FastAPI", "WebSockets", "MetaTrader 5"], cats: ["FinTech", "Web"],
   },
   {
-    title: "LEOFIT", tag: "E-commerce · React", accent: "#ff6b8b",
-    desc: "Tienda en línea de suplementos deportivos con React + Vite, catálogo y carrito completos, en producción.",
-    stack: ["React", "Vite", "E-commerce"], cats: ["E-commerce", "Web"], Visual: LeofitMock,
+    title: "Altaira Group", tag: "Web · Cliente", status: "Cliente", accent: "#8fa8ff",
+    image: "/projects/altaira.png", url: "altaira-group",
+    desc: "Sitio para una consultora de ingeniería geográfica y ambiental: ocho servicios, SEO con datos estructurados y contacto directo por WhatsApp.",
+    stack: ["Next.js 16", "React 19", "TypeScript"], cats: ["Web"],
   },
   {
-    title: "GymMatch", tag: "Social · Mobile", accent: "#6f93ff",
+    title: "GanancIA", tag: "SaaS · IA", status: "En desarrollo", accent: "#8fa8ff", Visual: GanancIAMock,
+    desc: "Convierte los datos de un restaurante en decisiones: KPIs, ingeniería de menú, alertas de fugas y un asistente IA que responde en lenguaje natural.",
+    stack: ["Next.js", "Fastify", "PostgreSQL", "Claude API"], cats: ["SaaS", "IA"],
+  },
+  {
+    title: "ReservaYa", tag: "Web · Angular", status: "Completado", accent: "#ffc857", Visual: ReservaYaMock,
+    desc: "Búsqueda de restaurantes, reserva con confirmación y panel administrativo. Desarrollado en equipo.",
+    stack: ["Angular", "Signals", "Tailwind", "Vitest"], cats: ["Web"],
+  },
+  {
+    title: "LEOFIT", tag: "E-commerce · React", status: "Completado", accent: "#ff6b8b", Visual: LeofitMock,
+    desc: "E-commerce con más de 127 productos, filtros, carrito persistente y pedido automático por WhatsApp. Base de lo que hoy es NEXA.",
+    stack: ["React", "Vite", "Tailwind"], cats: ["E-commerce", "Web"],
+  },
+  {
+    title: "GymMatch", tag: "Social · Mobile", status: "Completado", accent: "#6f93ff", Visual: GymMatchMock,
     desc: "App social-fitness para encontrar compañeros de entrenamiento, con perfiles, emparejamiento y landing de lanzamiento.",
-    stack: ["App móvil", "Matching", "Landing"], cats: ["Móvil"], Visual: GymMatchMock,
+    stack: ["App móvil", "Matching", "Landing"], cats: ["Móvil"],
   },
 ];
+
+const STATUS_STYLE: Record<Status, string> = {
+  "En línea": "text-[#3ddc97] border-[rgba(61,220,151,.4)] bg-[rgba(61,220,151,.08)]",
+  Beta: "text-[#3ddc97] border-[rgba(61,220,151,.4)] bg-[rgba(61,220,151,.08)]",
+  Cliente: "text-[var(--plasma)] border-[rgba(255,200,87,.4)] bg-[rgba(255,200,87,.08)]",
+  "En desarrollo": "text-[var(--ion-soft)] border-[rgba(143,168,255,.4)] bg-[rgba(143,168,255,.08)]",
+  Completado: "text-[var(--ether)] border-[var(--line2)] bg-[rgba(18,26,51,.6)]",
+};
 
 const MD_SPAN: Record<number, string> = { 1: "md:col-span-1", 2: "md:col-span-2" };
 const LG_SPAN: Record<number, string> = { 1: "lg:col-span-1", 2: "lg:col-span-2", 3: "lg:col-span-3" };
 
-const FILTERS = ["Todos", "Web", "Móvil", "SaaS & IA", "FinTech", "E-commerce"];
+const FILTERS = ["Todos", "Web", "SaaS", "IA", "E-commerce", "FinTech", "Móvil"];
+
+function Screenshot({ p, big }: { p: Project; big: boolean }) {
+  return (
+    <BrowserFrame url={p.url ?? ""}>
+      <div className="relative w-full h-full overflow-hidden">
+        <Image
+          src={p.image!}
+          alt={`Captura de ${p.title}`}
+          fill
+          sizes={big ? "(min-width:1024px) 680px, 100vw" : "(min-width:1024px) 380px, (min-width:768px) 50vw, 100vw"}
+          className="object-cover object-top transition-transform duration-[1.6s] ease-out group-hover:scale-[1.06]"
+        />
+      </div>
+    </BrowserFrame>
+  );
+}
 
 function ProjectCard({ p, big }: { p: Project; big: boolean }) {
   // Inclinación 3D + foco de luz que sigue al cursor
@@ -67,26 +117,40 @@ function ProjectCard({ p, big }: { p: Project; big: boolean }) {
       className={`project-card group relative h-full flex flex-col ${big ? "lg:grid lg:grid-cols-[1.45fr_1fr]" : ""} rounded-[24px] border border-[var(--line)] bg-gradient-to-b from-[rgba(18,26,51,.75)] to-[rgba(8,12,26,.85)] overflow-hidden`}
       style={{ ["--accent" as string]: p.accent }}
     >
-      <div className={`relative aspect-[16/10] p-4 sm:p-5 overflow-hidden bg-[radial-gradient(80%_80%_at_50%_0%,rgba(79,124,255,.18),transparent_70%)]`}>
+      <div className="relative aspect-[16/10] p-4 sm:p-5 overflow-hidden" style={{ background: `radial-gradient(80% 80% at 50% 0%, color-mix(in srgb, ${p.accent} 22%, transparent), transparent 70%)` }}>
         <div className="absolute inset-0 opacity-60 bg-[linear-gradient(rgba(79,124,255,.07)_1px,transparent_1px),linear-gradient(90deg,rgba(79,124,255,.07)_1px,transparent_1px)] bg-[size:28px_28px]" />
-        <div className="relative w-full h-full transition-transform duration-500 ease-out group-hover:scale-[1.03]">
-          <p.Visual />
+        <div className="relative w-full h-full transition-transform duration-500 ease-out group-hover:scale-[1.02]">
+          {p.image ? <Screenshot p={p} big={big} /> : p.Visual ? <p.Visual /> : null}
         </div>
       </div>
-      <div className={`relative p-6 pt-5 border-t border-[var(--line)] ${big ? "lg:border-t-0 lg:border-l lg:p-10 lg:flex lg:flex-col lg:justify-center" : ""}`}>
+      <div className={`relative flex-1 flex flex-col p-6 pt-5 border-t border-[var(--line)] ${big ? "lg:border-t-0 lg:border-l lg:p-10 lg:justify-center" : ""}`}>
         <div className="flex items-center justify-between gap-3">
           <span className="font-mono text-[0.72rem]" style={{ color: p.accent }}>{p.tag}</span>
-          <span className="w-8 h-8 rounded-full border border-[var(--line2)] flex items-center justify-center text-[var(--ether)] transition-all duration-300 group-hover:rotate-[-45deg] group-hover:border-[var(--accent)] group-hover:text-[var(--moon)]">
-            <svg viewBox="0 0 24 24" width={14} height={14} fill="none" stroke="currentColor" strokeWidth={2.2}><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+          <span className={`font-mono text-[0.62rem] uppercase tracking-[.12em] border rounded-full px-2.5 py-1 whitespace-nowrap ${STATUS_STYLE[p.status]}`}>
+            {(p.status === "Beta" || p.status === "En línea") && <span className="inline-block w-1.5 h-1.5 rounded-full bg-current mr-1.5 align-middle animate-pulse" />}
+            {p.status}
           </span>
         </div>
-        <h3 className={`${big ? "text-[clamp(1.35rem,2.6vw,2rem)]" : "text-[1.35rem]"} font-bold mt-2 mb-2 tracking-tight`} style={{ fontFamily: "var(--font-space)" }}>{p.title}</h3>
+        <h3 className={`${big ? "text-[clamp(1.5rem,2.8vw,2.2rem)]" : "text-[1.35rem]"} font-bold mt-2 mb-2 tracking-tight`} style={{ fontFamily: "var(--font-space)" }}>{p.title}</h3>
         <p className="text-[0.92rem] text-[var(--ether)] leading-relaxed">{p.desc}</p>
+        {big && p.highlights && (
+          <ul className="mt-5 grid sm:grid-cols-2 gap-x-4 gap-y-2 text-[0.84rem] text-[var(--moon)]">
+            {p.highlights.map((h) => (
+              <li key={h} className="flex gap-2"><span className="text-[var(--plasma)]">✦</span>{h}</li>
+            ))}
+          </ul>
+        )}
         <ul className="mt-4 flex flex-wrap gap-1.5">
           {p.stack.map((s) => (
             <li key={s} className="font-mono text-[0.66rem] text-[var(--ether)] border border-[var(--line2)] rounded-full px-2.5 py-1 bg-[rgba(18,26,51,.6)]">{s}</li>
           ))}
         </ul>
+        {p.demo && (
+          <a href={p.demo} target="_blank" rel="noopener" className={`mt-5 self-start text-[0.9rem] ${big ? "btn-primary" : "inline-flex items-center gap-2 font-semibold text-[var(--moon)] hover:text-[var(--plasma)] transition-colors"}`}>
+            Ver demo en vivo
+            <svg viewBox="0 0 24 24" width={15} height={15} fill="none" stroke="currentColor" strokeWidth={2.2}><path d="M7 17L17 7M9 7h8v8" /></svg>
+          </a>
+        )}
       </div>
     </article>
   );
@@ -108,7 +172,7 @@ export default function Portfolio() {
             className="mb-0"
             eyebrow="Portafolio"
             title={<>Productos reales, <span className="grad-text">construidos de cero.</span></>}
-            desc="Una muestra de lo que diseñamos y desarrollamos: plataformas de trading, SaaS con IA, reservas, e-commerce y apps móviles."
+            desc="Productos propios y trabajo para clientes, con capturas reales y demos que puedes probar ahora mismo."
           />
           <div role="tablist" aria-label="Filtrar proyectos" className="flex flex-wrap gap-2">
             {FILTERS.map((f) => (

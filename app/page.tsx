@@ -10,6 +10,8 @@ import B2B from "@/components/B2B";
 import WhyLanxa from "@/components/WhyLanxa";
 import Pricing from "@/components/Pricing";
 import Contact from "@/components/Contact";
+import Team from "@/components/Team";
+import LaunchCTA from "@/components/LaunchCTA";
 import Footer from "@/components/Footer";
 import WhatsAppFloat from "@/components/WhatsAppFloat";
 import { SITE_URL } from "@/lib/site";
@@ -45,7 +47,9 @@ export default function Home() {
         <Stack />
         <B2B />
         <WhyLanxa />
+        <Team />
         <Pricing />
+        <LaunchCTA />
         <Contact />
       </main>
       <Footer />
