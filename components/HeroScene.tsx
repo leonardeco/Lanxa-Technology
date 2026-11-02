@@ -175,7 +175,7 @@ export default function HeroScene() {
       ctx.save();
       ctx.globalAlpha = alpha;
       const g = ctx.createLinearGradient(tail[0], tail[1], tip[0], tip[1]);
-      g.addColorStop(0, "rgba(79,124,255,0.05)");
+      g.addColorStop(0, "rgba(91,134,255,0.05)");
       g.addColorStop(0.6, "rgba(143,168,255,0.95)");
       g.addColorStop(1, "rgba(255,200,87,1)");
       ctx.strokeStyle = g;
@@ -203,15 +203,15 @@ export default function HeroScene() {
       ctx.save();
       const fill = ctx.createLinearGradient(0, cy - r, 0, cy - r + L.h * 0.25);
       fill.addColorStop(0, "rgba(24,36,90,0.95)");
-      fill.addColorStop(1, "rgba(7,10,22,1)");
+      fill.addColorStop(1, "rgba(8,11,26,1)");
       ctx.fillStyle = fill;
       ctx.beginPath();
       ctx.arc(cx, cy, r, 0, Math.PI * 2);
       ctx.fill();
       // Borde iluminado del horizonte
       const rim = ctx.createLinearGradient(0, 0, L.w, 0);
-      rim.addColorStop(0, "rgba(79,124,255,0)");
-      rim.addColorStop(0.45, "rgba(79,124,255,0.75)");
+      rim.addColorStop(0, "rgba(91,134,255,0)");
+      rim.addColorStop(0.45, "rgba(91,134,255,0.75)");
       rim.addColorStop(0.75, "rgba(255,200,87,0.9)");
       rim.addColorStop(1, "rgba(255,200,87,0.15)");
       ctx.strokeStyle = rim;
@@ -261,7 +261,7 @@ export default function HeroScene() {
       ctx.globalAlpha = alpha;
       ctx.lineCap = "round";
       ctx.lineJoin = "round";
-      paint(limb * 1.7, torso * 1.45, "rgba(79,124,255,0.34)", 28, "rgba(79,124,255,0.9)");
+      paint(limb * 1.7, torso * 1.45, "rgba(91,134,255,0.34)", 28, "rgba(91,134,255,0.9)");
       paint(limb, torso, "rgba(232,237,255,0.96)", 8, "rgba(186,204,255,0.9)");
 
       const neck = w("neck");
@@ -287,7 +287,7 @@ export default function HeroScene() {
       for (const j of JOINTS) {
         if (j === "head") continue;
         const p = w(j);
-        ctx.fillStyle = j === "handT" ? "#ffc857" : "#eef2ff";
+        ctx.fillStyle = j === "handT" ? "#ffc857" : "#f3f5ff";
         ctx.beginPath();
         ctx.arc(p[0], p[1], j === "handT" ? 3.1 : 2.2, 0, Math.PI * 2);
         ctx.fill();
@@ -442,7 +442,7 @@ export default function HeroScene() {
         for (let i = 0; i < 3; i++) {
           const rr = (dt - i * 0.18) * 220;
           if (rr <= 0) continue;
-          ctx.strokeStyle = i === 1 ? `rgba(79,124,255,${0.6 * flare})` : `rgba(255,200,87,${0.7 * flare})`;
+          ctx.strokeStyle = i === 1 ? `rgba(91,134,255,${0.6 * flare})` : `rgba(255,200,87,${0.7 * flare})`;
           ctx.lineWidth = 1.5;
           ctx.beginPath();
           ctx.arc(L.sx, L.sy, rr, 0, Math.PI * 2);

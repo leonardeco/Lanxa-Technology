@@ -16,7 +16,7 @@ export function BrowserFrame({ url, children }: { url: string; children: ReactNo
         <i className="w-2 h-2 rounded-full bg-[#ff5f57]" />
         <i className="w-2 h-2 rounded-full bg-[#febc2e]" />
         <i className="w-2 h-2 rounded-full bg-[#28c840]" />
-        <span className="ml-3 flex-1 max-w-[220px] h-4 rounded-full bg-[rgba(79,124,255,.12)] text-[0.55rem] font-mono text-[var(--ether-dim)] flex items-center px-2.5 truncate">{url}</span>
+        <span className="ml-3 flex-1 max-w-[220px] h-4 rounded-full bg-[rgba(91,134,255,.12)] text-[0.55rem] font-mono text-[var(--ether-dim)] flex items-center px-2.5 truncate">{url}</span>
       </div>
       <div className="flex-1 min-h-0">{children}</div>
     </div>
@@ -30,34 +30,34 @@ export function GanancIAMock() {
     <BrowserFrame url="ganancia.app/panel">
       <svg viewBox="0 0 480 262" className="w-full h-full" preserveAspectRatio="xMidYMid slice">
         <rect width="480" height="262" fill="#080c1a" />
-        <text x="18" y="28" fill="#eef2ff" fontSize="13" fontWeight="700" style={H}>Restaurante La 70</text>
-        <text x="18" y="42" fill="#8a93b8" fontSize="8" style={T}>Resumen · últimos 7 días</text>
+        <text x="18" y="28" fill="#f3f5ff" fontSize="13" fontWeight="700" style={H}>Restaurante La 70</text>
+        <text x="18" y="42" fill="#9aa3c7" fontSize="8" style={T}>Resumen · últimos 7 días</text>
         {[
           ["MARGEN", "32%", "#ffc857"],
-          ["VENTAS", "$48.2M", "#eef2ff"],
+          ["VENTAS", "$48.2M", "#f3f5ff"],
           ["COSTO/PLATO", "−6%", "#8fa8ff"],
         ].map(([k, v, c], i) => (
           <g key={k} className="mk-slide" style={d(i * 0.2)}>
-            <rect x={18 + i * 92} y="54" width="84" height="50" rx="9" fill="#121a33" stroke="#1a2340" />
-            <text x={28 + i * 92} y="72" fill="#8a93b8" fontSize="7" style={T}>{k}</text>
+            <rect x={18 + i * 92} y="54" width="84" height="50" rx="9" fill="#141c3a" stroke="#1a2340" />
+            <text x={28 + i * 92} y="72" fill="#9aa3c7" fontSize="7" style={T}>{k}</text>
             <text x={28 + i * 92} y="94" fill={c} fontSize="16" fontWeight="700" style={H}>{v}</text>
           </g>
         ))}
         <rect x="18" y="114" width="268" height="134" rx="10" fill="#0d1328" stroke="#1a2340" />
-        <text x="30" y="132" fill="#b7c0de" fontSize="8" style={T}>Utilidad diaria</text>
+        <text x="30" y="132" fill="#bcc5e6" fontSize="8" style={T}>Utilidad diaria</text>
         {bars.map((b, i) => (
           <rect key={i} className="mk-grow" style={d(0.3 + i * 0.12)} x={34 + i * 35} y={236 - b} width="22" height={b} rx="4"
-            fill={i === bars.length - 1 ? "url(#gi-bar)" : "rgba(79,124,255,.45)"} />
+            fill={i === bars.length - 1 ? "url(#gi-bar)" : "rgba(91,134,255,.45)"} />
         ))}
         <defs>
-          <linearGradient id="gi-bar" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stopColor="#4f7cff" /><stop offset="1" stopColor="#ffc857" /></linearGradient>
+          <linearGradient id="gi-bar" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stopColor="#5b86ff" /><stop offset="1" stopColor="#ffc857" /></linearGradient>
         </defs>
         {/* Asistente IA */}
         <rect x="298" y="14" width="168" height="234" rx="12" fill="#0d1328" stroke="#26305a" />
         <circle cx="316" cy="34" r="8" fill="url(#gi-bar)" />
-        <text x="330" y="37.5" fill="#eef2ff" fontSize="9" fontWeight="700" style={H}>Asistente IA</text>
+        <text x="330" y="37.5" fill="#f3f5ff" fontSize="9" fontWeight="700" style={H}>Asistente IA</text>
         <g className="mk-slide" style={d(0.4)}>
-          <rect x="350" y="56" width="104" height="30" rx="10" fill="#4f7cff" />
+          <rect x="350" y="56" width="104" height="30" rx="10" fill="#5b86ff" />
           <text x="358" y="69" fill="#fff" fontSize="7" style={T}>¿Cómo subo mi</text>
           <text x="358" y="79" fill="#fff" fontSize="7" style={T}>margen este mes?</text>
         </g>
@@ -69,7 +69,7 @@ export function GanancIAMock() {
           ))}
         </g>
         <g>
-          <rect x="310" y="214" width="144" height="24" rx="12" fill="#121a33" stroke="#26305a" />
+          <rect x="310" y="214" width="144" height="24" rx="12" fill="#141c3a" stroke="#26305a" />
           {[0, 1, 2].map((i) => <circle key={i} className="mk-blink" style={d(i * 0.2)} cx={326 + i * 9} cy="226" r="2.4" fill="#8fa8ff" />)}
         </g>
       </svg>
@@ -89,7 +89,7 @@ export function ReservaYaMock() {
       <svg viewBox="0 0 480 262" className="w-full h-full" preserveAspectRatio="xMidYMid slice">
         <rect width="480" height="262" fill="#080c1a" />
         <rect x="14" y="14" width="300" height="234" rx="12" fill="#0d1328" stroke="#1a2340" />
-        <text x="28" y="34" fill="#eef2ff" fontSize="11" fontWeight="700" style={H}>Salón principal</text>
+        <text x="28" y="34" fill="#f3f5ff" fontSize="11" fontWeight="700" style={H}>Salón principal</text>
         {tables.map(([x, y, kind], i) => (
           <g key={i}>
             {kind === "c" ? (
@@ -99,12 +99,12 @@ export function ReservaYaMock() {
             ) : (
               <rect className="mk-status" style={d(i * 0.7)} x={x - 20} y={y - 20} width="40" height="40" rx="8" />
             )}
-            <text x={x} y={y + 3.5} fill="#070a16" fontSize="9" fontWeight="700" textAnchor="middle" style={T}>{i + 1}</text>
+            <text x={x} y={y + 3.5} fill="#080b1a" fontSize="9" fontWeight="700" textAnchor="middle" style={T}>{i + 1}</text>
           </g>
         ))}
         {/* Panel de reservas */}
-        <text x="330" y="34" fill="#8a93b8" fontSize="8" style={T}>HOY · 19:00 – 22:00</text>
-        <rect className="mk-scan" x="324" y="44" width="144" height="32" rx="8" fill="rgba(79,124,255,.22)" stroke="#4f7cff" />
+        <text x="330" y="34" fill="#9aa3c7" fontSize="8" style={T}>HOY · 19:00 – 22:00</text>
+        <rect className="mk-scan" x="324" y="44" width="144" height="32" rx="8" fill="rgba(91,134,255,.22)" stroke="#5b86ff" />
         {[
           ["19:00", "Mesa 4 · 2p", "Laura M."],
           ["19:30", "Mesa 7 · 4p", "Andrés R."],
@@ -114,14 +114,14 @@ export function ReservaYaMock() {
         ].map(([h, m, n], i) => (
           <g key={h}>
             <text x="334" y={58 + i * 38} fill="#ffc857" fontSize="9" fontWeight="700" style={T}>{h}</text>
-            <text x="374" y={58 + i * 38} fill="#eef2ff" fontSize="8" style={T}>{m}</text>
-            <text x="374" y={69 + i * 38} fill="#8a93b8" fontSize="7" style={T}>{n}</text>
+            <text x="374" y={58 + i * 38} fill="#f3f5ff" fontSize="8" style={T}>{m}</text>
+            <text x="374" y={69 + i * 38} fill="#9aa3c7" fontSize="7" style={T}>{n}</text>
           </g>
         ))}
         {[["Libre", "#3ddc97"], ["Reservada", "#8fa8ff"], ["Ocupada", "#ffc857"]].map(([k, c], i) => (
           <g key={k}>
             <circle cx={334 + i * 50} cy="240" r="3.5" fill={c} />
-            <text x={341 + i * 50} y="243" fill="#b7c0de" fontSize="7" style={T}>{k}</text>
+            <text x={341 + i * 50} y="243" fill="#bcc5e6" fontSize="7" style={T}>{k}</text>
           </g>
         ))}
       </svg>
@@ -132,7 +132,7 @@ export function ReservaYaMock() {
 /* ---------- LEOFIT: tienda de suplementos ---------- */
 export function LeofitMock() {
   const products = [
-    ["Whey Pro", "$189.900", "#4f7cff"],
+    ["Whey Pro", "$189.900", "#5b86ff"],
     ["Creatina", "$89.900", "#ffc857"],
     ["Pre-Work", "$129.900", "#ff6b8b"],
   ] as const;
@@ -147,22 +147,22 @@ export function LeofitMock() {
           </linearGradient>
         </defs>
         <rect width="480" height="262" fill="#080c1a" />
-        <text x="20" y="30" fill="#eef2ff" fontSize="15" fontWeight="800" letterSpacing="2" style={H}>LEOFIT</text>
-        {["Proteínas", "Creatinas", "Ofertas"].map((t, i) => <text key={t} x={150 + i * 66} y="29" fill="#b7c0de" fontSize="8" style={T}>{t}</text>)}
+        <text x="20" y="30" fill="#f3f5ff" fontSize="15" fontWeight="800" letterSpacing="2" style={H}>LEOFIT</text>
+        {["Proteínas", "Creatinas", "Ofertas"].map((t, i) => <text key={t} x={150 + i * 66} y="29" fill="#bcc5e6" fontSize="8" style={T}>{t}</text>)}
         {/* Carrito */}
         <g transform="translate(440 14)">
-          <path d="M2 4h4l3 12h11l3-9H8" fill="none" stroke="#eef2ff" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-          <circle cx="10" cy="20" r="1.6" fill="#eef2ff" /><circle cx="19" cy="20" r="1.6" fill="#eef2ff" />
+          <path d="M2 4h4l3 12h11l3-9H8" fill="none" stroke="#f3f5ff" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+          <circle cx="10" cy="20" r="1.6" fill="#f3f5ff" /><circle cx="19" cy="20" r="1.6" fill="#f3f5ff" />
           <g className="mk-badge">
             <circle cx="23" cy="3" r="6.5" fill="#ffc857" />
-            <text x="23" y="5.8" fill="#070a16" fontSize="8" fontWeight="800" textAnchor="middle" style={T}>3</text>
+            <text x="23" y="5.8" fill="#080b1a" fontSize="8" fontWeight="800" textAnchor="middle" style={T}>3</text>
           </g>
         </g>
         {/* Banner */}
         <rect x="20" y="44" width="440" height="52" rx="10" fill="url(#lf-banner)" />
         <defs><linearGradient id="lf-banner" x1="0" x2="1"><stop offset="0" stopColor="#1d2f75" /><stop offset="1" stopColor="#6b4a10" /></linearGradient></defs>
-        <text x="36" y="68" fill="#eef2ff" fontSize="13" fontWeight="700" style={H}>Semana fitness · −20%</text>
-        <text x="36" y="84" fill="#b7c0de" fontSize="8" style={T}>Envío gratis en compras +$150.000</text>
+        <text x="36" y="68" fill="#f3f5ff" fontSize="13" fontWeight="700" style={H}>Semana fitness · −20%</text>
+        <text x="36" y="84" fill="#bcc5e6" fontSize="8" style={T}>Envío gratis en compras +$150.000</text>
         {/* Productos */}
         {products.map(([n, p, c], i) => {
           const x = 20 + i * 150;
@@ -170,15 +170,15 @@ export function LeofitMock() {
             <g key={n} className="mk-slide" style={d(0.2 + i * 0.25)}>
               <rect x={x} y="106" width="140" height="146" rx="12" fill="#0d1328" stroke="#1a2340" />
               <g className="mk-float" style={d(i * 0.6)}>
-                <rect x={x + 48} y="122" width="44" height="12" rx="4" fill="#eef2ff" opacity=".9" />
+                <rect x={x + 48} y="122" width="44" height="12" rx="4" fill="#f3f5ff" opacity=".9" />
                 <rect x={x + 42} y="132" width="56" height="58" rx="10" fill={c} />
-                <rect x={x + 50} y="150" width="40" height="18" rx="4" fill="#070a16" opacity=".35" />
+                <rect x={x + 50} y="150" width="40" height="18" rx="4" fill="#080b1a" opacity=".35" />
               </g>
               <rect x={x + 42} y="122" width="56" height="68" fill="url(#lf-shine)" className="mk-shine" style={d(i * 0.8)} />
-              <text x={x + 12} y="210" fill="#eef2ff" fontSize="10" fontWeight="700" style={H}>{n}</text>
+              <text x={x + 12} y="210" fill="#f3f5ff" fontSize="10" fontWeight="700" style={H}>{n}</text>
               <text x={x + 12} y="224" fill="#ffc857" fontSize="9" style={T}>{p}</text>
-              <rect x={x + 82} y="214" width="48" height="26" rx="8" fill={i === 0 ? "#4f7cff" : "#1a2340"} className={i === 0 ? "mk-press" : undefined} />
-              <text x={x + 106} y="230" fill="#eef2ff" fontSize="8" textAnchor="middle" style={T}>+ Añadir</text>
+              <rect x={x + 82} y="214" width="48" height="26" rx="8" fill={i === 0 ? "#5b86ff" : "#1a2340"} className={i === 0 ? "mk-press" : undefined} />
+              <text x={x + 106} y="230" fill="#f3f5ff" fontSize="8" textAnchor="middle" style={T}>+ Añadir</text>
             </g>
           );
         })}
@@ -192,23 +192,23 @@ export function LeofitMock() {
 export function GymMatchMock() {
   return (
     <div className="relative w-full h-full flex items-center justify-center">
-      <div className="absolute w-[70%] aspect-square rounded-full border border-[rgba(79,124,255,.25)] animate-spin-slow" />
+      <div className="absolute w-[70%] aspect-square rounded-full border border-[rgba(91,134,255,.25)] animate-spin-slow" />
       <div className="absolute w-[50%] aspect-square rounded-full border border-dashed border-[rgba(255,200,87,.25)] animate-spin-slower" />
-      <div className="mk-frame relative h-[92%] aspect-[9/18] rounded-[26px] border-[5px] border-[#1c2440] bg-[#080c1a] overflow-hidden shadow-[0_30px_80px_-24px_rgba(79,124,255,.6)]">
+      <div className="mk-frame relative h-[92%] aspect-[9/18] rounded-[26px] border-[5px] border-[#1c2440] bg-[#080c1a] overflow-hidden shadow-[0_30px_80px_-24px_rgba(91,134,255,.6)]">
         <svg viewBox="0 0 180 360" className="w-full h-full">
           <defs>
-            <linearGradient id="gm-a" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor="#4f7cff" /><stop offset="1" stopColor="#1d2f75" /></linearGradient>
+            <linearGradient id="gm-a" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor="#5b86ff" /><stop offset="1" stopColor="#1d2f75" /></linearGradient>
             <linearGradient id="gm-b" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor="#ffc857" /><stop offset="1" stopColor="#6b4a10" /></linearGradient>
           </defs>
           <rect width="180" height="360" fill="#080c1a" />
           <rect x="66" y="8" width="48" height="10" rx="5" fill="#000" />
-          <text x="90" y="42" fill="#eef2ff" fontSize="13" fontWeight="800" textAnchor="middle" style={H}>GymMatch</text>
+          <text x="90" y="42" fill="#f3f5ff" fontSize="13" fontWeight="800" textAnchor="middle" style={H}>GymMatch</text>
           {/* Tarjeta de fondo */}
           <g>
             <rect x="22" y="62" width="136" height="200" rx="16" fill="url(#gm-b)" />
-            <circle cx="90" cy="135" r="30" fill="rgba(7,10,22,.35)" />
-            <text x="34" y="236" fill="#070a16" fontSize="12" fontWeight="800" style={H}>Sofía, 27</text>
-            <text x="34" y="250" fill="#070a16" fontSize="8" style={T}>Crossfit · 1.2 km</text>
+            <circle cx="90" cy="135" r="30" fill="rgba(8,11,26,.35)" />
+            <text x="34" y="236" fill="#080b1a" fontSize="12" fontWeight="800" style={H}>Sofía, 27</text>
+            <text x="34" y="250" fill="#080b1a" fontSize="8" style={T}>Crossfit · 1.2 km</text>
           </g>
           {/* Tarjeta que se desliza */}
           <g className="mk-swipe">
@@ -225,9 +225,9 @@ export function GymMatchMock() {
             <path d="M90 196 C70 180 62 168 70 158 C76 150 86 152 90 160 C94 152 104 150 110 158 C118 168 110 180 90 196 Z" fill="#ff6b8b" />
           </g>
           {/* Botones */}
-          <circle cx="58" cy="298" r="18" fill="#121a33" stroke="#26305a" />
+          <circle cx="58" cy="298" r="18" fill="#141c3a" stroke="#26305a" />
           <path d="M52 292l12 12M64 292l-12 12" stroke="#ff6b8b" strokeWidth="2.2" strokeLinecap="round" />
-          <circle cx="122" cy="298" r="18" fill="#121a33" stroke="#26305a" />
+          <circle cx="122" cy="298" r="18" fill="#141c3a" stroke="#26305a" />
           <path d="M122 306c-6-4.5-9-8-9-11a4.5 4.5 0 0 1 9-1 4.5 4.5 0 0 1 9 1c0 3-3 6.5-9 11z" fill="#ffc857" />
           <rect x="62" y="340" width="56" height="4" rx="2" fill="#26305a" />
         </svg>

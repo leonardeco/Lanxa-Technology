@@ -34,7 +34,7 @@ export default function Team() {
             <Item key={m.name}>
               <article className="card glow-border h-full p-7 flex flex-col sm:flex-row gap-6 items-start">
                 <div className="relative shrink-0">
-                  <div className="absolute -inset-1.5 rounded-full animate-spin-slow" style={{ background: "conic-gradient(from 0deg,#4f7cff,#ffc857,#4f7cff)" }} />
+                  <div className="absolute -inset-1.5 rounded-full animate-spin-slow" style={{ background: "conic-gradient(from 0deg,#5b86ff,#ffc857,#5b86ff)" }} />
                   {m.photo ? (
                     <Image src={m.photo} alt={m.name} width={112} height={112} className="relative w-28 h-28 rounded-full object-cover border-4 border-[var(--deep)]" />
                   ) : (

@@ -35,12 +35,12 @@ export default function Contact() {
     }
   }
 
-  const inputCls = "w-full bg-[rgba(18,26,51,.8)] border border-[var(--line)] rounded-xl text-[var(--moon)] text-[0.93rem] px-4 py-3 outline-none transition-all focus:border-[var(--ion)] focus:shadow-[0_0_0_3px_rgba(79,124,255,.15)] placeholder:text-[var(--ether-dim)]";
+  const inputCls = "w-full bg-[rgba(20,28,58,.8)] border border-[var(--line)] rounded-xl text-[var(--moon)] text-[0.93rem] px-4 py-3 outline-none transition-all focus:border-[var(--ion)] focus:shadow-[0_0_0_3px_rgba(91,134,255,.15)] placeholder:text-[var(--ether-dim)]";
   const labelCls = "font-mono text-[0.7rem] tracking-[.1em] uppercase text-[var(--ether-dim)] mb-1.5 block";
 
   return (
     <section id="contacto" className="py-[clamp(72px,11vw,128px)] relative overflow-hidden border-t border-[var(--line)] text-center">
-      <div className="absolute inset-0 z-0" style={{ background: "radial-gradient(55% 60% at 50% 35%,rgba(79,124,255,.22),transparent 65%)" }} />
+      <div className="absolute inset-0 z-0" style={{ background: "radial-gradient(55% 60% at 50% 35%,rgba(91,134,255,.22),transparent 65%)" }} />
       <div className="relative z-10 max-w-[760px] mx-auto px-5 md:px-10">
         <span className="inline-flex items-center gap-2 font-mono text-[0.72rem] tracking-[.28em] uppercase text-[var(--plasma)] before:content-[''] before:w-[22px] before:h-px before:bg-[var(--plasma)] before:opacity-60 justify-center">Contacto</span>
         <h2 className="text-[clamp(2rem,5vw,3.2rem)] font-bold mt-5 mb-4 tracking-tight" style={{ fontFamily: "var(--font-space)" }}>
@@ -56,7 +56,7 @@ export default function Contact() {
             Escribir por WhatsApp
           </a>
           <a href="mailto:leonardecojt@gmail.com?subject=Quiero%20cotizar%20un%20proyecto%20con%20Lanxa%20Technology"
-            className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-semibold border border-[var(--line2)] text-[var(--moon)] hover:border-[var(--ion)] hover:bg-[rgba(79,124,255,.1)] transition-all hover:-translate-y-0.5">
+            className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-semibold border border-[var(--line2)] text-[var(--moon)] hover:border-[var(--ion)] hover:bg-[rgba(91,134,255,.1)] transition-all hover:-translate-y-0.5">
             Enviar un correo
           </a>
         </div>
@@ -72,7 +72,7 @@ export default function Contact() {
           {[
             { initials: "LG", name: "Leonardo Guzmán", role: "Fundador & CTO",            tel: "+573226993891", wa: "Leonardo" },
           ].map((a) => (
-            <div key={a.name} className="flex items-center gap-4 border border-[var(--line2)] rounded-2xl px-6 py-4 bg-[rgba(18,26,51,.6)] min-w-[260px] text-left">
+            <div key={a.name} className="flex items-center gap-4 border border-[var(--line2)] rounded-2xl px-6 py-4 bg-[rgba(20,28,58,.6)] min-w-[260px] text-left">
               <div className="w-12 h-12 rounded-full flex-shrink-0 flex items-center justify-center font-bold text-[var(--void)] text-[0.9rem]" style={{ background: "var(--grad)", fontFamily: "var(--font-space)" }}>
                 {a.initials}
               </div>

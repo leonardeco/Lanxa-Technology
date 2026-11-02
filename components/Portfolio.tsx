@@ -68,7 +68,7 @@ const STATUS_STYLE: Record<Status, string> = {
   Beta: "text-[#3ddc97] border-[rgba(61,220,151,.4)] bg-[rgba(61,220,151,.08)]",
   Cliente: "text-[var(--plasma)] border-[rgba(255,200,87,.4)] bg-[rgba(255,200,87,.08)]",
   "En desarrollo": "text-[var(--ion-soft)] border-[rgba(143,168,255,.4)] bg-[rgba(143,168,255,.08)]",
-  Completado: "text-[var(--ether)] border-[var(--line2)] bg-[rgba(18,26,51,.6)]",
+  Completado: "text-[var(--ether)] border-[var(--line2)] bg-[rgba(20,28,58,.6)]",
 };
 
 const MD_SPAN: Record<number, string> = { 1: "md:col-span-1", 2: "md:col-span-2" };
@@ -114,11 +114,11 @@ function ProjectCard({ p, big }: { p: Project; big: boolean }) {
     <article
       onMouseMove={onMove}
       onMouseLeave={onLeave}
-      className={`project-card group relative h-full flex flex-col ${big ? "lg:grid lg:grid-cols-[1.45fr_1fr]" : ""} rounded-[24px] border border-[var(--line)] bg-gradient-to-b from-[rgba(18,26,51,.75)] to-[rgba(8,12,26,.85)] overflow-hidden`}
+      className={`project-card group relative h-full flex flex-col ${big ? "lg:grid lg:grid-cols-[1.45fr_1fr]" : ""} rounded-[24px] border border-[var(--line)] bg-gradient-to-b from-[rgba(20,28,58,.75)] to-[rgba(8,12,26,.85)] overflow-hidden`}
       style={{ ["--accent" as string]: p.accent }}
     >
       <div className="relative aspect-[16/10] p-4 sm:p-5 overflow-hidden" style={{ background: `radial-gradient(80% 80% at 50% 0%, color-mix(in srgb, ${p.accent} 22%, transparent), transparent 70%)` }}>
-        <div className="absolute inset-0 opacity-60 bg-[linear-gradient(rgba(79,124,255,.07)_1px,transparent_1px),linear-gradient(90deg,rgba(79,124,255,.07)_1px,transparent_1px)] bg-[size:28px_28px]" />
+        <div className="absolute inset-0 opacity-60 bg-[linear-gradient(rgba(91,134,255,.07)_1px,transparent_1px),linear-gradient(90deg,rgba(91,134,255,.07)_1px,transparent_1px)] bg-[size:28px_28px]" />
         <div className="relative w-full h-full transition-transform duration-500 ease-out group-hover:scale-[1.02]">
           {p.image ? <Screenshot p={p} big={big} /> : p.Visual ? <p.Visual /> : null}
         </div>
@@ -142,7 +142,7 @@ function ProjectCard({ p, big }: { p: Project; big: boolean }) {
         )}
         <ul className="mt-4 flex flex-wrap gap-1.5">
           {p.stack.map((s) => (
-            <li key={s} className="font-mono text-[0.66rem] text-[var(--ether)] border border-[var(--line2)] rounded-full px-2.5 py-1 bg-[rgba(18,26,51,.6)]">{s}</li>
+            <li key={s} className="font-mono text-[0.66rem] text-[var(--ether)] border border-[var(--line2)] rounded-full px-2.5 py-1 bg-[rgba(20,28,58,.6)]">{s}</li>
           ))}
         </ul>
         {p.demo && (

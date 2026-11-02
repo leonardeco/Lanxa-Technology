@@ -1,18 +1,18 @@
 @import "tailwindcss";
 
 :root {
-  --void: #070a16;
+  --void: #080b1a;
   --deep: #0b1020;
-  --panel: #121a33;
+  --panel: #141c3a;
   --line: #1e2742;
   --line2: #2a3358;
-  --ion: #4f7cff;
+  --ion: #5b86ff;
   --ion-soft: #8fa8ff;
   --plasma: #ffc857;
-  --ether: #b7c0de;
-  --ether-dim: #8a93b8;
-  --moon: #eef2ff;
-  --grad: linear-gradient(105deg, #4f7cff 0%, #7f9cff 55%, #ffd27a 100%);
+  --ether: #bcc5e6;
+  --ether-dim: #9aa3c7;
+  --moon: #f3f5ff;
+  --grad: linear-gradient(105deg, #ffc857 0%, #ffd98a 100%);
 }
 
 html { scroll-behavior: smooth; scroll-padding-top: 72px; }
@@ -63,7 +63,7 @@ body::before {
   transition: transform .25s ease, box-shadow .25s ease, background-color .25s ease, border-color .25s ease;
 }
 .btn-primary {
-  color: var(--void);
+  color: #1a1405;
   background: var(--grad);
   box-shadow: 0 10px 30px -14px rgba(255,200,87,.55), inset 0 1px 0 rgba(255,255,255,.35);
 }
@@ -71,19 +71,19 @@ body::before {
 .btn-ghost {
   color: var(--moon);
   border: 1px solid var(--line2);
-  background: rgba(18,26,51,.45);
+  background: rgba(20,28,58,.45);
   backdrop-filter: blur(8px);
 }
-.btn-ghost:hover { transform: translateY(-2px); border-color: var(--ion); background: rgba(79,124,255,.12); }
+.btn-ghost:hover { transform: translateY(-2px); border-color: var(--ion); background: rgba(91,134,255,.12); }
 
 .card {
   position: relative;
   border: 1px solid var(--line);
   border-radius: 22px;
-  background: linear-gradient(180deg, rgba(18,26,51,.6), rgba(11,16,32,.6));
+  background: linear-gradient(180deg, rgba(20,28,58,.6), rgba(11,16,32,.6));
   transition: transform .35s cubic-bezier(.22,1,.36,1), border-color .35s ease, box-shadow .35s ease;
 }
-.card:hover { transform: translateY(-6px); border-color: var(--ion); box-shadow: 0 28px 60px -34px rgba(79,124,255,.75); }
+.card:hover { transform: translateY(-6px); border-color: var(--ion); box-shadow: 0 28px 60px -34px rgba(91,134,255,.75); }
 
 /* Tarjeta con foco de luz que sigue al cursor (variables --mx/--my desde JS) */
 .spotlight { --mx: 50%; --my: 50%; overflow: hidden; }
@@ -95,7 +95,7 @@ body::before {
   pointer-events: none;
   opacity: 0;
   transition: opacity .35s ease;
-  background: radial-gradient(420px circle at var(--mx) var(--my), rgba(79,124,255,.16), transparent 45%);
+  background: radial-gradient(420px circle at var(--mx) var(--my), rgba(91,134,255,.16), transparent 45%);
 }
 .spotlight:hover::after { opacity: 1; }
 
@@ -129,7 +129,7 @@ body::before {
   inset: 0;
   padding: 1.5px;
   border-radius: inherit;
-  background: conic-gradient(from var(--angle), transparent 0 35%, #4f7cff 55%, #ffc857 70%, transparent 88%);
+  background: conic-gradient(from var(--angle), transparent 0 35%, #5b86ff 55%, #ffc857 70%, transparent 88%);
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
@@ -154,7 +154,7 @@ body::before {
 @keyframes scroll-dot { 0% { transform: translateY(0); opacity: 1; } 80% { transform: translateY(12px); opacity: 0; } 100% { opacity: 0; } }
 
 .grad-text {
-  background: linear-gradient(105deg, var(--ion-soft) 0%, var(--plasma) 50%, var(--ion-soft) 100%);
+  background: linear-gradient(105deg, #ffc857 0%, #ffe6ad 45%, #ffc857 60%, #ffb938 100%);
   background-size: 200% auto;
   -webkit-background-clip: text;
   background-clip: text;

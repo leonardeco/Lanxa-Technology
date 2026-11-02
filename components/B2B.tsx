@@ -22,7 +22,7 @@ export default function B2B() {
         />
 
         {/* Banner */}
-        <Reveal className="mb-12"><div className="grid md:grid-cols-[1fr_auto] gap-6 items-center border border-[var(--line2)] rounded-[22px] p-8 bg-gradient-to-br from-[rgba(79,124,255,.08)] to-[rgba(255,200,87,.06)]">
+        <Reveal className="mb-12"><div className="grid md:grid-cols-[1fr_auto] gap-6 items-center border border-[var(--line2)] rounded-[22px] p-8 bg-gradient-to-br from-[rgba(91,134,255,.08)] to-[rgba(255,200,87,.06)]">
           <div>
             <span className="inline-flex items-center gap-2 font-mono text-[0.7rem] tracking-[.15em] uppercase text-[var(--plasma)] border border-[rgba(255,200,87,.35)] px-3 py-1 rounded-full bg-[rgba(255,200,87,.05)] mb-3">
               Disponible para contratos corporativos

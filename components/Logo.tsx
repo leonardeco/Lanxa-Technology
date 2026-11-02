@@ -14,8 +14,8 @@ export default function Logo({ size = 32, animated = false }: { size?: number; a
     <svg viewBox="0 0 48 48" width={size} height={size} aria-hidden="true" className={animated ? "lx-logo-animated" : undefined}>
       <defs>
         <linearGradient id={g} x1="6" y1="42" x2="34" y2="14" gradientUnits="userSpaceOnUse">
-          <stop offset="0" stopColor="#4f7cff" stopOpacity="0.15" />
-          <stop offset="0.55" stopColor="#4f7cff" />
+          <stop offset="0" stopColor="#5b86ff" stopOpacity="0.15" />
+          <stop offset="0.55" stopColor="#5b86ff" />
           <stop offset="1" stopColor="#c9d4ff" />
         </linearGradient>
         <radialGradient id={s} cx="0.5" cy="0.5" r="0.5">
