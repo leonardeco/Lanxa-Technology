@@ -3,6 +3,7 @@ import { useState } from "react";
 
 export default function Contact() {
   const [status, setStatus] = useState<"idle"|"loading"|"success"|"error">("idle");
+  const [errorMsg, setErrorMsg] = useState("");
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -10,17 +11,26 @@ export default function Contact() {
     const nombre  = (form.elements.namedItem("nombre")  as HTMLInputElement).value.trim();
     const email   = (form.elements.namedItem("email")   as HTMLInputElement).value.trim();
     const mensaje = (form.elements.namedItem("mensaje") as HTMLTextAreaElement).value.trim();
-    if (!nombre || !email || !mensaje) return alert("Completa los campos obligatorios: Nombre, Email y Mensaje.");
+    if (!nombre || !email || !mensaje) {
+      setErrorMsg("Completa los campos obligatorios: nombre, email y mensaje.");
+      setStatus("error");
+      return;
+    }
 
     setStatus("loading");
+    setErrorMsg("");
     try {
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(Object.fromEntries(new FormData(form))),
       });
-      setStatus(res.ok ? "success" : "error");
+      if (res.ok) return setStatus("success");
+      const data = await res.json().catch(() => ({}));
+      setErrorMsg(data.error || "No se pudo enviar el mensaje.");
+      setStatus("error");
     } catch {
+      setErrorMsg("No se pudo enviar el mensaje. Revisa tu conexión.");
       setStatus("error");
     }
   }
@@ -116,7 +126,14 @@ export default function Contact() {
                   {status === "loading" ? "Enviando..." : <>Enviar propuesta <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.2} width={17} height={17}><path d="M5 12h14M13 6l6 6-6 6"/></svg></>}
                 </button>
               </div>
-              {status === "error" && <p className="sm:col-span-2 text-red-400 text-[0.85rem] font-mono">Error al enviar. Escríbenos a leonardecojt@gmail.com</p>}
+              {status === "error" && (
+                <p role="alert" className="sm:col-span-2 text-red-400 text-[0.85rem] font-mono">
+                  {errorMsg} Escríbenos por{" "}
+                  <a className="underline hover:text-[var(--moon)]" href="https://wa.me/573226993891?text=Hola%20Lanxa%20Technology,%20quiero%20cotizar%20un%20proyecto" target="_blank" rel="noopener">WhatsApp</a>
+                  {" "}o a{" "}
+                  <a className="underline hover:text-[var(--moon)]" href="mailto:leonardecojt@gmail.com">leonardecojt@gmail.com</a>.
+                </p>
+              )}
             </form>
           )}
         </div>

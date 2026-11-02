@@ -4,6 +4,7 @@ export const viewport: Viewport = { themeColor: "#070a16" };
 import { Space_Grotesk, Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import MotionProvider from "@/components/MotionProvider";
+import { SITE_URL } from "@/lib/site";
 
 const spaceGrotesk = Space_Grotesk({ subsets: ["latin"], variable: "--font-space" });
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
@@ -12,13 +13,16 @@ const jetbrainsMono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-mon
 export const metadata: Metadata = {
   title: "Lanxa Technology — Ingeniería de software a la medida",
   description: "Estudio de ingeniería de software en Colombia con más de 5 años de experiencia. Diseñamos y construimos aplicaciones web, de escritorio y móviles a la medida: sólidas, escalables y listas para crecer.",
-  metadataBase: new URL("https://lanxa-technology.netlify.app"),
+  metadataBase: new URL(SITE_URL),
+  alternates: { canonical: "/" },
+  keywords: ["desarrollo de software a la medida", "aplicaciones web", "apps móviles", "aplicaciones de escritorio", "desarrollo de software Colombia", "Armenia Quindío", "subcontratación de desarrolladores", "Next.js", "React"],
   openGraph: {
     title: "Lanxa Technology — Estudio de ingeniería de software",
     description: "Aplicaciones web, de escritorio y móviles a la medida. Sólidas, escalables, listas para crecer.",
     type: "website",
     locale: "es_CO",
-    url: "https://lanxa-technology.netlify.app",
+    url: SITE_URL,
+    siteName: "Lanxa Technology",
   },
   twitter: {
     card: "summary_large_image",
