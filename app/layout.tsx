@@ -12,7 +12,7 @@ const jetbrainsMono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-mon
 
 export const metadata: Metadata = {
   title: "Lanxa Technology — Ingeniería de software a la medida",
-  description: "Estudio de ingeniería de software en Colombia con más de 5 años de experiencia. Diseñamos y construimos aplicaciones web, de escritorio y móviles a la medida: sólidas, escalables y listas para crecer.",
+  description: "Estudio de ingeniería de software en Colombia con más de 2 años de experiencia. Diseñamos y construimos aplicaciones web, de escritorio y móviles a la medida: sólidas, escalables y listas para crecer.",
   metadataBase: new URL(SITE_URL),
   alternates: { canonical: "/" },
   keywords: ["desarrollo de software a la medida", "aplicaciones web", "apps móviles", "aplicaciones de escritorio", "desarrollo de software Colombia", "Armenia Quindío", "subcontratación de desarrolladores", "Next.js", "React"],

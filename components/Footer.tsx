@@ -18,7 +18,7 @@ export default function Footer() {
             Lanxa Technology
           </div>
           <p className="mt-4 text-[0.9rem] text-[var(--ether)] max-w-[42ch] leading-relaxed">
-            Más de 5 años desarrollando aplicaciones web, móviles y de escritorio a la medida. Apuntamos a las estrellas, entregamos en tierra firme.
+            Más de 2 años desarrollando aplicaciones web, móviles y de escritorio a la medida. Apuntamos a las estrellas, entregamos en tierra firme.
           </p>
         </div>
         <nav aria-label="Pie de página" className="flex flex-wrap gap-x-7 gap-y-3 md:justify-end text-[0.9rem] text-[var(--ether)]">

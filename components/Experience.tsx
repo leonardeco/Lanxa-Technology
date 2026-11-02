@@ -17,7 +17,7 @@ export default function Experience() {
           <span className="eyebrow">Trayectoria</span>
           <div className="mt-5 flex items-end gap-4">
             <span className="grad-text text-[clamp(6rem,16vw,11rem)] font-bold leading-[.8] tracking-[-0.05em]" style={{ fontFamily: "var(--font-space)" }}>
-              <Counter to={5} prefix="+" duration={1.2} />
+              <Counter to={2} prefix="+" duration={1.2} />
             </span>
             <span className="pb-3 text-[clamp(1.2rem,2.4vw,1.6rem)] font-semibold leading-tight" style={{ fontFamily: "var(--font-space)" }}>
               años
@@ -26,7 +26,7 @@ export default function Experience() {
             </span>
           </div>
           <p className="mt-6 text-[var(--ether)] text-[1.05rem] leading-relaxed max-w-[46ch]">
-            Más de cinco años desarrollando <strong className="text-[var(--moon)] font-semibold">aplicaciones a la medida</strong>:
+            Más de dos años desarrollando <strong className="text-[var(--moon)] font-semibold">aplicaciones a la medida</strong>:
             plataformas de trading, SaaS con inteligencia artificial, sistemas de reservas, e-commerce y apps móviles en producción.
           </p>
         </Reveal>

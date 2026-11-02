@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 
-export const alt = "Lanxa Technology — Software a la medida con más de 5 años de experiencia";
+export const alt = "Lanxa Technology — Software a la medida con más de 2 años de experiencia";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -21,7 +21,7 @@ export default function Image() {
           <div style={{ display: "flex", fontSize: 76, fontWeight: 700, lineHeight: 1.05 }}>Apuntamos alto.</div>
           <div style={{ display: "flex", fontSize: 76, fontWeight: 700, lineHeight: 1.05, color: "#ffc857" }}>Software que escala.</div>
           <div style={{ display: "flex", marginTop: 28, fontSize: 30, color: "#b7c0de" }}>
-            Aplicaciones web, móviles y de escritorio a la medida · +5 años de experiencia
+            Aplicaciones web, móviles y de escritorio a la medida · +2 años de experiencia
           </div>
         </div>
         <div style={{ display: "flex", fontSize: 24, color: "#8a93b8" }}>Armenia, Colombia · LATAM y global</div>

@@ -24,7 +24,7 @@ const jsonLd = {
   url: SITE_URL,
   logo: `${SITE_URL}/icon.svg`,
   image: `${SITE_URL}/opengraph-image`,
-  description: "Estudio de ingeniería de software con más de 5 años desarrollando aplicaciones web, móviles y de escritorio a la medida.",
+  description: "Estudio de ingeniería de software con más de 2 años desarrollando aplicaciones web, móviles y de escritorio a la medida.",
   email: "leonardecojt@gmail.com",
   telephone: "+57 322 699 3891",
   address: { "@type": "PostalAddress", addressLocality: "Armenia", addressRegion: "Quindío", addressCountry: "CO" },

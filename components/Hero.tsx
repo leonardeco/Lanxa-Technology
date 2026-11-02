@@ -20,7 +20,7 @@ export default function Hero() {
           <div className="hero-in" style={{ ["--i" as string]: 0 }}>
             <span className="inline-flex items-center gap-2.5 text-[var(--ether)] border border-[var(--line2)] bg-[rgba(18,26,51,.65)] backdrop-blur px-4 py-1.5 rounded-full mb-7 text-xs font-mono">
               <span className="w-2 h-2 rounded-full bg-[var(--plasma)] animate-pulse-dot" />
-              +5 años creando software a la medida
+              +2 años creando software a la medida
             </span>
           </div>
 
@@ -55,7 +55,7 @@ export default function Hero() {
           <div className="hero-in" style={{ ["--i" as string]: 4 }}>
             <dl className="mt-12 grid grid-cols-3 max-w-[520px] border border-[var(--line)] rounded-2xl overflow-hidden bg-[rgba(11,16,32,.72)] backdrop-blur">
               {[
-                { big: <Counter to={5} prefix="+" />, sub: "años de experiencia" },
+                { big: <Counter to={2} prefix="+" />, sub: "años de experiencia" },
                 { big: "3", sub: "web · móvil · escritorio" },
                 { big: <Counter to={100} suffix="%" />, sub: "código fuente tuyo" },
               ].map((c, i) => (
