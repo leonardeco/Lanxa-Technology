@@ -17,6 +17,13 @@ type Project = {
 
 const projects: Project[] = [
   {
+    title: "Guía de Estudio Magisterio", tag: "EdTech · Plataforma de pago", status: "En línea", featured: true, accent: "#7fb0ff",
+    image: "/projects/guia-magisterio.png", url: "magisterioguiaestudio.com", demo: "https://www.magisterioguiaestudio.com/registro/",
+    desc: "Plataforma para preparar el concurso docente en Colombia: cuentas, pase anual con pago en línea y todo el material del curso protegido. Primaria en línea; secundaria y media en creación.",
+    highlights: ["Pagos reales con Wompi: PSE, Nequi y tarjeta", "184 clases, 129 documentos y 197 preguntas con fuente", "Material protegido con enlaces que vencen", "Panel de administración y 122 pruebas automatizadas"],
+    stack: ["Astro 5", "TypeScript", "React 19", "Neon", "Wompi"], cats: ["Educación", "SaaS", "Web"],
+  },
+  {
     title: "MenuFlow", tag: "SaaS · Restaurantes", status: "Beta", featured: true, accent: "#ff7aa8",
     image: "/projects/menuflow.png", url: "menu-flow-navy.vercel.app", demo: "https://menu-flow-navy.vercel.app",
     desc: "SaaS multi-restaurante: pedidos web, QR de mesa y cocina en tiempo real, con registro, prueba gratuita de 14 días y suscripción.",
@@ -24,10 +31,27 @@ const projects: Project[] = [
     stack: ["Next.js 15", "TypeScript", "Prisma", "Neon", "Tailwind"], cats: ["SaaS", "Web"],
   },
   {
+    title: "Pulso Entrenadores", tag: "SaaS · Fitness", status: "Beta", accent: "#ff9f5a",
+    image: "/projects/pulso.png", url: "pulso-seven-tau.vercel.app", demo: "https://pulso-seven-tau.vercel.app",
+    desc: "La app del entrenador personal: agenda, clientes, rutinas, alimentación y el cobro de cada mes. Cada cliente entra y consulta solo lo suyo.",
+    stack: ["Angular 21", "TypeScript", "Neon", "Vitest", "Playwright"], cats: ["SaaS", "Web", "Móvil"],
+  },
+  {
+    title: "Guía Interactiva del Quindío", tag: "Turismo · App web", status: "En línea", accent: "#3ddc97",
+    image: "/projects/quindio.png", url: "guia-interactivo-quindio.vercel.app", demo: "https://guia-interactivo-quindio.vercel.app",
+    desc: "El departamento en el celular: mapa de los doce municipios, seis guías temáticos, rutas cortas y pasaporte de sellos, en 25 idiomas y lista para instalar.",
+    stack: ["TypeScript", "PWA", "Mapas", "25 idiomas"], cats: ["Web", "Móvil"],
+  },
+  {
     title: "NEXA Sports Nutrition", tag: "E-commerce · IA", status: "Beta", accent: "#3ddc97",
     image: "/projects/nexa.png", url: "nexa-sports-nutrition-web.vercel.app", demo: "https://nexa-sports-nutrition-web.vercel.app",
     desc: "Tienda de suplementos con pagos en línea (PSE, Nequi y tarjeta vía Wompi) y un asistente de ventas que consulta el catálogo real.",
     stack: ["Next.js 15", "Prisma", "pgvector", "Wompi"], cats: ["E-commerce", "IA", "Web"],
+  },
+  {
+    title: "BarberAD", tag: "SaaS · Barberías", status: "En desarrollo", accent: "#ffc857",
+    desc: "La caja de una barbería en el celular: carta de servicios, equipo, cobro de cada corte con propina aparte y cierre del día. Cada barbero ve solo sus cortes y su comisión.",
+    stack: ["Next.js", "TypeScript", "PostgreSQL"], cats: ["SaaS", "Web", "Móvil"],
   },
   {
     title: "MT5 Señales", tag: "FinTech · Python", status: "Beta", accent: "#ffc857",
@@ -42,9 +66,24 @@ const projects: Project[] = [
     stack: ["Next.js 16", "React 19", "TypeScript"], cats: ["Web"],
   },
   {
+    title: "NightTable CO", tag: "Marketplace · SaaS", status: "En desarrollo", accent: "#c08bff",
+    desc: "Marketplace de food & nightlife en Colombia: descubrir y reservar restaurantes, bares y discotecas, con un SaaS multi-sede para los locales.",
+    stack: ["Next.js 15", "Fastify 5", "PostgreSQL 16", "TypeScript"], cats: ["SaaS", "Web"],
+  },
+  {
     title: "GanancIA", tag: "SaaS · IA", status: "En desarrollo", accent: "#8fa8ff", Visual: GanancIAMock,
     desc: "Convierte los datos de un restaurante en decisiones: KPIs, ingeniería de menú, alertas de fugas y un asistente IA que responde en lenguaje natural.",
     stack: ["Next.js", "Fastify", "PostgreSQL", "Claude API"], cats: ["SaaS", "IA"],
+  },
+  {
+    title: "BioFit", tag: "Salud · IA", status: "Completado", accent: "#3ddc97",
+    desc: "Dashboard para entrenadores y nutricionistas: registra bioimpedancia, calcula IMC y metabolismo basal, y genera planes de entrenamiento y nutrición con IA.",
+    stack: ["Next.js 16", "TypeScript", "Tailwind 4", "Claude API"], cats: ["IA", "Web"],
+  },
+  {
+    title: "OptiAgenda", tag: "API · Java", status: "Completado", accent: "#ff7aa8",
+    desc: "API REST de agendamiento de citas con autenticación JWT, roles de administrador, profesional y cliente, validación de conflictos de horario y Swagger.",
+    stack: ["Java 17", "Spring Boot 3", "JWT", "MySQL", "Swagger"], cats: ["Backend"],
   },
   {
     title: "ReservaYa", tag: "Web · Angular", status: "Completado", accent: "#ffc857", Visual: ReservaYaMock,
@@ -52,7 +91,13 @@ const projects: Project[] = [
     stack: ["Angular", "Signals", "Tailwind", "Vitest"], cats: ["Web"],
   },
   {
+    title: "Luma", tag: "E-commerce · Next.js", status: "Completado", accent: "#ffb3d1",
+    desc: "Tienda de un solo producto, un serum de vitamina C, con precios en pesos y pedido armado directo a WhatsApp.",
+    stack: ["Next.js", "TypeScript"], cats: ["E-commerce", "Web"],
+  },
+  {
     title: "LEOFIT", tag: "E-commerce · React", status: "Completado", accent: "#ff6b8b", Visual: LeofitMock,
+    url: "sports-store-ruby.vercel.app", demo: "https://sports-store-ruby.vercel.app",
     desc: "E-commerce con más de 127 productos, filtros, carrito persistente y pedido automático por WhatsApp. Base de lo que hoy es NEXA.",
     stack: ["React", "Vite", "Tailwind"], cats: ["E-commerce", "Web"],
   },
@@ -74,7 +119,7 @@ const STATUS_STYLE: Record<Status, string> = {
 const MD_SPAN: Record<number, string> = { 1: "md:col-span-1", 2: "md:col-span-2" };
 const LG_SPAN: Record<number, string> = { 1: "lg:col-span-1", 2: "lg:col-span-2", 3: "lg:col-span-3" };
 
-const FILTERS = ["Todos", "Web", "SaaS", "IA", "E-commerce", "FinTech", "Móvil"];
+const FILTERS = ["Todos", "Educación", "Web", "SaaS", "IA", "E-commerce", "FinTech", "Móvil", "Backend"];
 
 function Screenshot({ p, big }: { p: Project; big: boolean }) {
   return (
@@ -87,6 +132,20 @@ function Screenshot({ p, big }: { p: Project; big: boolean }) {
           sizes={big ? "(min-width:1024px) 680px, 100vw" : "(min-width:1024px) 380px, (min-width:768px) 50vw, 100vw"}
           className="object-cover object-top transition-transform duration-[1.6s] ease-out group-hover:scale-[1.06]"
         />
+      </div>
+    </BrowserFrame>
+  );
+}
+
+/** Portada para proyectos sin captura pública: el nombre sobre el color del proyecto. */
+function Portada({ p }: { p: Project }) {
+  return (
+    <BrowserFrame url={p.url ?? p.title.toLowerCase().replace(/\s+/g, "-")}>
+      <div className="relative grid h-full w-full place-items-center overflow-hidden" style={{ background: `radial-gradient(70% 70% at 50% 40%, color-mix(in srgb, ${p.accent} 35%, transparent), transparent 75%)` }}>
+        <div className="text-center">
+          <p className="text-[clamp(1.4rem,3vw,2rem)] font-bold tracking-tight text-[var(--moon)]" style={{ fontFamily: "var(--font-space)" }}>{p.title}</p>
+          <p className="mt-2 font-mono text-[0.7rem] text-[var(--ether)]">{p.stack.slice(0, 3).join(" · ")}</p>
+        </div>
       </div>
     </BrowserFrame>
   );
@@ -120,7 +179,7 @@ function ProjectCard({ p, big }: { p: Project; big: boolean }) {
       <div className="relative aspect-[16/10] p-4 sm:p-5 overflow-hidden" style={{ background: `radial-gradient(80% 80% at 50% 0%, color-mix(in srgb, ${p.accent} 22%, transparent), transparent 70%)` }}>
         <div className="absolute inset-0 opacity-60 bg-[linear-gradient(rgba(91,134,255,.07)_1px,transparent_1px),linear-gradient(90deg,rgba(91,134,255,.07)_1px,transparent_1px)] bg-[size:28px_28px]" />
         <div className="relative w-full h-full transition-transform duration-500 ease-out group-hover:scale-[1.02]">
-          {p.image ? <Screenshot p={p} big={big} /> : p.Visual ? <p.Visual /> : null}
+          {p.image ? <Screenshot p={p} big={big} /> : p.Visual ? <p.Visual /> : <Portada p={p} />}
         </div>
       </div>
       <div className={`relative flex-1 flex flex-col p-6 pt-5 border-t border-[var(--line)] ${big ? "lg:border-t-0 lg:border-l lg:p-10 lg:justify-center" : ""}`}>

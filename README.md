@@ -12,7 +12,7 @@
 
 <br/>
 
-[![Deploy](https://img.shields.io/badge/Deploy-Vercel-000000?style=flat-square&logo=vercel&logoColor=white)](https://lanxa-technology.vercel.app)
+[![Deploy](https://img.shields.io/badge/Deploy-Vercel-000000?style=flat-square&logo=vercel&logoColor=white)](https://www.lanxatechnology.site)
 [![Next.js](https://img.shields.io/badge/Next.js-16-000000?style=flat-square&logo=next.js&logoColor=white)](https://nextjs.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-CSS-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white)](https://tailwindcss.com)
@@ -21,7 +21,7 @@
 
 <br/>
 
-**[🌐 Ver sitio en vivo](https://lanxa-technology.vercel.app) · [📋 Reportar un issue](https://github.com/leonardeco/Lanxa-Technology/issues) · [💬 Contactar](https://wa.me/573226993891)**
+**[🌐 Ver sitio en vivo](https://www.lanxatechnology.site) · [📋 Reportar un issue](https://github.com/leonardeco/Lanxa-Technology/issues) · [💬 Contactar](https://wa.me/573226993891)**
 
 <br/>
 
@@ -37,6 +37,7 @@
 - [Stack Tecnológico](#-stack-tecnológico)
 - [Estructura del Proyecto](#-estructura-del-proyecto)
 - [Secciones del Sitio](#-secciones-del-sitio)
+- [Portafolio](#-portafolio)
 - [Instalación y Configuración](#-instalación-y-configuración)
 - [Variables de Entorno](#-variables-de-entorno)
 - [Scripts Disponibles](#-scripts-disponibles)
@@ -152,7 +153,7 @@ lanxa-technology/
 │   ├── 📄 Services.tsx               # Grid de 6 servicios
 │   ├── 📄 Process.tsx                # 5 fases del proceso de trabajo
 │   ├── 📄 Stack.tsx                  # Stack tecnológico + terminal animada
-│   ├── 📄 Work.tsx                   # Portafolio de proyectos
+│   ├── 📄 Portfolio.tsx              # Portafolio de proyectos con filtros y capturas reales
 │   ├── 📄 B2B.tsx                    # Servicios corporativos y subcontratación
 │   ├── 📄 WhyLanxa.tsx               # Diferenciadores de la empresa
 │   ├── 📄 Pricing.tsx                # Planes de precio flexibles
@@ -181,13 +182,38 @@ lanxa-technology/
 | 3 | `#servicios` | `Services.tsx` | 6 servicios: Web, Mobile, Desktop, APIs, Integraciones, IA | ✅ |
 | 4 | `#proceso` | `Process.tsx` | 5 fases: Descubrimiento · Diseño · Desarrollo · Despliegue · Soporte | ✅ |
 | 5 | `#stack` | `Stack.tsx` | Tabla de tecnologías + terminal de deploy animada | ✅ |
-| 6 | `#trabajo` | `Work.tsx` | Portafolio: TradeSync, GanancIA, ReservaYa, LEOFIT, GymMatch | ✅ |
+| 6 | `#portafolio` | `Portfolio.tsx` | 16 proyectos con filtros (Educación, Web, SaaS, IA, E-commerce, FinTech, Móvil, Backend); destacados: Guía de Estudio Magisterio y MenuFlow | ✅ |
 | 7 | `#empresas` | `B2B.tsx` | Servicios B2B: Staff Aug, Contratos, White-Label, QA, IA | ✅ |
 | — | — | `WhyLanxa.tsx` | 4 diferenciadores: Sólido, Escalable, Transparente, Futurista | ✅ |
 | 8 | `#precios` | `Pricing.tsx` | 3 planes flexibles según necesidad del cliente | ✅ |
 | 9 | `#contacto` | `Contact.tsx` | Formulario, asesores, WhatsApp y correo | ✅ |
 | — | — | `Footer.tsx` | Pie de página con branding y copyright | ✅ |
 | — | — | `WhatsAppFloat.tsx` | Botón flotante con menú de asesores | ✅ |
+
+---
+
+## 💼 Portafolio
+
+Los proyectos que muestra el sitio, en `components/Portfolio.tsx`. Las capturas reales están en `public/projects/` (1440×900).
+
+| Proyecto | Qué es | Stack | En vivo |
+|---|---|---|---|
+| **Guía de Estudio Magisterio** ⭐ | Plataforma de pago para el concurso docente en Colombia: cuentas, pase anual con Wompi, material protegido, simulacros y panel de administración | Astro 5 · TypeScript · React 19 · Neon · Wompi | [magisterioguiaestudio.com](https://www.magisterioguiaestudio.com) |
+| **MenuFlow** ⭐ | SaaS multi-restaurante: pedidos web, QR de mesa y cocina en tiempo real | Next.js 15 · Prisma · Neon | [demo](https://menu-flow-navy.vercel.app) |
+| **Pulso Entrenadores** | App del entrenador personal: agenda, clientes, rutinas, alimentación y cobro mensual | Angular 21 · Neon · Vitest · Playwright | [demo](https://pulso-seven-tau.vercel.app) |
+| **Guía Interactiva del Quindío** | Los doce municipios en el celular, rutas, pasaporte de sellos y 25 idiomas | TypeScript · PWA | [demo](https://guia-interactivo-quindio.vercel.app) |
+| **NEXA Sports Nutrition** | Tienda de suplementos con Wompi y asistente de ventas | Next.js 15 · pgvector · Wompi | [demo](https://nexa-sports-nutrition-web.vercel.app) |
+| **BarberAD** | Caja de barbería: servicios, equipo, cobro y comisión por barbero | Next.js · PostgreSQL | — |
+| **MT5 Señales** | Radar de señales para MetaTrader 5 con gestión de riesgo | Python · FastAPI · WebSockets | [demo](https://mt5-signals.vercel.app) |
+| **Altaira Group** | Sitio para una consultora de ingeniería geográfica y ambiental (cliente) | Next.js 16 · React 19 | [sitio](https://altaira-group.vercel.app) |
+| **NightTable CO** | Marketplace de food & nightlife con SaaS multi-sede | Next.js 15 · Fastify 5 · PostgreSQL 16 | — |
+| **GanancIA** | Rentabilidad gastronómica con asistente IA | Next.js · Fastify · Claude API | — |
+| **BioFit** | Dashboard de bioimpedancia con planes generados por IA | Next.js 16 · Claude API | — |
+| **OptiAgenda** | API REST de citas con JWT, roles y Swagger | Java 17 · Spring Boot 3 · MySQL | — |
+| **ReservaYa** | Reservas de restaurantes con panel administrativo (en equipo) | Angular · Signals | — |
+| **Luma** | Tienda de un solo producto con pedido por WhatsApp | Next.js | — |
+| **LEOFIT** | E-commerce de 127 productos con pedido por WhatsApp | React · Vite | [demo](https://sports-store-ruby.vercel.app) |
+| **GymMatch** | App social para encontrar compañeros de entrenamiento | App móvil | — |
 
 ---
 
@@ -353,7 +379,7 @@ npm run start
 ### v2.2 — Funcionalidad avanzada 📅
 - [ ] Panel de administración para gestionar leads
 - [ ] Integración con CRM (HubSpot o Notion)
-- [ ] Dominio personalizado `lanxatechnology.com`
+- [x] Dominio propio: `www.lanxatechnology.site`
 - [ ] Versión en inglés del sitio (i18n)
 - [ ] OG image dinámica generada con `next/og`
 
@@ -405,7 +431,7 @@ refactor: refactorización sin cambio de comportamiento
 
 | Canal | Detalle |
 |-------|---------|
-| 🌐 Sitio web | [lanxa-technology.vercel.app](https://lanxa-technology.vercel.app) |
+| 🌐 Sitio web | [www.lanxatechnology.site](https://www.lanxatechnology.site) |
 | 📧 Email | [leonardecojt@gmail.com](mailto:leonardecojt@gmail.com) |
 | 💬 WhatsApp | [+57 322 699 3891](https://wa.me/573226993891) |
 | 📍 Ubicación | Armenia, Quindío, Colombia |
