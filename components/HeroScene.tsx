@@ -281,26 +281,10 @@ export default function HeroScene() {
       const heel = (f: P): P => add(f, [-0.024, -0.016]);
       const toe = (f: P): P => add(f, [0.072, -0.007]);
 
-      /*
-       * Volumen: en la pasada de sombreado cada pieza se pinta sola con un degradado
-       * transversal (como un cilindro): borde dorado del lado de la estrella, núcleo
-       * oscuro y rebote azul del planeta del lado contrario.
-       */
-      let shadeMode = false;
       const towardStar = (x: number, y: number): P => {
         const vx = L.sx - x, vy = L.sy - y;
         const vl = Math.hypot(vx, vy) || 1;
         return [vx / vl, vy / vl];
-      };
-      const cylinder = (mx: number, my: number, nx: number, ny: number, r: number) => {
-        const g = ctx.createLinearGradient(mx - nx * r, my - ny * r, mx + nx * r, my + ny * r);
-        g.addColorStop(0, "rgba(143,168,255,0.42)");
-        g.addColorStop(0.2, "rgba(143,168,255,0.06)");
-        g.addColorStop(0.45, "rgba(5,8,22,0.38)");
-        g.addColorStop(0.72, "rgba(255,217,138,0.05)");
-        g.addColorStop(0.9, "rgba(255,217,138,0.42)");
-        g.addColorStop(1, "rgba(255,240,200,0.85)");
-        return g;
       };
 
       // Segmento ahusado: semicírculo de radio ra en a, semicírculo de radio rb en b.
@@ -308,19 +292,10 @@ export default function HeroScene() {
         const A = W(a), B = W(b);
         const rA = ra * S, rB = rb * S;
         const ang = Math.atan2(B[1] - A[1], B[0] - A[0]);
-        if (shadeMode) ctx.beginPath();
         ctx.moveTo(A[0] + Math.cos(ang + Math.PI / 2) * rA, A[1] + Math.sin(ang + Math.PI / 2) * rA);
         ctx.arc(A[0], A[1], rA, ang + Math.PI / 2, ang + (Math.PI * 3) / 2);
         ctx.arc(B[0], B[1], rB, ang - Math.PI / 2, ang + Math.PI / 2);
         ctx.closePath();
-        if (shadeMode) {
-          const mx = (A[0] + B[0]) / 2, my = (A[1] + B[1]) / 2;
-          let nx = -Math.sin(ang), ny = Math.cos(ang);
-          const ls = towardStar(mx, my);
-          if (nx * ls[0] + ny * ls[1] < 0) { nx = -nx; ny = -ny; }
-          ctx.fillStyle = cylinder(mx, my, nx, ny, Math.max(rA, rB) * 1.05);
-          ctx.fill();
-        }
       };
 
       /*
@@ -381,19 +356,9 @@ export default function HeroScene() {
         [...ks].reverse().forEach((k, j) => { const i = ks.length - 1 - j; const c = mix(a, b, k); pts.push(W([c[0] - n[0] * back[i], c[1] - n[1] * back[i]])); });
         const mid = (p: P, q: P): P => [(p[0] + q[0]) / 2, (p[1] + q[1]) / 2];
         const start = mid(pts[pts.length - 1], pts[0]);
-        if (shadeMode) ctx.beginPath();
         ctx.moveTo(start[0], start[1]);
         pts.forEach((p, i) => { const m = mid(p, pts[(i + 1) % pts.length]); ctx.quadraticCurveTo(p[0], p[1], m[0], m[1]); });
         ctx.closePath();
-        if (shadeMode) {
-          // El torso es un cilindro más ancho: el degradado cruza el pecho
-          const C = W(mix(a, b, 0.4));
-          let nx = n[0], ny = n[1];
-          const ls = towardStar(C[0], C[1]);
-          if (nx * ls[0] + ny * ls[1] < 0) { nx = -nx; ny = -ny; }
-          ctx.fillStyle = cylinder(C[0], C[1], nx, ny, 0.085 * S);
-          ctx.fill();
-        }
       };
 
       const head = () => {
@@ -401,8 +366,6 @@ export default function HeroScene() {
         const tilt = Math.atan2(h[1] - pose.neck[1], h[0] - pose.neck[0]) + Math.PI / 2;
         const C = W(h);
         const rx = 0.056 * S, ry = 0.068 * S;
-        if (shadeMode) capsule(neckBase, add(h, [0, 0.03]), 0.027, 0.025);
-        if (shadeMode) ctx.beginPath();
         ctx.moveTo(C[0] + Math.cos(tilt) * rx, C[1] + Math.sin(tilt) * rx);
         ctx.ellipse(C[0], C[1], rx, ry, tilt, 0, Math.PI * 2);
         // Cara de perfil: mandíbula y mentón hacia adelante
@@ -410,18 +373,7 @@ export default function HeroScene() {
         const J = W(add(h, rot([0.03, 0.026])));
         ctx.moveTo(J[0] + 0.03 * S, J[1]);
         ctx.ellipse(J[0], J[1], 0.03 * S, 0.033 * S, tilt, 0, Math.PI * 2);
-        if (shadeMode) {
-          // La cabeza como esfera: luz desde la estrella y sombra hacia la nuca
-          const ls = towardStar(C[0], C[1]);
-          const hx = C[0] + ls[0] * rx * 0.55, hy = C[1] + ls[1] * ry * 0.55;
-          const g = ctx.createRadialGradient(hx, hy, rx * 0.1, C[0], C[1], ry * 1.25);
-          g.addColorStop(0, "rgba(255,233,168,0.55)");
-          g.addColorStop(0.35, "rgba(255,217,138,0.12)");
-          g.addColorStop(0.7, "rgba(5,8,22,0.35)");
-          g.addColorStop(1, "rgba(143,168,255,0.4)");
-          ctx.fillStyle = g;
-          ctx.fill();
-        } else capsule(neckBase, add(h, [0, 0.03]), 0.027, 0.025);
+        capsule(neckBase, add(h, [0, 0.03]), 0.027, 0.025);
       };
 
       const far = () => { arm(shT, pose.elbowT, wristT, pose.handT, openT); leg(add(pose.hip, [-0.012, 0]), pose.kneeB, pose.footB); };
@@ -454,13 +406,43 @@ export default function HeroScene() {
       body.addColorStop(0.55, "#121a3c");
       body.addColorStop(1, "#0b1129");
 
-      // Pasada de volumen sobre una silueta ya pintada
+      /*
+       * Volumen: la luz se pinta sobre la silueta entera, recortada a su forma, como un
+       * solo cuerpo. Así no se marcan las uniones entre brazo, antebrazo, mano o dedos.
+       */
       const shadePass = (shape: () => void, k: number) => {
+        const top = W([0, -1.05]), bottom = W([0, 0.02]);
+        const C = W([0.02, -0.58]);
+        const ls = towardStar(C[0], C[1]);
+        const span = S * 0.32;
         ctx.save();
         ctx.globalAlpha *= k;
-        shadeMode = true;
+        ctx.beginPath();
         shape();
-        shadeMode = false;
+        ctx.clip();
+        const x0 = C[0] - S, y0 = top[1] - S * 0.2, w = S * 2, hh = bottom[1] - top[1] + S * 0.4;
+        // De la espalda en sombra al lado que mira la estrella
+        const side = ctx.createLinearGradient(C[0] - ls[0] * span, C[1] - ls[1] * span, C[0] + ls[0] * span, C[1] + ls[1] * span);
+        side.addColorStop(0, "rgba(2,4,12,0.55)");
+        side.addColorStop(0.45, "rgba(2,4,12,0.12)");
+        side.addColorStop(0.78, "rgba(143,168,255,0.07)");
+        side.addColorStop(1, "rgba(255,217,138,0.26)");
+        ctx.fillStyle = side;
+        ctx.fillRect(x0, y0, w, hh);
+        // Arriba recibe más luz; las piernas se hunden hacia el suelo
+        const vert = ctx.createLinearGradient(top[0], top[1], bottom[0], bottom[1]);
+        vert.addColorStop(0, "rgba(143,168,255,0.12)");
+        vert.addColorStop(0.55, "rgba(143,168,255,0)");
+        vert.addColorStop(1, "rgba(2,4,12,0.4)");
+        ctx.fillStyle = vert;
+        ctx.fillRect(x0, y0, w, hh);
+        // Brillo suave en cabeza y hombros, del lado de la estrella
+        const hx = W(pose.head)[0] + ls[0] * S * 0.05, hy = W(pose.head)[1] + ls[1] * S * 0.05;
+        const glow = ctx.createRadialGradient(hx, hy, 0, hx, hy, S * 0.3);
+        glow.addColorStop(0, "rgba(255,233,168,0.22)");
+        glow.addColorStop(1, "rgba(255,233,168,0)");
+        ctx.fillStyle = glow;
+        ctx.fillRect(x0, y0, w, hh);
         ctx.restore();
       };
 
@@ -487,14 +469,6 @@ export default function HeroScene() {
       shadePass(far, 0.45);
       fillWith(near, body);
       shadePass(near, 1);
-      // Contorno tenue del brazo delantero para separarlo del torso
-      ctx.save();
-      ctx.strokeStyle = "rgba(255,217,138,0.28)";
-      ctx.lineWidth = 1;
-      ctx.beginPath();
-      arm(shF, pose.elbowF, wristF, pose.handF, openF);
-      ctx.stroke();
-      ctx.restore();
       ctx.restore();
     };
 
