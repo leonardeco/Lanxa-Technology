@@ -204,10 +204,46 @@ export default function HeroScene() {
       const fill = ctx.createLinearGradient(0, cy - r, 0, cy - r + L.h * 0.25);
       fill.addColorStop(0, "rgba(24,36,90,0.95)");
       fill.addColorStop(1, "rgba(8,11,26,1)");
+      // Atmósfera: un anillo que se desvanece hacia el espacio
+      const atm = L.h * (L.mobile ? 0.05 : 0.08);
+      const air = ctx.createRadialGradient(cx, cy, r, cx, cy, r + atm);
+      air.addColorStop(0, "rgba(91,134,255,0.32)");
+      air.addColorStop(0.35, "rgba(91,134,255,0.1)");
+      air.addColorStop(1, "rgba(91,134,255,0)");
+      ctx.fillStyle = air;
+      ctx.beginPath();
+      ctx.arc(cx, cy, r + atm, 0, Math.PI * 2);
+      ctx.arc(cx, cy, r, 0, Math.PI * 2, true);
+      ctx.fill();
+
       ctx.fillStyle = fill;
       ctx.beginPath();
       ctx.arc(cx, cy, r, 0, Math.PI * 2);
       ctx.fill();
+
+      // Esfera iluminada: la luz de la estrella cae sobre la curva del horizonte
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(cx, cy, r, 0, Math.PI * 2);
+      ctx.clip();
+      const dx = L.sx - cx, dy = L.sy - cy;
+      const dl = Math.hypot(dx, dy) || 1;
+      const lit: P = [cx + (dx / dl) * r, cy + (dy / dl) * r];
+      const glow = ctx.createRadialGradient(lit[0], lit[1], 0, lit[0], lit[1], L.w * 0.55);
+      glow.addColorStop(0, "rgba(255,200,87,0.22)");
+      glow.addColorStop(0.3, "rgba(143,168,255,0.10)");
+      glow.addColorStop(1, "rgba(143,168,255,0)");
+      ctx.fillStyle = glow;
+      ctx.fillRect(0, 0, L.w, L.h);
+      // Curvas de latitud: dan la sensación de superficie esférica
+      ctx.strokeStyle = "rgba(143,168,255,0.06)";
+      ctx.lineWidth = 1;
+      for (let i = 1; i <= 4; i++) {
+        ctx.beginPath();
+        ctx.ellipse(cx, cy - r + L.h * 0.05 * i * i, r * (0.72 + i * 0.05), L.h * 0.012 * i, 0, Math.PI, Math.PI * 2);
+        ctx.stroke();
+      }
+      ctx.restore();
       // Borde iluminado del horizonte
       const rim = ctx.createLinearGradient(0, 0, L.w, 0);
       rim.addColorStop(0, "rgba(91,134,255,0)");
@@ -245,15 +281,46 @@ export default function HeroScene() {
       const heel = (f: P): P => add(f, [-0.024, -0.016]);
       const toe = (f: P): P => add(f, [0.072, -0.007]);
 
+      /*
+       * Volumen: en la pasada de sombreado cada pieza se pinta sola con un degradado
+       * transversal (como un cilindro): borde dorado del lado de la estrella, núcleo
+       * oscuro y rebote azul del planeta del lado contrario.
+       */
+      let shadeMode = false;
+      const towardStar = (x: number, y: number): P => {
+        const vx = L.sx - x, vy = L.sy - y;
+        const vl = Math.hypot(vx, vy) || 1;
+        return [vx / vl, vy / vl];
+      };
+      const cylinder = (mx: number, my: number, nx: number, ny: number, r: number) => {
+        const g = ctx.createLinearGradient(mx - nx * r, my - ny * r, mx + nx * r, my + ny * r);
+        g.addColorStop(0, "rgba(143,168,255,0.42)");
+        g.addColorStop(0.2, "rgba(143,168,255,0.06)");
+        g.addColorStop(0.45, "rgba(5,8,22,0.38)");
+        g.addColorStop(0.72, "rgba(255,217,138,0.05)");
+        g.addColorStop(0.9, "rgba(255,217,138,0.42)");
+        g.addColorStop(1, "rgba(255,240,200,0.85)");
+        return g;
+      };
+
       // Segmento ahusado: semicírculo de radio ra en a, semicírculo de radio rb en b.
       const capsule = (a: P, b: P, ra: number, rb: number) => {
         const A = W(a), B = W(b);
         const rA = ra * S, rB = rb * S;
         const ang = Math.atan2(B[1] - A[1], B[0] - A[0]);
+        if (shadeMode) ctx.beginPath();
         ctx.moveTo(A[0] + Math.cos(ang + Math.PI / 2) * rA, A[1] + Math.sin(ang + Math.PI / 2) * rA);
         ctx.arc(A[0], A[1], rA, ang + Math.PI / 2, ang + (Math.PI * 3) / 2);
         ctx.arc(B[0], B[1], rB, ang - Math.PI / 2, ang + Math.PI / 2);
         ctx.closePath();
+        if (shadeMode) {
+          const mx = (A[0] + B[0]) / 2, my = (A[1] + B[1]) / 2;
+          let nx = -Math.sin(ang), ny = Math.cos(ang);
+          const ls = towardStar(mx, my);
+          if (nx * ls[0] + ny * ls[1] < 0) { nx = -nx; ny = -ny; }
+          ctx.fillStyle = cylinder(mx, my, nx, ny, Math.max(rA, rB) * 1.05);
+          ctx.fill();
+        }
       };
 
       /*
@@ -314,9 +381,19 @@ export default function HeroScene() {
         [...ks].reverse().forEach((k, j) => { const i = ks.length - 1 - j; const c = mix(a, b, k); pts.push(W([c[0] - n[0] * back[i], c[1] - n[1] * back[i]])); });
         const mid = (p: P, q: P): P => [(p[0] + q[0]) / 2, (p[1] + q[1]) / 2];
         const start = mid(pts[pts.length - 1], pts[0]);
+        if (shadeMode) ctx.beginPath();
         ctx.moveTo(start[0], start[1]);
         pts.forEach((p, i) => { const m = mid(p, pts[(i + 1) % pts.length]); ctx.quadraticCurveTo(p[0], p[1], m[0], m[1]); });
         ctx.closePath();
+        if (shadeMode) {
+          // El torso es un cilindro más ancho: el degradado cruza el pecho
+          const C = W(mix(a, b, 0.4));
+          let nx = n[0], ny = n[1];
+          const ls = towardStar(C[0], C[1]);
+          if (nx * ls[0] + ny * ls[1] < 0) { nx = -nx; ny = -ny; }
+          ctx.fillStyle = cylinder(C[0], C[1], nx, ny, 0.085 * S);
+          ctx.fill();
+        }
       };
 
       const head = () => {
@@ -324,6 +401,8 @@ export default function HeroScene() {
         const tilt = Math.atan2(h[1] - pose.neck[1], h[0] - pose.neck[0]) + Math.PI / 2;
         const C = W(h);
         const rx = 0.056 * S, ry = 0.068 * S;
+        if (shadeMode) capsule(neckBase, add(h, [0, 0.03]), 0.027, 0.025);
+        if (shadeMode) ctx.beginPath();
         ctx.moveTo(C[0] + Math.cos(tilt) * rx, C[1] + Math.sin(tilt) * rx);
         ctx.ellipse(C[0], C[1], rx, ry, tilt, 0, Math.PI * 2);
         // Cara de perfil: mandíbula y mentón hacia adelante
@@ -331,7 +410,18 @@ export default function HeroScene() {
         const J = W(add(h, rot([0.03, 0.026])));
         ctx.moveTo(J[0] + 0.03 * S, J[1]);
         ctx.ellipse(J[0], J[1], 0.03 * S, 0.033 * S, tilt, 0, Math.PI * 2);
-        capsule(neckBase, add(h, [0, 0.03]), 0.027, 0.025);
+        if (shadeMode) {
+          // La cabeza como esfera: luz desde la estrella y sombra hacia la nuca
+          const ls = towardStar(C[0], C[1]);
+          const hx = C[0] + ls[0] * rx * 0.55, hy = C[1] + ls[1] * ry * 0.55;
+          const g = ctx.createRadialGradient(hx, hy, rx * 0.1, C[0], C[1], ry * 1.25);
+          g.addColorStop(0, "rgba(255,233,168,0.55)");
+          g.addColorStop(0.35, "rgba(255,217,138,0.12)");
+          g.addColorStop(0.7, "rgba(5,8,22,0.35)");
+          g.addColorStop(1, "rgba(143,168,255,0.4)");
+          ctx.fillStyle = g;
+          ctx.fill();
+        } else capsule(neckBase, add(h, [0, 0.03]), 0.027, 0.025);
       };
 
       const far = () => { arm(shT, pose.elbowT, wristT, pose.handT, openT); leg(add(pose.hip, [-0.012, 0]), pose.kneeB, pose.footB); };
@@ -364,13 +454,39 @@ export default function HeroScene() {
       body.addColorStop(0.55, "#121a3c");
       body.addColorStop(1, "#0b1129");
 
+      // Pasada de volumen sobre una silueta ya pintada
+      const shadePass = (shape: () => void, k: number) => {
+        ctx.save();
+        ctx.globalAlpha *= k;
+        shadeMode = true;
+        shape();
+        shadeMode = false;
+        ctx.restore();
+      };
+
+      // Sombra de contacto en el suelo, estirada hacia el lado contrario a la estrella
+      const feetC = W([0.04, 0]);
+      ctx.save();
+      ctx.globalAlpha = alpha * 0.85;
+      const sh = ctx.createRadialGradient(feetC[0] - S * 0.06, feetC[1] + S * 0.01, 0, feetC[0] - S * 0.06, feetC[1] + S * 0.01, S * 0.42);
+      sh.addColorStop(0, "rgba(2,4,12,0.85)");
+      sh.addColorStop(0.5, "rgba(2,4,12,0.35)");
+      sh.addColorStop(1, "rgba(2,4,12,0)");
+      ctx.fillStyle = sh;
+      ctx.beginPath();
+      ctx.ellipse(feetC[0] - S * 0.06, feetC[1] + S * 0.012, S * 0.42, S * 0.045, -0.04, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+
       ctx.save();
       ctx.globalAlpha = alpha;
       fillWith(all, "rgba(91,134,255,0.22)", [0, 0], 40, "rgba(91,134,255,0.85)"); // halo
       fillWith(all, "#ffd98a", toStar, 14, "rgba(255,200,87,0.95)");               // borde dorado (luz de la estrella)
       fillWith(all, "rgba(143,168,255,0.85)", away, 6, "rgba(143,168,255,0.8)");  // rebote azul del planeta
       fillWith(far, "#080c1f");
+      shadePass(far, 0.45);
       fillWith(near, body);
+      shadePass(near, 1);
       // Contorno tenue del brazo delantero para separarlo del torso
       ctx.save();
       ctx.strokeStyle = "rgba(255,217,138,0.28)";
@@ -379,6 +495,64 @@ export default function HeroScene() {
       arm(shF, pose.elbowF, wristF, pose.handF, openF);
       ctx.stroke();
       ctx.restore();
+      ctx.restore();
+    };
+
+    // Luna lejana: esfera con terminador y cráteres, en un plano intermedio de profundidad
+    const drawMoon = () => {
+      if (L.mobile) return;
+      const r = Math.min(34, L.w * 0.022);
+      const x = L.w * 0.6 + pointer.x * 8, y = L.h * 0.2 + pointer.y * 6;
+      const dx = L.sx - x, dy = L.sy - y;
+      const dl = Math.hypot(dx, dy) || 1;
+      const lx = (dx / dl) * r * 0.55, ly = (dy / dl) * r * 0.55;
+      ctx.save();
+      const halo = ctx.createRadialGradient(x, y, r * 0.9, x, y, r * 2.4);
+      halo.addColorStop(0, "rgba(143,168,255,0.12)");
+      halo.addColorStop(1, "rgba(143,168,255,0)");
+      ctx.fillStyle = halo;
+      ctx.beginPath();
+      ctx.arc(x, y, r * 2.4, 0, Math.PI * 2);
+      ctx.fill();
+      const body = ctx.createRadialGradient(x + lx, y + ly, r * 0.08, x, y, r);
+      body.addColorStop(0, "#d9def2");
+      body.addColorStop(0.45, "#7f8bb8");
+      body.addColorStop(0.85, "#262f57");
+      body.addColorStop(1, "#141a36");
+      ctx.fillStyle = body;
+      ctx.beginPath();
+      ctx.arc(x, y, r, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.clip();
+      ctx.fillStyle = "rgba(20,26,54,0.28)";
+      for (const [cx, cy, cr] of [[-0.3, -0.2, 0.22], [0.25, 0.3, 0.16], [0.1, -0.45, 0.1], [-0.15, 0.42, 0.12]]) {
+        ctx.beginPath();
+        ctx.arc(x + cx * r, y + cy * r, cr * r, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      ctx.restore();
+    };
+
+    // Rayos de luz que salen de la estrella y giran despacio
+    const drawRays = (elapsed: number, boost: number) => {
+      if (L.mobile) return;
+      ctx.save();
+      ctx.globalCompositeOperation = "lighter";
+      const reach = Math.max(L.w, L.h) * 0.5;
+      for (let i = 0; i < 6; i++) {
+        const a = elapsed * 0.03 + i * (Math.PI / 3) + Math.sin(elapsed * 0.4 + i) * 0.05;
+        const spread = 0.04 + (i % 2) * 0.025;
+        const g = ctx.createRadialGradient(L.sx, L.sy, 0, L.sx, L.sy, reach);
+        g.addColorStop(0, `rgba(255,214,128,${0.06 + boost * 0.1})`);
+        g.addColorStop(0.45, `rgba(255,214,128,${0.02 + boost * 0.04})`);
+        g.addColorStop(1, "rgba(255,214,128,0)");
+        ctx.fillStyle = g;
+        ctx.beginPath();
+        ctx.moveTo(L.sx, L.sy);
+        ctx.arc(L.sx, L.sy, reach, a - spread, a + spread);
+        ctx.closePath();
+        ctx.fill();
+      }
       ctx.restore();
     };
 
@@ -496,10 +670,16 @@ export default function HeroScene() {
         }
       }
 
-      drawPlanet();
+      drawMoon();
+
+      // Primer plano (planeta, figura, lanza y estrella): el que más se desplaza con el puntero, para dar profundidad
+      ctx.save();
+      ctx.translate(-pointer.x * 12, -pointer.y * 7);
 
       const [p0, p1, p2] = flightPath();
       const flare = t >= T_IMPACT ? Math.exp(-(t - T_IMPACT) * 1.5) : 0;
+      drawRays(elapsed, flare);
+      drawPlanet();
 
       // Trayectoria de puntería mientras se prepara el lanzamiento
       const aim = t < T_RELEASE ? clamp01((t - 0.6) / 1.1) : clamp01(1 - (t - T_RELEASE) / 0.6);
@@ -593,6 +773,7 @@ export default function HeroScene() {
 
       const shown = nameAlpha(t);
       if (shown > 0.01) drawName(shown, twinkle, elapsed * 0.15);
+      ctx.restore();
 
       if (!reduced && visible) raf = requestAnimationFrame(frame);
     };
