@@ -472,38 +472,51 @@ export default function HeroScene() {
       ctx.restore();
     };
 
-    // Luna lejana: esfera con terminador y cráteres, en un plano intermedio de profundidad
+    // Luna lejana: un disco perfecto iluminado desde la estrella, con el lado oscuro apenas visible y cráteres suaves
     const drawMoon = () => {
       if (L.mobile) return;
-      const r = Math.min(34, L.w * 0.022);
-      const x = L.w * 0.6 + pointer.x * 8, y = L.h * 0.2 + pointer.y * 6;
+      const r = Math.min(36, L.w * 0.024);
+      const x = L.w * 0.655 - pointer.x * 9, y = L.h * 0.19 - pointer.y * 6;
       const dx = L.sx - x, dy = L.sy - y;
       const dl = Math.hypot(dx, dy) || 1;
-      const lx = (dx / dl) * r * 0.55, ly = (dy / dl) * r * 0.55;
+      const ux = dx / dl, uy = dy / dl;
       ctx.save();
-      const halo = ctx.createRadialGradient(x, y, r * 0.9, x, y, r * 2.4);
-      halo.addColorStop(0, "rgba(143,168,255,0.12)");
+      const halo = ctx.createRadialGradient(x, y, r * 0.95, x, y, r * 2.6);
+      halo.addColorStop(0, "rgba(143,168,255,0.14)");
       halo.addColorStop(1, "rgba(143,168,255,0)");
       ctx.fillStyle = halo;
       ctx.beginPath();
-      ctx.arc(x, y, r * 2.4, 0, Math.PI * 2);
+      ctx.arc(x, y, r * 2.6, 0, Math.PI * 2);
       ctx.fill();
-      const body = ctx.createRadialGradient(x + lx, y + ly, r * 0.08, x, y, r);
-      body.addColorStop(0, "#d9def2");
-      body.addColorStop(0.45, "#7f8bb8");
-      body.addColorStop(0.85, "#262f57");
-      body.addColorStop(1, "#141a36");
-      ctx.fillStyle = body;
+      // Disco base (lado oscuro)
       ctx.beginPath();
       ctx.arc(x, y, r, 0, Math.PI * 2);
+      ctx.fillStyle = "#171d3d";
       ctx.fill();
+      ctx.save();
       ctx.clip();
-      ctx.fillStyle = "rgba(20,26,54,0.28)";
-      for (const [cx, cy, cr] of [[-0.3, -0.2, 0.22], [0.25, 0.3, 0.16], [0.1, -0.45, 0.1], [-0.15, 0.42, 0.12]]) {
+      // Zona iluminada: un círculo de luz centrado hacia la estrella
+      const lit = ctx.createRadialGradient(x + ux * r * 0.55, y + uy * r * 0.55, r * 0.05, x + ux * r * 0.35, y + uy * r * 0.35, r * 1.35);
+      lit.addColorStop(0, "#eef0fb");
+      lit.addColorStop(0.35, "#aab3dc");
+      lit.addColorStop(0.7, "#4d5890");
+      lit.addColorStop(1, "rgba(23,29,61,0)");
+      ctx.fillStyle = lit;
+      ctx.fillRect(x - r, y - r, r * 2, r * 2);
+      // Cráteres suaves, solo donde llega la luz
+      ctx.fillStyle = "rgba(38,47,87,0.22)";
+      for (const [cx, cy, cr] of [[-0.25, -0.2, 0.2], [0.2, 0.28, 0.14], [0.05, -0.5, 0.09], [-0.2, 0.4, 0.11], [0.45, -0.1, 0.08]]) {
         ctx.beginPath();
         ctx.arc(x + cx * r, y + cy * r, cr * r, 0, Math.PI * 2);
         ctx.fill();
       }
+      ctx.restore();
+      // Borde fino de luz del lado de la estrella
+      ctx.strokeStyle = "rgba(255,226,170,0.45)";
+      ctx.lineWidth = 1.2;
+      ctx.beginPath();
+      ctx.arc(x, y, r, Math.atan2(uy, ux) - 0.9, Math.atan2(uy, ux) + 0.9);
+      ctx.stroke();
       ctx.restore();
     };
 
@@ -612,8 +625,8 @@ export default function HeroScene() {
       // Estrellas de fondo con paralaje
       for (const s of stars) {
         const tw = reduced ? 0.7 : 0.55 + 0.45 * Math.sin(elapsed * s.speed + s.phase);
-        const x = s.x * w + pointer.x * (4 + s.depth * 18);
-        const y = s.y * h + pointer.y * (4 + s.depth * 18);
+        const x = s.x * w - pointer.x * (3 + s.depth * 15);
+        const y = s.y * h - pointer.y * (3 + s.depth * 15);
         ctx.fillStyle = `hsla(${s.hue},80%,${s.hue === 228 ? 92 : 78}%,${0.25 + tw * 0.6 * (0.4 + s.depth * 0.6)})`;
         ctx.beginPath();
         ctx.arc(x, y, s.r * (0.6 + s.depth * 0.6), 0, Math.PI * 2);
@@ -648,7 +661,7 @@ export default function HeroScene() {
 
       // Primer plano (planeta, figura, lanza y estrella): el que más se desplaza con el puntero, para dar profundidad
       ctx.save();
-      ctx.translate(-pointer.x * 12, -pointer.y * 7);
+      ctx.translate(-pointer.x * 28, -pointer.y * 15);
 
       const [p0, p1, p2] = flightPath();
       const flare = t >= T_IMPACT ? Math.exp(-(t - T_IMPACT) * 1.5) : 0;
@@ -753,10 +766,17 @@ export default function HeroScene() {
     };
 
     const onResize = () => { layout(); if (reduced) frame(performance.now()); };
+    // La «cámara» sigue al puntero y, al tocar o hacer clic, se inclina más hacia donde se toca
+    let boost = 1;
+    let rawX = 0, rawY = 0;
+    const aimCamera = () => { pointer.tx = rawX * boost; pointer.ty = rawY * boost; };
     const onPointer = (e: PointerEvent) => {
-      pointer.tx = (e.clientX / window.innerWidth - 0.5) * 2;
-      pointer.ty = (e.clientY / window.innerHeight - 0.5) * 2;
+      rawX = (e.clientX / window.innerWidth - 0.5) * 2;
+      rawY = (e.clientY / window.innerHeight - 0.5) * 2;
+      aimCamera();
     };
+    const onDown = (e: PointerEvent) => { boost = 1.8; onPointer(e); };
+    const onUp = () => { boost = 1; aimCamera(); };
     const io = new IntersectionObserver(([entry]) => {
       const was = visible;
       visible = entry.isIntersecting;
@@ -768,11 +788,17 @@ export default function HeroScene() {
     io.observe(canvas);
     window.addEventListener("resize", onResize);
     window.addEventListener("pointermove", onPointer, { passive: true });
+    window.addEventListener("pointerdown", onDown, { passive: true });
+    window.addEventListener("pointerup", onUp, { passive: true });
+    window.addEventListener("pointercancel", onUp, { passive: true });
     return () => {
       cancelAnimationFrame(raf);
       io.disconnect();
       window.removeEventListener("resize", onResize);
       window.removeEventListener("pointermove", onPointer);
+      window.removeEventListener("pointerdown", onDown);
+      window.removeEventListener("pointerup", onUp);
+      window.removeEventListener("pointercancel", onUp);
     };
   }, []);
 
