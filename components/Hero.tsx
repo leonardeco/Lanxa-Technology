@@ -1,4 +1,4 @@
-import HeroStage from "@/components/HeroStage";
+import HeroScene from "@/components/HeroScene";
 import Counter from "@/components/Counter";
 
 const WA_QUOTE = "https://wa.me/573226993891?text=Hola%20Lanxa%20Technology,%20quiero%20cotizar%20un%20proyecto";
@@ -11,7 +11,7 @@ export default function Hero() {
         background:
           "radial-gradient(55% 50% at 78% 18%,rgba(255,200,87,.14),transparent 60%), radial-gradient(60% 60% at 30% 0%,rgba(91,134,255,.30),transparent 62%), radial-gradient(50% 40% at 60% 100%,rgba(91,134,255,.22),transparent 70%)",
       }} />
-      <HeroStage />
+      <HeroScene />
       {/* Velo para legibilidad del texto */}
       <div className="absolute inset-0 pointer-events-none bg-[linear-gradient(180deg,rgba(8,11,26,.55)_0%,rgba(8,11,26,.15)_45%,rgba(8,11,26,.0)_70%)] md:bg-[linear-gradient(90deg,rgba(8,11,26,.85)_0%,rgba(8,11,26,.55)_38%,rgba(8,11,26,0)_62%)]" />
 
