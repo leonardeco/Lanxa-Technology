@@ -13,12 +13,14 @@ type Project = {
   /** Captura real (1440×900) en /public/projects; si no hay, se usa la vista animada `Visual`. */
   image?: string; url?: string; Visual?: ComponentType;
   demo?: string; featured?: boolean; highlights?: string[];
+  /** Texto del botón; por defecto "Ver demo en vivo". Los sitios ya en producción usan otro. */
+  cta?: string;
 };
 
 const projects: Project[] = [
   {
     title: "Guía de Estudio Magisterio", tag: "EdTech · Plataforma de pago", status: "En línea", featured: true, accent: "#7fb0ff",
-    image: "/projects/guia-magisterio.png", url: "magisterioguiaestudio.com", demo: "https://www.magisterioguiaestudio.com/registro/",
+    image: "/projects/guia-magisterio.png", url: "magisterioguiaestudio.com", demo: "https://www.magisterioguiaestudio.com", cta: "Visitar el sitio",
     desc: "Plataforma para preparar el concurso docente en Colombia: cuentas, pase anual con pago en línea y todo el material del curso protegido. Primaria en línea; secundaria y media en creación.",
     highlights: ["Pagos reales con Wompi: PSE, Nequi y tarjeta", "184 clases, 129 documentos y 197 preguntas con fuente", "Material protegido con enlaces que vencen", "Panel de administración y 122 pruebas automatizadas"],
     stack: ["Astro 5", "TypeScript", "React 19", "Neon", "Wompi"], cats: ["Educación", "SaaS", "Web"],
@@ -206,7 +208,7 @@ function ProjectCard({ p, big }: { p: Project; big: boolean }) {
         </ul>
         {p.demo && (
           <a href={p.demo} target="_blank" rel="noopener" className={`mt-5 self-start text-[0.9rem] ${big ? "btn-primary" : "inline-flex items-center gap-2 font-semibold text-[var(--moon)] hover:text-[var(--plasma)] transition-colors"}`}>
-            Ver demo en vivo
+            {p.cta ?? "Ver demo en vivo"}
             <svg viewBox="0 0 24 24" width={15} height={15} fill="none" stroke="currentColor" strokeWidth={2.2}><path d="M7 17L17 7M9 7h8v8" /></svg>
           </a>
         )}
